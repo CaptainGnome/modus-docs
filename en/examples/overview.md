@@ -25,4 +25,4 @@ Role map — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://git
 | 12 | [Embedder](12-embedder.md) | `embedder` | `modus new embedder` |
 | 13 | [Rates / FX](13-rates-fx.md) | `rates` | `modus new rates` |
 
-Hub — [README](../introduction.md).
+Hub — [table of contents](../introduction.md).
