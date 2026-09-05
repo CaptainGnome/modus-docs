@@ -1,14 +1,10 @@
 # Плагины Modus
 
+**Языки:** [Русский](README.md) · [English](en/README.md)
+
 Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через `modus-sdk` и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome.
 
-Этот репозиторий рассчитан как **submodule** [CaptainGnome/Modus](https://github.com/CaptainGnome/Modus) (каталог `modus-docs/`). Эталоны плагинов живут в checkout Modus: ссылки вида [`../../plugins/twitch`](../../plugins/twitch). После клона:
-
-```powershell
-git clone https://github.com/CaptainGnome/Modus.git
-cd Modus
-git submodule update --init
-```
+Эталоны плагинов — в соседнем дереве продукта (`plugins/…`), когда этот hub лежит как каталог `modus-docs/` рядом с `modus-sdk/` и `plugins/`. В главах — относительные ссылки вида [`../../plugins/twitch`](../../plugins/twitch).
 
 Путь автора: SDK → `new` → `dev` → `pack` → Core. Язык — Rust. Секреты в пакет не кладут.
 

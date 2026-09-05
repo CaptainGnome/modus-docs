@@ -17,7 +17,7 @@
 CLI из репозитория (пока не crates.io):
 
 ```powershell
-cargo run --manifest-path sdk/cli/Cargo.toml --release -- <команда>
+cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <команда>
 ```
 
 Или функция `modus` из [туториала](../start/01-tools.md).

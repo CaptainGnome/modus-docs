@@ -5,7 +5,7 @@
 Сжатый обзор — [ref/05-cli](../ref/05-cli.md). Запуск из корня **Modus** (родитель `modus-docs/` как submodule):
 
 ```powershell
-cargo run --manifest-path sdk/cli/Cargo.toml --release -- <команда>
+cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <команда>
 ```
 
 Тулчейн — [start/01-tools](../start/01-tools.md).

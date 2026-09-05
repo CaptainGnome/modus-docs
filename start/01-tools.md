@@ -51,36 +51,27 @@ rustup target list --installed
 
 ## Репозиторий
 
-SDK пока не на crates.io. CLI (`sdk/cli`) и crate `modus-sdk` (`sdk/guest`) живут в репозитории **Modus**. Документация — в `modus-docs/` (этот текст): как submodule или отдельный clone рядом.
+SDK пока не на crates.io. CLI (`modus-sdk/cli`) и crate `modus-sdk` (`modus-sdk/guest`) живут в дереве продукта рядом с этой документацией. Документация — каталог `modus-docs/` (этот текст).
 
-Команды ниже — **из корня Modus** (родитель каталога `modus-docs/`, когда docs подключены submodule). Рядом должны быть `sdk/` и `modus-docs/`.
-
-Если Modus уже на диске — `cd` в его корень. Иначе:
+Команды ниже — **из корня дерева**, где рядом лежат `modus-sdk/`, `plugins/` и `modus-docs/`. Если docs — submodule, корень — родитель `modus-docs/`.
 
 ```powershell
-git clone https://github.com/CaptainGnome/Modus.git
-cd Modus
-git submodule update --init
+cd path\to\product-root
 ```
 
-- `git clone` — скачать копию репозитория.
-- URL — откуда качать.
-- `cd Modus` — войти в скачанную папку (`cd` = change directory).
-- `git submodule update --init` — подтянуть `modus-docs/`.
-
-В корне Modus есть `rust-toolchain.toml`: rustup возьмёт stable и ту же wasm-цель сам. Шаг `target add` всё равно обязателен — чтобы цель была до первой долгой сборки.
+В корне есть `rust-toolchain.toml`: rustup возьмёт stable и ту же wasm-цель сам. Шаг `target add` всё равно обязателен — чтобы цель была до первой долгой сборки.
 
 ## CLI
 
 Первый запуск собирает `modus` несколько минут. Это нормально, не «зависло».
 
 ```powershell
-cargo run --manifest-path sdk/cli/Cargo.toml --release -- --help
+cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- --help
 ```
 
 - `cargo` — сборщик Rust: читает `Cargo.toml`, компилирует, запускает.
 - `run` — собрать бинарник и сразу выполнить его.
-- `--manifest-path sdk/cli/Cargo.toml` — не искать пакет в текущей папке, а взять манифест CLI. Путь **относительный**: вы стоите в корне репо, файл — `sdk/cli/Cargo.toml`.
+- `--manifest-path modus-sdk/cli/Cargo.toml` — не искать пакет в текущей папке, а взять манифест CLI. Путь **относительный**: вы стоите в корне репо, файл — `modus-sdk/cli/Cargo.toml`.
 - `--release` — оптимизированная сборка **самого CLI** (не плагина). Без флага каждый вызов будет debug и другим файлом.
 - `--` — всё, что правее, **не** флаги cargo, а аргументы программы `modus`. Без этого `--help` покажет справку cargo, не modus.
 - `--help` — уже modus: напечатать список подкоманд и выйти.
@@ -106,7 +97,7 @@ Commands:
 Чтобы не таскать длинную строку, на **эту сессию** PowerShell:
 
 ```powershell
-function modus { cargo run --manifest-path sdk/cli/Cargo.toml --release -- @args }
+function modus { cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- @args }
 modus --help
 ```
 

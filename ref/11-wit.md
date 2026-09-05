@@ -2,7 +2,7 @@
 
 Если это первый плагин — WIT не нужен: [контракт](00-contract.md). Если смотрите исходники хоста — эта глава.
 
-**Правило.** Авторский путь не копирует `world.wit` и не пишет `wit_bindgen::generate`. Биндинги внутри `modus-sdk`. Контракт хоста — [`wit/world.wit`](../../wit/world.wit), пакет `modus:abi@2.0.0`. Гость всегда на world **`plugin`**.
+**Правило.** Авторский путь не копирует `world.wit` и не пишет `wit_bindgen::generate`. Биндинги внутри `modus-sdk`. Контракт хоста — [`modus-sdk/wit/world.wit`](../../modus-sdk/wit/world.wit), пакет `modus:abi@2.0.0`. Гость всегда на world **`plugin`**.
 
 ## Следствие
 

@@ -36,10 +36,10 @@ flowchart LR
 CLI из этого репозитория, не crates.io:
 
 ```powershell
-cargo run --manifest-path sdk/cli/Cargo.toml --release -- <команда>
+cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <команда>
 ```
 
-- `--manifest-path sdk/cli/Cargo.toml` — пакет CLI, вы стоите в корне репо.
+- `--manifest-path modus-sdk/cli/Cargo.toml` — пакет CLI, вы стоите в корне репо.
 - `--release` — оптимизированный бинарник `modus`.
 - `--` — дальше аргументы `modus`, не cargo.
 - Alias `modus` — [туториал, глава 1](../start/01-tools.md). Здесь дальше пишем `modus`.
@@ -61,6 +61,6 @@ cargo run --manifest-path sdk/cli/Cargo.toml --release -- <команда>
 | [`plugins/store`](../../plugins/store) | `store` | KV |
 | [`plugins/commander`](../../plugins/commander) | `commander` | `chat.act` |
 
-WIT хоста — [`wit/world.wit`](../../wit/world.wit). Смотреть при порте SDK или споре с хостом. Не копировать в плагин. Таблица capability → модуль SDK — [карта ролей](01-roles.md); WIT как приложение — [глава 11](11-wit.md).
+WIT хоста — [`modus-sdk/wit/world.wit`](../../modus-sdk/wit/world.wit). Смотреть при порте SDK или споре с хостом. Не копировать в плагин. Таблица capability → модуль SDK — [карта ролей](01-roles.md); WIT как приложение — [глава 11](11-wit.md).
 
 Секреты: не в wasm, не в манифесте (`client_secret` — отказ), не в лог. `new connector` не ставит `broker`, официальный Twitch `client_id` и хосты Twitch.

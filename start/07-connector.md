@@ -39,7 +39,7 @@ Ctrl+C — `Ready::Stop`. `"остановлен"` / `HostError::is_stop()` не
 
 Без `--replay` CLI может открыть один live `wss://` из `hosts` манифеста (не private). Для первого раза replay достаточно.
 
-`--http-file` — JSON-ответы для офлайн `net.http` (ключ = URL без query). Нужен Helix/API без сети — см. [`sdk/cli/tests/fixtures`](../../sdk/cli/tests/fixtures) и эталон [`plugins/twitch`](../../plugins/twitch).
+`--http-file` — JSON-ответы для офлайн `net.http` (ключ = URL без query). Нужен Helix/API без сети — см. [`modus-sdk/cli/tests/fixtures`](../../modus-sdk/cli/tests/fixtures) и эталон [`plugins/twitch`](../../plugins/twitch).
 
 ## Что не трогать в этой главе
 

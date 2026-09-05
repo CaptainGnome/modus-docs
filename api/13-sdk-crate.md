@@ -10,7 +10,7 @@
 
 ```toml
 [dependencies]
-modus-sdk = { path = "../sdk/guest", features = ["consumer"] }
+modus-sdk = { path = "../../modus-sdk/guest", features = ["consumer"] }
 ```
 
 | Feature | Пресет |
@@ -103,4 +103,4 @@ use modus_sdk::{
 
 WASI SDK не подмешивает. `wasi:*` в компоненте — отказ pack/load.
 
-CLI рядом: `sdk/cli`. Документация — этот репозиторий (`modus-docs`). Эталоны в checkout Modus: [`plugins/*`](../../plugins/consumer).
+CLI рядом: `modus-sdk/cli`. Документация — этот репозиторий (`modus-docs`). Эталоны: [`plugins/*`](../../plugins/consumer).
