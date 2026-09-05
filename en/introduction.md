@@ -60,7 +60,7 @@ Reference depth: fields, tables, call semantics. Core only enough to understand 
 | 6 | [KV, act, alerts](api/06-kv-act-alerts.md) |
 | 7 | [Slots and panel](api/07-ui-slots-panel.md) |
 | 8 | [Media: cache, audio, embed](api/08-media-cache-audio-embed.md) |
-| 9 | [Bridge, history, rates, catalog](api/09-bridge-history-rates-catalog.md) |
+| 9 | [History, rates, catalog](api/09-bridge-history-rates-catalog.md) |
 | 10 | [Package and signing](api/10-package-signing.md) |
 | 11 | [CLI](api/11-cli-dev.md) |
 | 12 | [Limits](api/12-limits.md) |

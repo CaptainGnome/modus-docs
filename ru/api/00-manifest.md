@@ -45,7 +45,7 @@
 | `media.embed` | iframe allowlist + `embed_hosts` |
 | `catalog.publish` | снимок словаря (эмоуты и т.п.) |
 | `history.read` | страницы журнала (не replay `wait`) |
-| `net.bridge` | loopback WS к локальному софту (OBS/VTS); протокол в wasm |
+| `net.bridge` | loopback WS к локальному софту (OBS/VTS); протокол в wasm — [05](05-emit-auth-net.md#netbridge) |
 | `rates.publish` | таблица курсов |
 | `rates.convert` | convert → base currency Core |
 

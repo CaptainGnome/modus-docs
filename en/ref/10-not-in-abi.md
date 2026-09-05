@@ -15,7 +15,7 @@ If this is your first plugin — [what you cannot](../start/04-cannot.md). If yo
 
 ## Already in ABI 2 (not here)
 
-`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, alerts, KV, `chat.act` — see [role map](01-roles.md) and [host API](07-host-apis.md).
+`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, alerts, KV, `chat.act` — see [role map](01-roles.md), [network](06-net-auth.md), and [host API](07-host-apis.md).
 
 TTS: voice — another plugin (`media.audio` or `custom` `tts.request`), not “Core speaks”.
 

@@ -15,7 +15,7 @@
 
 ## Уже в ABI 2 (не сюда)
 
-`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, алерты, KV, `chat.act` — см. [карту ролей](01-roles.md) и [host API](07-host-apis.md).
+`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, алерты, KV, `chat.act` — см. [карту ролей](01-roles.md), [сеть](06-net-auth.md) и [host API](07-host-apis.md).
 
 TTS: голос — другой плагин (`media.audio` или `custom` `tts.request`), не «Core говорит».
 

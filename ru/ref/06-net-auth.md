@@ -35,9 +35,15 @@ token(account-id) -> result<string, string>
 
 ## WebSocket
 
-Грант `net.ws`. Только `wss://`. ≤2 сокета. Кадры — `Ready::WsText` / `WsClosed`. Стоп рвёт TCP.
+Грант `net.ws`. Только `wss://`. ≤2 сокета. Кадры — `Ready::WsText` / `WsClosed`. Стоп рвёт TCP. Loopback / private — отказ.
 
 В `dev`: `--replay` (строки файла) или один live URL из `hosts`.
+
+## Bridge (loopback)
+
+Грант `net.bridge`. Тот же ABI, что `net.ws`, но только `ws://` на loopback (`127.0.0.1` / `::1`). Путь к OBS/VTS: протокол в wasm, не в Core. `net.ws` на loopback запрещён. Endpoint — settings плагина.
+
+Полный контракт — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netbridge). Эталон: `modus new bridge`.
 
 ## Следствие
 

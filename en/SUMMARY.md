@@ -40,7 +40,7 @@
 - [KV, act, alerts](api/06-kv-act-alerts.md)
 - [Slots and panel](api/07-ui-slots-panel.md)
 - [Media: cache, audio, embed](api/08-media-cache-audio-embed.md)
-- [Bridge, history, rates, catalog](api/09-bridge-history-rates-catalog.md)
+- [History, rates, catalog](api/09-bridge-history-rates-catalog.md)
 - [Package and signing](api/10-package-signing.md)
 - [CLI](api/11-cli-dev.md)
 - [Limits](api/12-limits.md)

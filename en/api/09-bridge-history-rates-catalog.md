@@ -1,26 +1,8 @@
-# Bridge, history, rates, catalog
+# History, rates, catalog
 
-**Rule.** These APIs are separate capabilities. Not the canon bus: catalog/rates are Core snapshots; history is journal pages; bridge is loopback WS to local software (`net.bridge`).
+**Rule.** These APIs are separate capabilities. Not the canon bus: catalog/rates are Core snapshots; history is journal pages. Loopback WS (`net.bridge`) — in [network](05-emit-auth-net.md#netbridge).
 
-References: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
-
-## `net.bridge`
-
-Grant `net.bridge`. Feature `bridge`. Same ABI as `net.ws`, but **loopback only**.
-
-```text
-net_bridge::connect(url) -> Result<u32, string>
-net_bridge::send_text(handle, message) -> Result<(), string>
-net_bridge::close(handle) -> Result<(), string>
-```
-
-| | `net.ws` | `net.bridge` |
-| --- | --- | --- |
-| URL | `wss://` + hosts ∩ whitelist | only `ws://` to `127.0.0.1` / `::1` / localhost |
-| Frames | opaque text → `Ready::WsText` / `WsClosed` | same |
-| Protocol | in wasm | in wasm (OBS/VTS — not in Core) |
-
-Raw TCP and `net.ws` on loopback are forbidden. Endpoint (host/port/password) — plugin settings. In `dev` without live software — connect fails / log.
+References: `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
 ## `history.read`
 

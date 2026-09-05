@@ -45,7 +45,7 @@ Array of strings. Empty / absent — base only (`wait`, settings, assets, log, �
 | `media.embed` | iframe allowlist + `embed_hosts` |
 | `catalog.publish` | dictionary snapshot (emotes, etc.) |
 | `history.read` | journal pages (not `wait` replay) |
-| `net.bridge` | loopback WS to local software (OBS/VTS); protocol in wasm |
+| `net.bridge` | loopback WS to local software (OBS/VTS); protocol in wasm — [05](05-emit-auth-net.md#netbridge) |
 | `rates.publish` | FX rate table |
 | `rates.convert` | convert → Core base currency |
 

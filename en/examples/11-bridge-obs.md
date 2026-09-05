@@ -10,7 +10,7 @@ Grant `net.bridge` — loopback WS. OBS WebSocket v5 (Hello → Identify → Req
 | Required | `net.bridge` |
 | Base | `settings` (host/port/password, `follow_scene`) |
 
-Map — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates-catalog](../api/09-bridge-history-rates-catalog.md).
+Map — [ref/01-roles](../ref/01-roles.md). API — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netbridge).
 
 ## Manifest
 

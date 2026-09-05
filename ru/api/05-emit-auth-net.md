@@ -45,7 +45,7 @@ token(account_id) -> Result<string, string>
 
 ## Allowlist хостов
 
-Концепт для гостя:
+Концепт для гостя (`net.http` / `net.ws`):
 
 1. URL должен быть `https://` или `wss://`.
 2. Hostname ∈ `hosts` манифеста (для embed iframe — `embed_hosts`).
@@ -53,6 +53,8 @@ token(account_id) -> Result<string, string>
 4. Литеральный IP, loopback, private, link-local — отказ.
 
 Редиректы HTTP: до **5** hop, каждый hop проверяется теми же правилами. Ошибки класса `Network` — [03-errors](03-errors.md).
+
+Исключение: локальный софт — только [`net.bridge`](#netbridge) (plain `ws://` на loopback), не `net.ws`.
 
 `new connector` **не** подставляет официальный Twitch `client_id`, `broker` и хосты Twitch — автор площадки пишет сам.
 
@@ -94,6 +96,29 @@ close(handle) -> Result<(), String>
 | сокетов | ≤ 2 |
 
 В `dev`: `--replay file` (текстовые кадры по строке) **или** один live `wss://` из `hosts` (не private).
+
+## `net.bridge`
+
+Грант `net.bridge`. Feature `bridge`. Тот же ABI, что `net.ws`, но **только loopback** — путь к OBS/VTS и прочему local soft. Протокол софта — в wasm, не в Core.
+
+```text
+net_bridge::connect(url) -> Result<u32, string>
+net_bridge::send_text(handle, message) -> Result<(), string>
+net_bridge::close(handle) -> Result<(), string>
+```
+
+| | `net.ws` | `net.bridge` |
+| --- | --- | --- |
+| URL | `wss://` + hosts ∩ whitelist | только `ws://` на `127.0.0.1` / `::1` / localhost |
+| Кадры | opaque text → `Ready::WsText` / `WsClosed` | то же |
+| Протокол | в wasm | в wasm (OBS/VTS — не в Core) |
+
+| Потолок | Значение |
+| --- | --- |
+| схема | только `ws` (без TLS в срезе) |
+| сокетов | ≤ 2 (отдельный пул от `net.ws`) |
+
+Сырой TCP и `net.ws` на loopback — запрещены. Endpoint (host/port/пароль) — settings плагина. В `dev` без живого софта — отказ connect / лог. Эталон: `modus new bridge`, `plugins/obs-bridge`.
 
 ## Следствие
 

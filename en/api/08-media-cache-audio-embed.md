@@ -67,4 +67,4 @@ Duplicates in `embed_hosts` — manifest reject. Host format same as `hosts`.
 
 Link to slots — [07-ui-slots-panel](07-ui-slots-panel.md). Network — [05-emit-auth-net](05-emit-auth-net.md).
 
-Next chapter — [bridge, history, rates, catalog](09-bridge-history-rates-catalog.md).
+Next chapter — [history, rates, catalog](09-bridge-history-rates-catalog.md).

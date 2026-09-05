@@ -67,4 +67,4 @@ allowed(url) -> bool        // можно ли этот URL в iframe
 
 Связь со слотами — [07-ui-slots-panel](07-ui-slots-panel.md). Сеть — [05-emit-auth-net](05-emit-auth-net.md).
 
-Следующая глава — [bridge, history, rates, catalog](09-bridge-history-rates-catalog.md).
+Следующая глава — [history, rates, catalog](09-bridge-history-rates-catalog.md).

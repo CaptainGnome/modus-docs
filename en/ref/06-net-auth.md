@@ -35,9 +35,15 @@ In `dev`: without network — `--http-file` (JSON, key = URL without query).
 
 ## WebSocket
 
-Grant `net.ws`. Only `wss://`. ≤2 sockets. Frames — `Ready::WsText` / `WsClosed`. Stop tears TCP.
+Grant `net.ws`. Only `wss://`. ≤2 sockets. Frames — `Ready::WsText` / `WsClosed`. Stop tears TCP. Loopback / private — refuse.
 
 In `dev`: `--replay` (file lines) or one live URL from `hosts`.
+
+## Bridge (loopback)
+
+Grant `net.bridge`. Same ABI as `net.ws`, but only `ws://` on loopback (`127.0.0.1` / `::1`). Path to OBS/VTS: protocol in wasm, not Core. `net.ws` on loopback is forbidden. Endpoint — plugin settings.
+
+Full contract — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netbridge). Reference: `modus new bridge`.
 
 ## Consequence
 

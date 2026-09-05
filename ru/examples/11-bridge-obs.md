@@ -10,7 +10,7 @@
 | Обязательные | `net.bridge` |
 | База | `settings` (host/port/password, `follow_scene`) |
 
-Карта — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates-catalog](../api/09-bridge-history-rates-catalog.md).
+Карта — [ref/01-roles](../ref/01-roles.md). API — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netbridge).
 
 ## Манифест
 

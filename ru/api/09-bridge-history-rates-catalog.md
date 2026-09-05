@@ -1,26 +1,8 @@
-# Bridge, history, rates, catalog
+# History, rates, catalog
 
-**Правило.** Эти API — отдельные capability. Не шина канона: catalog/rates — снимки у Core; history — страницы журнала; bridge — loopback WS к локальному софту (`net.bridge`).
+**Правило.** Эти API — отдельные capability. Не шина канона: catalog/rates — снимки у Core; history — страницы журнала. Loopback WS (`net.bridge`) — в [сети](05-emit-auth-net.md#netbridge).
 
-Эталоны: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
-
-## `net.bridge`
-
-Грант `net.bridge`. Feature `bridge`. Тот же ABI, что `net.ws`, но **только loopback**.
-
-```text
-net_bridge::connect(url) -> Result<u32, string>
-net_bridge::send_text(handle, message) -> Result<(), string>
-net_bridge::close(handle) -> Result<(), string>
-```
-
-| | `net.ws` | `net.bridge` |
-| --- | --- | --- |
-| URL | `wss://` + hosts ∩ whitelist | только `ws://` на `127.0.0.1` / `::1` / localhost |
-| Кадры | opaque text → `Ready::WsText` / `WsClosed` | то же |
-| Протокол | в wasm | в wasm (OBS/VTS — не в Core) |
-
-Сырой TCP и `net.ws` на loopback — запрещены. Endpoint (host/port/пароль) — settings плагина. В `dev` без живого софта — отказ connect / лог.
+Эталоны: `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
 ## `history.read`
 
@@ -78,8 +60,8 @@ unpublish(name) -> Result<(), string>
 | Потолок | Значение |
 | --- | --- |
 | размер снимка | 256 KiB |
-| эмоутов | 2048 |
-| publish | 10/с |
+| emotes | 2048 |
+| publish | 10/s |
 
 В `dev`: publish → stderr. Эталон — `modus new provider` (+ `media.cache` для картинок).
 

@@ -45,7 +45,7 @@ URL/client_id fields — [00-manifest](00-manifest.md). In `dev`: `--token` / `-
 
 ## Host allowlist
 
-Guest concept:
+Guest concept (`net.http` / `net.ws`):
 
 1. URL must be `https://` or `wss://`.
 2. Hostname ∈ manifest `hosts` (for embed iframe — `embed_hosts`).
@@ -53,6 +53,8 @@ Guest concept:
 4. Literal IP, loopback, private, link-local — rejected.
 
 HTTP redirects: up to **5** hops, each hop checked by the same rules. `Network`-class errors — [03-errors](03-errors.md).
+
+Exception: local software — only [`net.bridge`](#netbridge) (plain `ws://` on loopback), not `net.ws`.
 
 `new connector` does **not** insert official Twitch `client_id`, `broker`, or Twitch hosts — the platform author writes them.
 
@@ -94,6 +96,29 @@ Frames arrive as `Ready::WsText { handle, text }` / `Ready::WsClosed(handle)`. H
 | sockets | ≤ 2 |
 
 In `dev`: `--replay file` (text frames per line) **or** one live `wss://` from `hosts` (not private).
+
+## `net.bridge`
+
+Grant `net.bridge`. Feature `bridge`. Same ABI as `net.ws`, but **loopback only** — path to OBS/VTS and other local software. Software protocol lives in wasm, not Core.
+
+```text
+net_bridge::connect(url) -> Result<u32, string>
+net_bridge::send_text(handle, message) -> Result<(), string>
+net_bridge::close(handle) -> Result<(), string>
+```
+
+| | `net.ws` | `net.bridge` |
+| --- | --- | --- |
+| URL | `wss://` + hosts ∩ whitelist | only `ws://` to `127.0.0.1` / `::1` / localhost |
+| Frames | opaque text → `Ready::WsText` / `WsClosed` | same |
+| Protocol | in wasm | in wasm (OBS/VTS — not in Core) |
+
+| Ceiling | Value |
+| --- | --- |
+| scheme | `ws` only (no TLS in this slice) |
+| sockets | ≤ 2 (separate pool from `net.ws`) |
+
+Raw TCP and `net.ws` on loopback are forbidden. Endpoint (host/port/password) — plugin settings. In `dev` without live software — connect fails / log. Reference: `modus new bridge`, `plugins/obs-bridge`.
 
 ## Consequence
 

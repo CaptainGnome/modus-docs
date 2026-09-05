@@ -60,7 +60,7 @@
 | 6 | [KV, act, алерты](api/06-kv-act-alerts.md) |
 | 7 | [Слоты и panel](api/07-ui-slots-panel.md) |
 | 8 | [Media: cache, audio, embed](api/08-media-cache-audio-embed.md) |
-| 9 | [Bridge, history, rates, catalog](api/09-bridge-history-rates-catalog.md) |
+| 9 | [History, rates, catalog](api/09-bridge-history-rates-catalog.md) |
 | 10 | [Пакет и подпись](api/10-package-signing.md) |
 | 11 | [CLI](api/11-cli-dev.md) |
 | 12 | [Лимиты](api/12-limits.md) |
