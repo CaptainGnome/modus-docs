@@ -66,7 +66,7 @@ Options:
 | `panel` | док в раскладке Core (`native` / `web`) | `modus new panel` |
 | `reader` | страницы журнала (`history.read`) | `modus new reader` |
 | `player` | звук через Core (`media.audio`) | `modus new player` |
-| `bridge` | OBS WebSocket (`bridge.obs`) | `modus new bridge` |
+| `bridge` | loopback WS (`net.bridge`) | `modus new bridge` |
 | `embedder` | iframe чужого origin (`media.embed`) | `modus new embedder` |
 | `rates` | таблица курсов (`rates.publish`) | `modus new rates` |
 | `alerter` | талон в кассу алертов + оверлей | `modus new alerter` |

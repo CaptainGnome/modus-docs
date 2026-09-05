@@ -30,7 +30,7 @@
 | `ui.slot` | `ui_slot` + слот `web` и/или `panel` | |
 | `media.cache` | `media_cache` | |
 | `media.audio` | `media_audio` (`player`) | |
-| `bridge.obs` | `bridge` (`bridge`) | |
+| `net.bridge` | `net_bridge` (`bridge`) | loopback WS |
 | `media.embed` | `media_embed` (`embedder`) | |
 | `catalog.publish` | `catalog` (`provider`) | |
 | `history.read` | `history_read` | |
@@ -56,7 +56,7 @@
 | `store` | `store` | `storage.kv` | `storage_kv` + `settings` (база) | `modus new store` | чужое KV, секреты |
 | `reader` | `reader` | `history.read` | `history_read` | `modus new reader` | emit, сеть, replay в `wait` |
 | `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player` | открывать устройство, TTS в обход Core |
-| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge` | сырой сокет в обход allowlist |
+| `bridge` | `bridge` | `net.bridge` | `net_bridge` | `modus new bridge` | `net.ws` на loopback |
 | `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder` | прокси MP4, `play` на хосте, youtube-dl |
 | `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates` | emit, UI, KV; курс в `opaque` |
 

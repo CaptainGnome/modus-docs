@@ -45,7 +45,7 @@ Array of strings. Empty / absent — base only (`wait`, settings, assets, log, �
 | `media.embed` | iframe allowlist + `embed_hosts` |
 | `catalog.publish` | dictionary snapshot (emotes, etc.) |
 | `history.read` | journal pages (not `wait` replay) |
-| `bridge.obs` | OBS invoke; type list — `bridge_requests` |
+| `net.bridge` | loopback WS to local software (OBS/VTS); protocol in wasm |
 | `rates.publish` | FX rate table |
 | `rates.convert` | convert → Core base currency |
 
@@ -73,7 +73,6 @@ Assets: web — `assets/web/`; panel native — `assets/panel.json`; panel web �
 | --- | --- |
 | `hosts` | DNS allowlist for `net.http` / `net.ws` and auth URLs. Format: hostname or `host:port`. Intersection with Core whitelist. Literal IP / private — rejected at call time |
 | `embed_hosts` | iframe allowlist (`media.embed`). Empty + no cap — CSP `frame-src 'none'`. Non-empty without `media.embed` — `embed_hosts требует capability media.embed`. Duplicates — rejected |
-| `bridge_requests` | OBS request types. Without `bridge.obs` — rejected. Core denylist: `GetStreamServiceSettings`, `SetStreamServiceSettings` |
 
 Concept: manifest ∩ Core policy. The guest does not “open” a URL itself — the host checks. Network — [05-emit-auth-net](05-emit-auth-net.md).
 
@@ -130,6 +129,5 @@ Runtime label in settings form: `settings::set_label_i18n` / `modus_sdk::set_lab
 | `slots require grant ui.slot` / reverse | slots and cap out of sync |
 | `user_theme требует …` | theme without ui surface |
 | `provides: неизвестное имя` / bad schema | catalog |
-| `bridge_requests: type … is on Core denylist` | forbidden OBS request |
 
 Next chapter — [lifecycle and wait](01-lifecycle-wait.md).

@@ -30,7 +30,7 @@ Every package has: `self_info`, `log`, `wait`, `types`, `clock`, `settings`, `as
 | `ui.slot` | `ui_slot` + slot `web` and/or `panel` | |
 | `media.cache` | `media_cache` | |
 | `media.audio` | `media_audio` (`player`) | |
-| `bridge.obs` | `bridge` (`bridge`) | |
+| `net.bridge` | `net_bridge` (`bridge`) | loopback WS |
 | `media.embed` | `media_embed` (`embedder`) | |
 | `catalog.publish` | `catalog` (`provider`) | |
 | `history.read` | `history_read` | |
@@ -56,7 +56,7 @@ Every row is a preset of the same world `plugin`. Feature column = `new` argumen
 | `store` | `store` | `storage.kv` | `storage_kv` + `settings` (base) | `modus new store` | others' KV, secrets |
 | `reader` | `reader` | `history.read` | `history_read` | `modus new reader` | emit, network, replay in `wait` |
 | `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player` | open device, TTS bypassing Core |
-| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge` | raw socket bypassing allowlist |
+| `bridge` | `bridge` | `net.bridge` | `net_bridge` | `modus new bridge` | `net.ws` on loopback |
 | `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` and/or `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder` | proxy MP4, host `play`, youtube-dl |
 | `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates` | emit, UI, KV; rate in `opaque` |
 

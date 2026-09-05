@@ -1,14 +1,14 @@
 # Bridge / OBS
 
-The role does not open a socket to OBS itself: RPC goes through Core (`bridge.obs`) with an allowlist of types from the manifest. On follow (or `custom` `obs.set-scene`) the reference calls `SetCurrentProgramScene`.
+Grant `net.bridge` — loopback WS. OBS WebSocket v5 (Hello → Identify → Request) lives in wasm, not Core. On follow / `custom` `obs.set-scene` the reference sends `SetCurrentProgramScene`.
 
 ## Feature and grants
 
 | | |
 | --- | --- |
 | SDK feature | `bridge` |
-| Required | `bridge.obs` + non-empty `bridge_requests` |
-| Base | `settings` (host/port/password UI, follow scene) |
+| Required | `net.bridge` |
+| Base | `settings` (host/port/password, `follow_scene`) |
 
 Map — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates-catalog](../api/09-bridge-history-rates-catalog.md).
 
@@ -20,65 +20,44 @@ Map — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates
   "name": "OBS Bridge",
   "version": "0.1.0",
   "abi": 2,
-  // invoke OBS RPC via Core — never raw TCP from guest
-  "capabilities": ["bridge.obs"],
-  // whitelist of OBS request types this plugin may call
-  "bridge_requests": ["SetCurrentProgramScene"]
-  // Core still denylists sensitive types even if listed here
+  "capabilities": ["net.bridge"]
 }
 ```
 
-| Field | Why |
-| --- | --- |
-| `bridge.obs` | `bridge::invoke` |
-| `bridge_requests` | OBS type whitelist; anything else — refuse |
-| Core denylist | incl. `Get/SetStreamServiceSettings` — even from the manifest |
+No `hosts` / `bridge_requests`: endpoint is settings; `ws://` on loopback only.
 
 ## Code
 
-**Init.** Subscribe and status label.
+**Connect.** URL from settings → `net_bridge::connect`.
 
 ```rust
-fn init() {
-    wait::subscribe(); // need Bus for follow / custom scene
-    refresh_status("ожидание событий"); // settings label until first invoke
+let url = format!("ws://{host}:{port}");
+let handle = net_bridge::connect(&url)?;
+```
+
+**Identify.** Frames arrive as `Ready::WsText`. `op:0` (Hello) → `send_text` Identify (`op:1`); `op:2` → identified.
+
+```rust
+Ready::WsText(frame) => {
+    if frame.handle != session.handle { continue; }
+    // Hello (op 0) → Identify; Identified (op 2) → session.identified = true
+    on_ws_text(&mut session, &frame.text);
 }
 ```
 
-**Bus → invoke.** Follow → scene name from settings; `custom` kind `obs.set-scene` → `scene` field in `fields`. Payload — JSON for OBS.
+**Bus → scene.** Follow / `obs.set-scene` → Request (`op:6`) via `net_bridge::send_text`.
 
 ```rust
 Ready::Bus(event) => {
-    let scene = match &event.payload {
-        // follow → scene name from settings "follow_scene"
-        Payload::Follow(_) => follow_scene(),
-        // custom canon from another plugin: kind + fields.scene
-        Payload::Custom(c) if c.kind == "obs.set-scene" => scene_from_fields(&c.fields),
-        _ => None, // ignore chat/donation/…
-    };
-    let Some(scene) = scene else { continue; };
-    // OBS WebSocket v5 body for SetCurrentProgramScene
-    let payload = format!("{{\"sceneName\":\"{}\"}}", escape_json(&scene));
-    // "obs" = Core target id; type must be in bridge_requests
-    match bridge::invoke("obs", "SetCurrentProgramScene", payload.as_bytes()) {
-        Ok(_) => refresh_status(&format!("сцена: {scene}")),
-        Err(err) => { log::log(Level::Warn, &err); refresh_status(&err); }
-    }
+    let Some(scene) = scene_from_event(&event) else { continue; };
+    if !session.identified { continue; }
+    let msg = format!(
+        r#"{{"op":6,"d":{{"requestType":"SetCurrentProgramScene","requestId":"{id}","requestData":{{"sceneName":"{}"}}}}}}"#,
+        escape_json(&scene)
+    );
+    net_bridge::send_text(session.handle, &msg)?;
 }
 ```
-
-**Settings.** `follow_scene` — OBS scene name string; empty → do not switch on follow. `host` / `port` / `password` are read by Core for the connection; the guest does not put them on a socket.
-
-```rust
-fn follow_scene() -> Option<String> {
-    let scene = settings::get("follow_scene").unwrap_or_default();
-    let scene = scene.trim();
-    // empty setting → never auto-switch on Follow
-    if scene.is_empty() { None } else { Some(scene.to_string()) }
-}
-```
-
-The first `invoke` argument (`"obs"`) is the target id at Core, as set in the host UI.
 
 ## Assets
 
@@ -86,24 +65,24 @@ The first `invoke` argument (`"obs"`) is the target id at Core, as set in the ho
 | --- | --- |
 | `assets/settings.json` | host, port, password (secret), `follow_scene`, label `status` |
 
-Raw WASI/`net` to a private IP toward OBS is forbidden; bridge only.
+`net.ws` on loopback and raw TCP are forbidden; `net.bridge` only.
 
 ## Run
 
 ```powershell
-modus new <role>  # scaffold, then modus dev <dir>
+modus new bridge --id com.you.obs
+modus dev <dir>
 ```
 
-In `dev`, bridge is a stub/log, not a live OBS WebSocket. Full crate: [`modus new bridge`](modus new bridge).
+Without a live OBS on loopback, connect fails. Reference: [`modus new bridge`](modus new bridge) / `plugins/obs-bridge`.
 
 ## Typical host errors
 
 | String / situation | Meaning |
 | --- | --- |
-| `no grant bridge.obs` | call without capability |
-| type not in `bridge_requests` | manifest whitelist |
-| Core denylist | sensitive OBS request |
-| no connection / bad settings | error from Core → status |
-| own TCP to OBS | `forbidden import` / network |
+| `no grant net.bridge` | call without capability |
+| non-loopback / not `ws://` | connect refused |
+| no connection / bad settings | error → status |
+| own TCP / `net.ws` on loopback | `forbidden import` / network |
 
 See [ref/04-errors](../ref/04-errors.md), [ref/06-net-auth](../ref/06-net-auth.md).

@@ -9,13 +9,13 @@
 - Диск и свои сокеты (кроме KV хоста и чтения своих `assets/`).
 - WASI / `wasi-http` — всегда отказ `pack` / загрузки.
 - Settings как HTML-форма плагина: схему рисует Core.
-- Сырой TCP к OBS/VTS в обход `bridge.*`.
+- Сырой TCP к OBS/VTS в обход `net.bridge`.
 - Эмит канона `system` (только Core).
 - Store/DRM (`signature.license` и т.п.) — позже у продукта, не путь автора плагина в этом гайде.
 
 ## Уже в ABI 2 (не сюда)
 
-`media.audio`, `bridge.*`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, алерты, KV, `chat.act` — см. [карту ролей](01-roles.md) и [host API](07-host-apis.md).
+`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, алерты, KV, `chat.act` — см. [карту ролей](01-roles.md) и [host API](07-host-apis.md).
 
 TTS: голос — другой плагин (`media.audio` или `custom` `tts.request`), не «Core говорит».
 

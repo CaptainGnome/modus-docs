@@ -24,7 +24,7 @@ modus-sdk = { path = "../modus-sdk/guest", features = ["consumer"] }
 | `widget` | + `ui_slot` (`new panel` тоже) |
 | `reader` | + `history_read` |
 | `player` | + `media_audio`, `media_cache` |
-| `bridge` | + `bridge` |
+| `bridge` | + `net_bridge` |
 | `embedder` | + `media_embed`, `ui_slot` |
 | `rates` | + `net_http`, `rates_publish`, `rates` |
 | `alerter` | + enqueue, ui, history, rates convert |

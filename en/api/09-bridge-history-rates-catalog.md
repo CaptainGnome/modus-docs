@@ -1,26 +1,26 @@
 # Bridge, history, rates, catalog
 
-**Rule.** These APIs are separate capabilities. Not the canon bus: catalog/rates — snapshots at Core; history — journal pages; bridge — RPC through the host to OBS (type allowlist).
+**Rule.** These APIs are separate capabilities. Not the canon bus: catalog/rates are Core snapshots; history is journal pages; bridge is loopback WS to local software (`net.bridge`).
 
 References: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
-## `bridge.obs`
+## `net.bridge`
 
-Grant `bridge.obs` + non-empty (usually) `bridge_requests` in the manifest. Feature `bridge`.
+Grant `net.bridge`. Feature `bridge`. Same ABI as `net.ws`, but **loopback only**.
 
 ```text
-bridge::invoke(id, request_type, payload) -> Result<list<u8>, string>
+net_bridge::connect(url) -> Result<u32, string>
+net_bridge::send_text(handle, message) -> Result<(), string>
+net_bridge::close(handle) -> Result<(), string>
 ```
 
-| Argument | Meaning |
-| --- | --- |
-| `id` | connection/target id at Core (as set up in UI) |
-| `request_type` | OBS request type; must be allowed by manifest and not in denylist |
-| `payload` | JSON/bytes per OBS agreement |
+| | `net.ws` | `net.bridge` |
+| --- | --- | --- |
+| URL | `wss://` + hosts ∩ whitelist | only `ws://` to `127.0.0.1` / `::1` / localhost |
+| Frames | opaque text → `Ready::WsText` / `WsClosed` | same |
+| Protocol | in wasm | in wasm (OBS/VTS — not in Core) |
 
-Core denylist (manifest also cuts): `GetStreamServiceSettings`, `SetStreamServiceSettings`.
-
-Raw TCP/WebSocket to OBS past bridge — forbidden (WASI/`net` to private). In `dev` — stub/log, not a live OBS.
+Raw TCP and `net.ws` on loopback are forbidden. Endpoint (host/port/password) — plugin settings. In `dev` without live software — connect fails / log.
 
 ## `history.read`
 
@@ -36,9 +36,9 @@ read(cursor?, limit) -> Result<Page, string>
 | --- | --- |
 | `events` | list of the same `wait::Event` (canon + flags) |
 | `next` | next page cursor or empty |
-| `alert_shown` | `event-id` values on this page already successfully shown by **this** `plugin_id`. Written to Core table `alert_shown` only after `alert_enqueue::complete(..., Ok(()))`. Event payloads stay untouched (no canon mangling). Retention ~1 h / cap ~2000. Not tracked in `dev` |
+| `alert_shown` | `event-id`s from this page already successfully shown by **this** `plugin_id`. Written to Core table `alert_shown` only after `alert_enqueue::complete(..., Ok(()))`. Event payloads are unchanged (no canon mangling). Retention ~1 h / cap ~2000. In `dev` the table is not kept |
 
-This is **not** replay into `Ready::Bus`. `wait` does not return history. Alerter uses read + `alert_shown` for recovery after restart / `Resume` — details in [alerts](06-kv-act-alerts.md#shown-alerts-alert_shown).
+This is **not** replay into `Ready::Bus`. `wait` does not return history. Alerter uses read + `alert_shown` for recovery after restart / `Resume` — see [alerts](06-kv-act-alerts.md#shown-alerts-alert_shown).
 
 ## `rates.publish` / `rates.convert`
 
@@ -46,7 +46,7 @@ Two grants:
 
 | Grant | Module | Role |
 | --- | --- | --- |
-| `rates.publish` | `rates_publish` | feature `rates` — rate table |
+| `rates.publish` | `rates_publish` | feature `rates` — rates table |
 | `rates.convert` | `rates` | feature `alerter` (+ rates) — read |
 
 ```text
@@ -59,10 +59,10 @@ rates::convert_to_base(amount, from) -> Result<f64, string>
 | Call | Rule |
 | --- | --- |
 | `publish` | currency pairs → Core FX table |
-| `base` | ISO-4217 base from Core settings |
-| `convert_to_base` | `amount` in `from` → base, floor to minor; no rate → `Err` |
+| `base` | ISO-4217 base from Core FX settings |
+| `convert_to_base` | `amount` in `from` → base, floor to minor; missing rate → `Err` |
 
-Do not put the rate in canon `opaque`. Publish reference — `modus new rates`.
+Do not put rates in canon `opaque`. Publish reference — `modus new rates`.
 
 ## `catalog.publish`
 
@@ -73,9 +73,9 @@ publish(name, payload: list<u8>) -> Result<(), string>
 unpublish(name) -> Result<(), string>
 ```
 
-Currently name `emotes`, schema `modus.emotes.v1` (bytes — JSON snapshot per schema). This is **not** `bus.emit`: dictionary at Core for UI/other plugins with `consumes`.
+Currently name `emotes`, schema `modus.emotes.v1` (bytes — JSON snapshot). This is **not** `bus.emit`: a Core dictionary for UI/other plugins with `consumes`.
 
-| Ceiling | Value |
+| Cap | Value |
 | --- | --- |
 | snapshot size | 256 KiB |
 | emotes | 2048 |

@@ -66,7 +66,7 @@ Short map. Grants and details — [ref/01-roles](../ref/01-roles.md); code walkt
 | `panel` | dock in Core layout (`native` / `web`) | `modus new panel` |
 | `reader` | journal pages (`history.read`) | `modus new reader` |
 | `player` | audio via Core (`media.audio`) | `modus new player` |
-| `bridge` | OBS WebSocket (`bridge.obs`) | `modus new bridge` |
+| `bridge` | loopback WS (`net.bridge`) | `modus new bridge` |
 | `embedder` | foreign-origin iframe (`media.embed`) | `modus new embedder` |
 | `rates` | FX table (`rates.publish`) | `modus new rates` |
 | `alerter` | alert till ticket + overlay | `modus new alerter` |

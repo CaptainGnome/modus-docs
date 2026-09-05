@@ -9,13 +9,13 @@ If this is your first plugin — [what you cannot](../start/04-cannot.md). If yo
 - Disk and own sockets (except host KV and reading own `assets/`).
 - WASI / `wasi-http` — always refuse `pack` / load.
 - Settings as a plugin HTML form: Core draws the schema.
-- Raw TCP to OBS/VTS bypassing `bridge.*`.
+- Raw TCP to OBS/VTS bypassing `net.bridge`.
 - Emit of canon `system` (Core only).
 - Store/DRM (`signature.license` etc.) — later at the product; not the plugin author's path in this guide.
 
 ## Already in ABI 2 (not here)
 
-`media.audio`, `bridge.*`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, alerts, KV, `chat.act` — see [role map](01-roles.md) and [host API](07-host-apis.md).
+`media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, alerts, KV, `chat.act` — see [role map](01-roles.md) and [host API](07-host-apis.md).
 
 TTS: voice — another plugin (`media.audio` or `custom` `tts.request`), not “Core speaks”.
 

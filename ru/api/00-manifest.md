@@ -45,7 +45,7 @@
 | `media.embed` | iframe allowlist + `embed_hosts` |
 | `catalog.publish` | снимок словаря (эмоуты и т.п.) |
 | `history.read` | страницы журнала (не replay `wait`) |
-| `bridge.obs` | OBS invoke; список типов — `bridge_requests` |
+| `net.bridge` | loopback WS к локальному софту (OBS/VTS); протокол в wasm |
 | `rates.publish` | таблица курсов |
 | `rates.convert` | convert → base currency Core |
 
@@ -73,7 +73,6 @@
 | --- | --- |
 | `hosts` | allowlist DNS для `net.http` / `net.ws` и URL auth. Формат: hostname или `host:port`. Пересечение с whitelist Core. Литеральный IP / private — отказ на вызове |
 | `embed_hosts` | allowlist для iframe (`media.embed`). Пустой + нет cap — CSP `frame-src 'none'`. Непустой без `media.embed` — `embed_hosts требует capability media.embed`. Дубликаты — отказ |
-| `bridge_requests` | типы OBS-запросов. Без `bridge.obs` — отказ. Denylist Core: `GetStreamServiceSettings`, `SetStreamServiceSettings` |
 
 Концепт: манифест ∩ политика Core. Гость URL сам не «открывает» — хост проверяет. Сеть — [05-emit-auth-net](05-emit-auth-net.md).
 
@@ -130,6 +129,5 @@ Runtime label в форме settings: `settings::set_label_i18n` / `modus_sdk::s
 | `slots require grant ui.slot` / обратное | рассинхрон слотов и cap |
 | `user_theme требует …` | theme без ui surface |
 | `provides: неизвестное имя` / плохая схема | catalog |
-| `bridge_requests: type … is on Core denylist` | запрещённый OBS request |
 
 Следующая глава — [lifecycle и wait](01-lifecycle-wait.md).

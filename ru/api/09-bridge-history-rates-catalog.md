@@ -1,26 +1,26 @@
 # Bridge, history, rates, catalog
 
-**Правило.** Эти API — отдельные capability. Не шина канона: catalog/rates — снимки у Core; history — страницы журнала; bridge — RPC через хост к OBS (allowlist типов).
+**Правило.** Эти API — отдельные capability. Не шина канона: catalog/rates — снимки у Core; history — страницы журнала; bridge — loopback WS к локальному софту (`net.bridge`).
 
 Эталоны: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
-## `bridge.obs`
+## `net.bridge`
 
-Грант `bridge.obs` + непустой (обычно) `bridge_requests` в манифесте. Feature `bridge`.
+Грант `net.bridge`. Feature `bridge`. Тот же ABI, что `net.ws`, но **только loopback**.
 
 ```text
-bridge::invoke(id, request_type, payload) -> Result<list<u8>, string>
+net_bridge::connect(url) -> Result<u32, string>
+net_bridge::send_text(handle, message) -> Result<(), string>
+net_bridge::close(handle) -> Result<(), string>
 ```
 
-| Аргумент | Смысл |
-| --- | --- |
-| `id` | id соединения/цели у Core (как заведено в UI) |
-| `request_type` | тип OBS-запроса; должен быть разрешён манифестом и не в denylist |
-| `payload` | JSON/байты по договору OBS |
+| | `net.ws` | `net.bridge` |
+| --- | --- | --- |
+| URL | `wss://` + hosts ∩ whitelist | только `ws://` на `127.0.0.1` / `::1` / localhost |
+| Кадры | opaque text → `Ready::WsText` / `WsClosed` | то же |
+| Протокол | в wasm | в wasm (OBS/VTS — не в Core) |
 
-Denylist Core (манифест тоже режет): `GetStreamServiceSettings`, `SetStreamServiceSettings`.
-
-Сырой TCP/WebSocket к OBS в обход bridge — запрещён (WASI/`net` на private). В `dev` — заглушка/лог, не живой OBS.
+Сырой TCP и `net.ws` на loopback — запрещены. Endpoint (host/port/пароль) — settings плагина. В `dev` без живого софта — отказ connect / лог.
 
 ## `history.read`
 
