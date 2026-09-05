@@ -112,8 +112,8 @@ loop {
 Line::Privmsg(msg) => {
     // заранее lookup URL эмодзи — прогреть кэш до ensure
     for url in &urls { let _ = media_cache::lookup(url); }
-    // собрать канон: user, fragments, color, badges…
-    let payload = Payload::Message(Message { /* user, fragments, color… */ });
+    // канон Message: user, fragments, name_color?, message_id?, rewarded
+    let payload = Payload::Message(Message { /* … */ });
     // канал = IRC channel без #; opaque обычно None
     if let Err(err) = bus_emit::emit(&msg.channel, &payload, None) {
         // stopped during emit — выйти из сессии, не Retry

@@ -1,12 +1,12 @@
 # Канон шины
 
-Если слушаете шину в первый раз — [туториал](../start/03-dev.md) `dev`. Если эмитите канон — эта глава. Грант и world — [карта ролей](01-roles.md). Доставка в гостя — `wait` [/](02-wait.md) `Ready::Bus`.
+Если слушаете шину в первый раз — [туториал](../start/03-dev.md) `dev`. Если эмитите канон — эта глава + полный контракт [api/02-canon-bus](../api/02-canon-bus.md). Грант и роли — [карта ролей](01-roles.md). Доставка — [`wait`](02-wait.md) / `Ready::Bus`.
 
-**Правило.** `id`, `ts`, `source.plugin_id` штампует Core. Гость передаёт канал, payload и опциональный opaque. `system` только Core. Канон площадки — с `platform_id` в манифесте.
+**Правило.** Гость передаёт `channel`, `payload`, опциональный `opaque`. Core штампует `id`, `ts`, `source.plugin_id` и `source.platform` ← `platform_id` манифеста. `system` только Core. Канон площадки без непустого `platform_id` — отказ.
 
 ## Вызов
 
-Грант `bus.emit`, роль SDK `emitter` / `connector` (не consumer).
+Грант `bus.emit`, SDK feature `emitter` / `connector` (не consumer).
 
 ```text
 bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
@@ -14,75 +14,56 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 - `channel` — канал площадки, не id плагина.
 - `payload` — `types::Payload`.
-- `opaque` — `Option<&str>`: пусто или **JSON-текст**. Не JSON — `"opaque is not JSON"`. Потребители хвост не разбирают. Секреты не класть.
+- `opaque` — пусто или **JSON-текст**; иначе `opaque is not JSON`. Секреты не класть.
 
-Нет гранта — `"no grant bus.emit"`. Тело штампованного события > 64 KiB JSON — drop, `"TooLarge"`.
+Нет гранта — `no grant bus.emit`. Штамп > 64 KiB JSON — drop, `TooLarge`. Подделать `plugin_id` нельзя. Один живой плагин на `platform_id`.
 
-`source.platform` берётся из `platform_id` манифеста. Подделать `plugin_id` нельзя.
+Helpers: `text_message`, `donation`, `follow`, `reward`, `viewer_count`, `money`, `text_fragment`, `sanitize_name_color`. Эталон emit — [`modus-examples/emitter`](../../../modus-examples/emitter); живая площадка — `modus new connector`.
 
-Каркас: `modus_sdk::text_message`, `donation`, `reward`, `money`, `text_fragment`. Эталон emit — `[modus-examples/emitter](../../../modus-examples/emitter)`, живая площадка — ``modus new connector``.
+## Кто какой payload
 
-## Кто может какой payload
+| Payload | `platform_id` | Кто |
+| --- | --- | --- |
+| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | обязателен | коннектор / emitter этой площадки |
+| `Custom` | не нужен | любой с `bus.emit` |
+| `System` | — | только Core |
 
+`platform_id` — короткое имя площадки (`twitch`), не `id` пакета. Это метка источника канона в `source.platform`, не «только роль connector».
 
-| Payload                                                           | Нужен `platform_id`           | Кто                                                |
-| ----------------------------------------------------------------- | ----------------------------- | -------------------------------------------------- |
-| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | да, иначе `"no platform_id"` | коннектор (или emitter-фикстура) **этой** площадки |
-| `Custom`                                                          | нет (пусто ок)                | любой с `bus.emit`                                 |
-| `System`                                                          | —                             | только Core; гость — `"system is Core-only"`        |
+## Поля (кратко)
 
+Гость в `Ready::Bus` видит: `id`, `ts`, `source`, `payload`, `opaque?`, `flags`. Отдельного `kind` и `audio_key` нет (`audio_key` — в opaque / UI Core).
 
-Один живой плагин на `platform_id`; второй не встанет: `"platform_id … already taken"`. `platform_id` — короткое имя площадки (`twitch`), не `id` пакета.
+- **Message:** `user_id`, `display_name`, `fragments`, `name_color?` (`#`+6 hex или Core выкинет), `message_id?`, `rewarded` (очки канала в IRC). Badges в каноне нет.
+- **Donation:** юзер + `Money { amount, currency }` + `fragments`. Валюта — договорённость (`RUB`, `BITS`, …), Core не нормализует.
+- **Sub:** юзер, `months`, `tier?`, `gifted`, `gifter_*?`, `fragments`.
+- **Follow:** юзер.
+- **Raid:** `from_user_id`, `from_display_name`, `viewers`.
+- **ViewerCount:** `count`. Core: `hide_chat`+`skip_alert`, без journal и без ленты; fanout и snapshot зрителей остаются.
+- **Reward:** `reward_id`, `title`, `cost` (u32), `fragments` промпта, `image_url?`. Bits → `Donation`. Пара с `Message.rewarded` на Twitch возможна; Core авто-hide не делает.
+- **Moderation:** факт с площадки (`delete`/`timeout`/`ban`/`unban`), не сам `chat.act`. Лента может убрать строки; journal не трём.
+- **Custom:** `kind` + `fields`; `kind` ≠ имя канона.
+- **System:** коды kebab (`plugin-crashed`, `auth-revoked`, `ws-closed`, …) — полный список в api.
 
-`Moderation` на шине — факт с площадки, не `chat.act`. Поля: `target_user_id` (id, не ник), `target_display_name`, опционально модератор, `message_id` у delete, `duration_sec` у timeout. Лента прячет строки по событию; журнал не трём. Как это стыкуется с командиром — ниже.
+## Фрагменты
 
-`Reward` — очки канала: `reward_id` площадки, `title`, `cost` (u32, не `Money`), `fragments` промпта, `image_url?`. Bits остаются `Donation`. Хайлайт и кастом с текстом в ленте не рисуем (дубль IRC `message.rewarded`); алерт и журнал остаются.
+Упорядоченный список, не HTML: `Text` / `Emote { id, alt, url? }` / `Mention` / `Url`. Коннектор режет тело по границам эмодзи и ссылок. Helper SDK — только `text_fragment`; остальное через `types`. `https:` в `Emote.url` — для pin кэша. Подробности и пример — [api](../api/02-canon-bus.md#фрагменты).
 
-`ViewerCount` — gauge зрителей канала: `count` (u32). Канал/площадка в `source`. Core всегда ставит `hide_chat` и `skip_alert`, **не** пишет в journal и **не** кладёт в ленту; fanout подписчикам и snapshot в UI (`viewers:update`) остаются. Offline / нет стрима — `count: 0`.
+## Flags
 
-`Custom { kind, fields }` — `kind` не имя канона (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`). Иначе `"custom cannot mask canon"`. TTS-запрос — `custom` kind `tts.request`, не голос в Core.
+После фильтров: `hide_chat`, `skip_alert`, `highlight`, `mask?`. **Payload сырой.** `hide_chat` ≠ «события не было». `highlight` ≠ `Message.rewarded`.
 
 ## `chat.act` — не emit
 
-Два разных канала.
-
 | | `bus.emit` | `chat.act` |
 | --- | --- | --- |
-| Что это | событие **уже случилось** (чат, донат, бан на площадке) | **просьба** сделать send / delete / timeout / ban / unban |
-| Кто зовёт | коннектор / emitter | командир или композер Core |
-| Куда попадает | шина → все `subscribe` | очередь Core → один коннектор этой `platform_id` |
-| Грант / роль | `bus.emit`, `emitter`/`connector` | `chat.act`, `commander` |
-| Ответ | нет (или ошибка emit) | `chat_complete` с тем же `id` |
+| Что | факт уже случился | просьба send/delete/timeout/ban/unban |
+| Кто | connector / emitter | commander / композер Core |
+| Куда | шина → subscribe | очередь → коннектор `platform_id` |
+| Ответ | нет | `chat_complete` |
 
-Цепочка:
+Цепочка: `act` → парк → `Ready::Act` → протокол → `complete` → на шину только отдельный `emit` факта с площадки. Командир `complete`/канон не делает. [`modus-examples/emitter`](../../../modus-examples/emitter) после `Act` эмитит — имитация площадки в `dev`.
 
-1. Командир увидел `Ready::Bus` (чужое сообщение) или Core нажал «отправить». Зовут `chat_act::act(job)`: `platform`, `channel`, `kind` (`Send` / `Delete` / `Timeout` / `Ban` / `Unban`), опционально текст / `message_id` / `target_user_id` / `duration_sec`.
-2. Хост проверяет грант, валидирует job (пустое send, timeout 0, нет цели — отказ), подставляет `account_id`, паркует job. Нет живого коннектора этой площадки — сразу ошибка, шины нет.
-3. Коннектор в своём `wait` получает `Ready::Act(req)` с `id` job. Исполняет протокол (Twitch: PRIVMSG / Helix). Потом `chat_complete::complete(&req.id, Ok(()) | Err(...))`. Чужой `id` — отказ. Нет `complete` за 15 с — ошибка вызывающему.
-4. На шину само по себе ничего не кладётся. Сообщение или бан появятся, только если **площадка** пришлёт это в протоколе, и коннектор сделает **отдельный** `bus.emit` (`Message` / `Moderation`).
+Шторм: 10 `act`/с на плагин, 5/с у Core. Текст send ≤ 500. Эталон: `modus new commander` + `modus new connector`.
 
-Командир `complete` не вызывает и канон не эмитит. Коннектор в ветке `Act` не должен `emit` «от себя вместо площадки»: факт — из IRC/Helix, как обычный кадр. [`modus-examples/emitter`](../../../modus-examples/emitter) после `Act` ещё и эмитит — это **имитация** площадки в `dev`, не образец командира.
-
-Шторм: 10 `act`/с на плагин, 5/с у Core. Текст send ≤ 500. Эталон заявки — `modus new commander`; исполнение — `modus new connector` (`handle_act`). `Ready::Act` в [wait](02-wait.md).
-
-## Поля канона
-
-- **Message:** `user_id`, `display_name`, `fragments`, `name_color?`, `message_id?` (id площадки), `rewarded` (строка чата за очки канала: `highlighted-message` / `custom-reward-id`). Не `flags.highlight`.
-- **Donation:** юзер + `Money { amount: f64, currency }` + `fragments`. Сумма и валюта (ISO или юнит вроде `BITS`), не строка «100₽».
-- **Sub:** юзер, `months`, `tier?`, `gifted`, `gifter_id` / `gifter_name?`, `fragments`.
-- **Follow:** юзер.
-- **Raid:** `from_user_id`, `from_display_name`, `viewers`.
-- **ViewerCount:** `count`. Не journal / не лента; Core форсит hide_chat + skip_alert.
-- **Reward:** очки канала. Лента не рисует строку, если это хайлайт / промпт с текстом (дубль IRC). Алерт и журнал остаются.
-
-Фрагменты — не HTML: `Text`, `Emote { id, alt, url? }` (`url` для `<img>`, лучше https), `Mention { user_id, display_name }`, `Url`.
-
-`name_color`: только `#` + 6 hex (`#FF4500`). Иначе Core **выкинет** цвет, emit не падает.
-
-## Что видит consumer
-
-После фильтров Core у события `flags`: `hide_chat`, `skip_alert`, `highlight`, `mask?`. **Payload сырой.** `hide_chat` — не «события не было»: журнал и `Ready::Bus` его получают, лента может скрыть. Маска — для показа, не для гостя-парсера.
-
-Inbox 64, полный — drop, см. [wait](02-wait.md).
-
-Эталон слушателя: `[modus-examples/consumer](../../../modus-examples/consumer)` (логирует kind, source, flags, текст).
+Inbox 64 — [wait](02-wait.md). Слушатель: [`modus-examples/consumer`](../../../modus-examples/consumer).

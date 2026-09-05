@@ -41,7 +41,7 @@ Reference: [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 ```rust
 fn init() {
-    // build a chat Message payload (user/login/text; optional color/badges = None)
+    // Message: user / display_name / text fragment; name_color / message_id optional
     let message = text_message("fixture", "fixture", "fixture hello", None, None);
     // push onto bus channel "dev" — consumers with subscribe see Ready::Bus
     let _ = bus_emit::emit("dev", &message, None);

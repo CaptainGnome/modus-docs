@@ -107,8 +107,8 @@ loop {
 Line::Privmsg(msg) => {
     // warm-lookup emote CDN URLs before emit (async pin starts)
     for url in &urls { let _ = media_cache::lookup(url); }
-    // map IRC tags → canon Message (user, fragments, color, …)
-    let payload = Payload::Message(Message { /* user, fragments, color… */ });
+    // canon Message: user, fragments, name_color?, message_id?, rewarded
+    let payload = Payload::Message(Message { /* … */ });
     // channel from PRIVMSG → bus channel; None opaque for plain chat
     if let Err(err) = bus_emit::emit(&msg.channel, &payload, None) {
         // stop errors (shutdown) must abort the session, not log-and-continue
