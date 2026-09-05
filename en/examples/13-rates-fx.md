@@ -103,10 +103,10 @@ Convert consumer — [07-alerter](07-alerter.md) (`rates::convert_to_base`).
 ## Run
 
 ```powershell
-modus dev plugins/fx
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Needs network + host whitelist (and Core allowlist if stricter than the manifest). Full crate: [`../../../plugins/fx`](../../../plugins/fx).
+Needs network + host whitelist (and Core allowlist if stricter than the manifest). Full crate: [`modus new rates`](modus new rates).
 
 In `dev`, publish often goes to stderr; convert in another plugin depends on whether the teaching host kept the table.
 

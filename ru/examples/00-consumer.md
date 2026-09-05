@@ -11,7 +11,7 @@
 | База | `wait`, `log`, `types` (и прочее без cap) |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/consumer`](../../../plugins/consumer).
+Эталон: [`modus-examples/consumer`](../../../modus-examples/consumer).
 
 ## Манифест
 
@@ -92,7 +92,7 @@ fn log_bus(event: &Event) {
 
 ```powershell
 modus new consumer --id com.you.bus --dir bus
-modus dev ../../../plugins/consumer
+modus dev ../modus-examples/consumer
 ```
 
 Свой каркас: `modus dev bus`. Без флагов `dev` кладёт учебные `message` / `donation` / `reward` сразу после `init`. См. [start/03-dev](../start/03-dev.md), флаги — [api/11-cli-dev](../api/11-cli-dev.md).

@@ -94,11 +94,11 @@ fn on_settings() {
 ## Запуск
 
 ```powershell
-modus dev plugins/store
-# смена настроек в CLI: modus dev plugins/store --settings …
+modus new <role>  # scaffold, then modus dev <dir>
+# смена настроек в CLI: modus new store  # then: modus dev <dir> --settings …
 ```
 
-Полный crate: [`../../../plugins/store`](../../../plugins/store).
+Полный crate: [`modus new store`](modus new store).
 
 В `dev` KV — RAM на процесс (после рестарта CLI счётчик с нуля). В Core persist привязан к `id` плагина.
 

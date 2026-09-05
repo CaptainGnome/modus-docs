@@ -2,7 +2,7 @@
 
 **Rule.** The `manifest` file (no extension) is JSON at the crate root and at the `.mplug` root. The host reads it before wasm. No field — no right, except the base. `client_secret` in the manifest — always rejected.
 
-Scaffold is written by `modus new`. Full check — `modus check` / `pack`. References: [`plugins/twitch`](../../../plugins/twitch), [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/7tv`](../../../plugins/7tv).
+Scaffold is written by `modus new`. Full check — `modus check` / `pack`. References: `modus new connector`, [`modus-examples/widget`](../../../modus-examples/widget), `modus new provider`.
 
 ## Required fields
 
@@ -101,7 +101,7 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 | `depends` | `{ "platform": "twitch" }` — platform without which the catalog is meaningless. Empty `platform` — rejected |
 | `consumes` | names of others' provides; currently only `"emotes"` |
 
-Snapshot publish — grant `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Reference: [`plugins/7tv`](../../../plugins/7tv).
+Snapshot publish — grant `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Reference: `modus new provider`.
 
 ## i18n in labels
 

@@ -39,7 +39,7 @@ Ctrl+C — `Ready::Stop`. `"остановлен"` / `HostError::is_stop()` не
 
 Без `--replay` CLI может открыть один live `wss://` из `hosts` манифеста (не private). Для первого раза replay достаточно.
 
-`--http-file` — JSON-ответы для офлайн `net.http` (ключ = URL без query). Нужен Helix/API без сети — см. [фикстуры CLI](https://github.com/CaptainGnome/modus-sdk/tree/main/cli/tests/fixtures) и эталон [`plugins/twitch`](../../../plugins/twitch) (если есть продуктовый checkout).
+`--http-file` — JSON-ответы для офлайн `net.http` (ключ = URL без query). Нужен Helix/API без сети — см. [фикстуры CLI](https://github.com/CaptainGnome/modus-sdk/tree/main/cli/tests/fixtures) и dummy [`modus-examples/connector-replay`](https://github.com/CaptainGnome/modus-examples/tree/master/connector-replay).
 
 ## Что не трогать в этой главе
 

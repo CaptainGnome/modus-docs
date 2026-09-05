@@ -95,10 +95,10 @@ None. Only `manifest` + `src/lib.rs`.
 ## Run
 
 ```powershell
-modus dev plugins/reader
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Teaching emits from `dev` appear both in history (if the host writes the journal) and as `Ready::Bus`. Full crate: [`../../../plugins/reader`](../../../plugins/reader).
+Teaching emits from `dev` appear both in history (if the host writes the journal) and as `Ready::Bus`. Full crate: [`modus new reader`](modus new reader).
 
 ## Typical host errors
 

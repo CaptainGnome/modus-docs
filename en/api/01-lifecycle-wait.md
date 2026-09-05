@@ -2,7 +2,7 @@
 
 **Rule.** In `run`, the long loop is only via `wait::wait`. `Ready::Stop` and `HostError::is_stop()` exit the loop, not into backoff. There is no second thread and no callbacks from wasm: the host wakes `wait`.
 
-Compressed contract — [ref/02-wait](../ref/02-wait.md). References: [`plugins/consumer`](../../../plugins/consumer), [`plugins/twitch`](../../../plugins/twitch).
+Compressed contract — [ref/02-wait](../ref/02-wait.md). References: [`modus-examples/consumer`](../../../modus-examples/consumer), `modus new connector`.
 
 ## Guest: three entry points
 
@@ -52,7 +52,7 @@ wait::wait() -> Ready
 | `AlertPlay(cmd)` | Core cashier issued a show | alerter: own overlay / SFX; then `alert_enqueue::complete` |
 | `AlertStop(cmd)` | cashier cleared the show (skip / timeout) | collapse overlay; complete if not yet |
 
-`alert-play` / `alert-stop`: fields `job-id`, `event-id`, `duration-ms`. Cashier and queue are **Core**, not guest. In `modus dev` (S5) enqueue writes id to stderr **without** `AlertPlay`/`AlertStop`. Show reference — [`plugins/alerter`](../../../plugins/alerter).
+`alert-play` / `alert-stop`: fields `job-id`, `event-id`, `duration-ms`. Cashier and queue are **Core**, not guest. In `modus dev` (S5) enqueue writes id to stderr **without** `AlertPlay`/`AlertStop`. Show reference — `modus new alerter`.
 
 ## Inbox 64
 

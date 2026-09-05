@@ -20,7 +20,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 `source.platform` берётся из `platform_id` манифеста. Подделать `plugin_id` нельзя.
 
-Каркас: `modus_sdk::text_message`, `donation`, `reward`, `money`, `text_fragment`. Эталон emit — `[plugins/fixture](../../../plugins/fixture)`, живая площадка — `[plugins/twitch](../../../plugins/twitch)`.
+Каркас: `modus_sdk::text_message`, `donation`, `reward`, `money`, `text_fragment`. Эталон emit — `[modus-examples/emitter](../../../modus-examples/emitter)`, живая площадка — ``modus new connector``.
 
 ## Кто может какой payload
 
@@ -61,9 +61,9 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 3. Коннектор в своём `wait` получает `Ready::Act(req)` с `id` job. Исполняет протокол (Twitch: PRIVMSG / Helix). Потом `chat_complete::complete(&req.id, Ok(()) | Err(...))`. Чужой `id` — отказ. Нет `complete` за 15 с — ошибка вызывающему.
 4. На шину само по себе ничего не кладётся. Сообщение или бан появятся, только если **площадка** пришлёт это в протоколе, и коннектор сделает **отдельный** `bus.emit` (`Message` / `Moderation`).
 
-Командир `complete` не вызывает и канон не эмитит. Коннектор в ветке `Act` не должен `emit` «от себя вместо площадки»: факт — из IRC/Helix, как обычный кадр. [`plugins/fixture`](../../../plugins/fixture) после `Act` ещё и эмитит — это **имитация** площадки в `dev`, не образец командира.
+Командир `complete` не вызывает и канон не эмитит. Коннектор в ветке `Act` не должен `emit` «от себя вместо площадки»: факт — из IRC/Helix, как обычный кадр. [`modus-examples/emitter`](../../../modus-examples/emitter) после `Act` ещё и эмитит — это **имитация** площадки в `dev`, не образец командира.
 
-Шторм: 10 `act`/с на плагин, 5/с у Core. Текст send ≤ 500. Эталон заявки — [`plugins/commander`](../../../plugins/commander); исполнение — [`plugins/twitch`](../../../plugins/twitch) (`handle_act`). `Ready::Act` в [wait](02-wait.md).
+Шторм: 10 `act`/с на плагин, 5/с у Core. Текст send ≤ 500. Эталон заявки — `modus new commander`; исполнение — `modus new connector` (`handle_act`). `Ready::Act` в [wait](02-wait.md).
 
 ## Поля канона
 
@@ -85,4 +85,4 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 Inbox 64, полный — drop, см. [wait](02-wait.md).
 
-Эталон слушателя: `[plugins/consumer](../../../plugins/consumer)` (логирует kind, source, flags, текст).
+Эталон слушателя: `[modus-examples/consumer](../../../modus-examples/consumer)` (логирует kind, source, flags, текст).

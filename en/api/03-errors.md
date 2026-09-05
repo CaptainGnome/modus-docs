@@ -2,7 +2,7 @@
 
 **Rule.** Error strings are part of ABI 2. In code: `HostError::classify(err)`, not parsing Russian phrases with your own `contains`. `is_stop()` — do not swallow into reconnect.
 
-Compressed overview — [ref/04-errors](../ref/04-errors.md). Backoff exit reference: [`plugins/twitch`](../../../plugins/twitch).
+Compressed overview — [ref/04-errors](../ref/04-errors.md). Backoff exit reference: `modus new connector`.
 
 ## Classify
 

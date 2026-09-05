@@ -2,7 +2,7 @@
 
 **Правило.** `id`, `ts`, `source.plugin_id` штампует **Core**. Гость передаёт канал, payload и опциональный opaque. `system` только Core. Канон площадки — с `platform_id` в манифесте.
 
-Сжатый обзор — [ref/03-canon](../ref/03-canon.md). Emit: [`plugins/fixture`](../../../plugins/fixture), [`plugins/twitch`](../../../plugins/twitch). Слушатель: [`plugins/consumer`](../../../plugins/consumer).
+Сжатый обзор — [ref/03-canon](../ref/03-canon.md). Emit: [`modus-examples/emitter`](../../../modus-examples/emitter), `modus new connector`. Слушатель: [`modus-examples/consumer`](../../../modus-examples/consumer).
 
 ## Вызов emit
 

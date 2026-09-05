@@ -52,7 +52,7 @@ Options:
 
 `new` умеет все роли из help (включая `store`, `commander`, `alerter`, …). Новичку туда не идти — сначала `consumer`. Точнее — [справочник](../ref/01-roles.md).
 
-Эталон consumer в репо — [`plugins/consumer`](../../../plugins/consumer). Копировать его не нужно: `new` напишет свежий каркас.
+Эталон consumer в репо — [`modus-examples/consumer`](../../../modus-examples/consumer). Копировать его не нужно: `new` напишет свежий каркас.
 
 ## `id`
 

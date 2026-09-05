@@ -11,7 +11,7 @@ A connector is a live platform: OAuth via host, HTTP/WS, canon emit, reply to `c
 | Modules | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/twitch`](../../../plugins/twitch). Auth/network — [ref/06-net-auth](../ref/06-net-auth.md).
+Reference: `modus new connector`. Auth/network — [ref/06-net-auth](../ref/06-net-auth.md).
 
 ## Manifest (fragment)
 
@@ -43,7 +43,7 @@ Reference: [`plugins/twitch`](../../../plugins/twitch). Auth/network — [ref/06
 }
 ```
 
-Full file: [`plugins/twitch/manifest`](../../../plugins/twitch/manifest).
+Full file: `modus new connector`.
 
 ## Code: auth → WS → wait → emit
 
@@ -147,7 +147,7 @@ modus new connector --id com.you.twitch --dir twitch
 Offline without live Twitch ([start/07-connector](../start/07-connector.md)):
 
 ```powershell
-modus dev ../../../plugins/twitch --token fake --replay frames.replay
+modus dev ../modus-examples/connector-replay --token fake --replay frames.replay
 ```
 
 Optional `--http-file` for Helix. Live OAuth — Core / broker, not the first debug step.

@@ -12,7 +12,7 @@
 | Не делает | `bus.emit`, сеть |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/commander`](../../../plugins/commander).
+Эталон: `modus new commander`.
 
 ## Манифест
 
@@ -82,7 +82,7 @@ match cmd.as_str() {
 
 ```powershell
 modus new commander --id com.you.cmd --dir cmd
-modus dev ../../../plugins/commander
+modus dev modus new commander
 ```
 
 В `dev` `chat.act` логируется учебным хостом (не очередь Core). Для полного пути нужен живой connector той же `platform` (fixture тоже отвечает на `Act`). Рядом: `modus dev …/fixture` + inject/`!say` с шины, или `--inject` с message-текстом команды.

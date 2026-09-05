@@ -106,10 +106,10 @@ Play/pause без смены URL — `post_cmd("play"|"pause")`; страниц�
 ## Запуск
 
 ```powershell
-modus dev plugins/embedder --ui
+modus new embedder  # then: modus dev <dir> --ui
 ```
 
-Нужен эмиттер сообщений с командами (fixture/twitch) или клики panel. Полный crate: [`../../../plugins/embedder`](../../../plugins/embedder).
+Нужен эмиттер сообщений с командами (fixture/twitch) или клики panel. Полный crate: [`modus new embedder`](modus new embedder).
 
 ## Типичные ошибки хоста
 

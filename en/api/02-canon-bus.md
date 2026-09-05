@@ -2,7 +2,7 @@
 
 **Rule.** `id`, `ts`, `source.plugin_id` are stamped by **Core**. The guest passes channel, payload, and optional opaque. `system` is Core-only. Platform canon — with `platform_id` in the manifest.
 
-Compressed overview — [ref/03-canon](../ref/03-canon.md). Emit: [`plugins/fixture`](../../../plugins/fixture), [`plugins/twitch`](../../../plugins/twitch). Listener: [`plugins/consumer`](../../../plugins/consumer).
+Compressed overview — [ref/03-canon](../ref/03-canon.md). Emit: [`modus-examples/emitter`](../../../modus-examples/emitter), `modus new connector`. Listener: [`modus-examples/consumer`](../../../modus-examples/consumer).
 
 ## Emit call
 

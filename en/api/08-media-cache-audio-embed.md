@@ -2,7 +2,7 @@
 
 **Rule.** Binaries and sound go through the host. The guest does not open devices and does not download files with its own socket past `net.*` / cache. Embed — iframe allowlist only, not youtube-dl and not `play` of a foreign MP4 on the host.
 
-References: cache/catalog — [`plugins/7tv`](../../../plugins/7tv); audio — [`plugins/player`](../../../plugins/player); embed — [`plugins/embedder`](../../../plugins/embedder).
+References: cache/catalog — `modus new provider`; audio — `modus new player`; embed — `modus new embedder`.
 
 ## `media.cache`
 

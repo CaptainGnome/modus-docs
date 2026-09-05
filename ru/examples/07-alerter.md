@@ -1,6 +1,6 @@
 # Alerter
 
-Роль ставит талон в кассу Core (`alert.enqueue`), а показ делает сама: после `Ready::AlertPlay` шлёт JSON в web-оверлей. Очередь, приоритеты и skip — у хоста; гость не ведёт свою кассу. Эталон — [`plugins/alerter`](../../../plugins/alerter) (~1900 строк UI/тиров; ниже только узлы потока).
+Роль ставит талон в кассу Core (`alert.enqueue`), а показ делает сама: после `Ready::AlertPlay` шлёт JSON в web-оверлей. Очередь, приоритеты и skip — у хоста; гость не ведёт свою кассу. Эталон — `modus new alerter` (~1900 строк UI/тиров; ниже только узлы потока).
 
 ## Feature и гранты
 
@@ -167,10 +167,10 @@ Web не ходит в сеть сам: кадры `plugin` и `cache/{key}` п�
 Из корня репо:
 
 ```powershell
-modus dev plugins/alerter
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Полный crate: [`../../../plugins/alerter`](../../../plugins/alerter). С эмиттером событий — рядом fixture/twitch; курсы для donation FX — [13-rates-fx](13-rates-fx.md).
+Полный crate: [`modus new alerter`](modus new alerter). С эмиттером событий — рядом fixture/twitch; курсы для donation FX — [13-rates-fx](13-rates-fx.md).
 
 ## Типичные ошибки хоста
 

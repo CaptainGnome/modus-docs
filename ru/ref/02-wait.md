@@ -48,7 +48,7 @@ wait::wait() -> Ready
 
 `HostError::classify` / `is_stop()` — [ошибки хоста](04-errors.md), подробно — [api/03-errors](../api/03-errors.md). `Stopped` и `Revoked` — не сеть.
 
-`modus_sdk::wait_backoff(ms) -> bool`: ставит таймер, крутит `wait`, **true** если стоп (в т.ч. `Act` во время backoff закрывает job ошибкой «нет соединения»). `Resume` — как сработавший таймер: **false**, немедленный retry. Каркас `new connector` и [`plugins/twitch`](../../../plugins/twitch) так и делают. Не писать свой `sleep` + реконнект вокруг `"остановлен"`.
+`modus_sdk::wait_backoff(ms) -> bool`: ставит таймер, крутит `wait`, **true** если стоп (в т.ч. `Act` во время backoff закрывает job ошибкой «нет соединения»). `Resume` — как сработавший таймер: **false**, немедленный retry. Каркас `new connector` и `modus new connector` так и делают. Не писать свой `sleep` + реконнект вокруг `"остановлен"`.
 
 Константы: `BACKOFF_START_MS` 1 s, потолок `BACKOFF_MAX_MS` 30 s, `next_backoff_ms`.
 
@@ -58,4 +58,4 @@ Trap в `init`/`run` — дело **Core**, не `dev`: рестарт 1 s, з
 
 Память инстанса **16 MiB**. Диск гостю не виден. RAM wasm сгорает при выгрузке; KV, settings, аккаунты, журнал — у Core.
 
-Эталон цикла: каркас `modus new consumer` / `new connector`, живой коннектор — [`plugins/twitch/src/lib.rs`](../../../plugins/twitch/src/lib.rs).
+Эталон цикла: каркас `modus new consumer` / `new connector`, живой коннектор — `modus new connector`.

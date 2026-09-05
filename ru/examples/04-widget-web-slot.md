@@ -12,7 +12,7 @@ Widget с грантом `ui.slot` и слотом `web`: wasm ↔ страни�
 | Не делает | сеть, emit |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/web-slot`](../../../plugins/web-slot). Глухой web без канала wasm — consumer + `slots: ["web"]` без `ui.slot`.
+Эталон: [`modus-examples/widget`](../../../modus-examples/widget). Глухой web без канала wasm — consumer + `slots: ["web"]` без `ui.slot`.
 
 ## Манифест
 
@@ -79,9 +79,9 @@ fn run() {
 
 | Путь | Назначение |
 | --- | --- |
-| [`assets/web/index.html`](../../../plugins/web-slot/assets/web/index.html) | HUD `#count` + `#inc`, `#feed` |
-| [`assets/web/overlay.js`](../../../plugins/web-slot/assets/web/overlay.js) | WS: snapshot/batch/catalog/`plugin` |
-| [`assets/web/overlay.css`](../../../plugins/web-slot/assets/web/overlay.css) | стили ленты / эмодзи |
+| [`assets/web/index.html`](../../../modus-examples/widget/assets/web/index.html) | HUD `#count` + `#inc`, `#feed` |
+| [`assets/web/overlay.js`](../../../modus-examples/widget/assets/web/overlay.js) | WS: snapshot/batch/catalog/`plugin` |
+| [`assets/web/overlay.css`](../../../modus-examples/widget/assets/web/overlay.css) | стили ленты / эмодзи |
 
 Картинки эмодзи — `cache/{key}` (не произвольный origin).
 
@@ -89,7 +89,7 @@ fn run() {
 
 ```powershell
 modus new widget --id com.you.overlay --dir overlay
-modus dev ../../../plugins/web-slot --ui click.json
+modus dev ../modus-examples/widget --ui click.json
 ```
 
 `--ui` эмулирует клик без браузера. Полный оверлей — Core / OBS browser source. См. [api/07-ui-slots-panel](../api/07-ui-slots-panel.md).

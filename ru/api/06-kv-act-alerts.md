@@ -22,7 +22,7 @@ list_keys(prefix) -> Result<list<string>, String>
 | значение | ≤ 16 KiB |
 | шторм set/delete | 60/с |
 
-Рестарт `dev` — пусто. В Core persist привязан к `id` плагина. Эталон: [`plugins/store`](../../../plugins/store).
+Рестарт `dev` — пусто. В Core persist привязан к `id` плагина. Эталон: `modus new store`.
 
 ## `chat.act` / `chat_complete`
 
@@ -49,7 +49,7 @@ chat_act::act(job) -> Result<string, string>   // id job
 | шторм act | ~10/с на плагин (у Core отдельно ~5/с) |
 | таймаут complete | 15 s |
 
-В `dev`: `act` → id + лог сразу; `--act file.json` (объект или массив) будит emitter/connector как `Ready::Act`. Эталон заявки — [`plugins/commander`](../../../plugins/commander); исполнитель — [`plugins/twitch`](../../../plugins/twitch) / имитация [`plugins/fixture`](../../../plugins/fixture).
+В `dev`: `act` → id + лог сразу; `--act file.json` (объект или массив) будит emitter/connector как `Ready::Act`. Эталон заявки — `modus new commander`; исполнитель — `modus new connector` / имитация [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 Командир канон не эмитит и `complete` не вызывает.
 
@@ -74,6 +74,6 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 
 В `dev`: enqueue/complete → stderr, **без** `AlertPlay`/`AlertStop` и без очереди 32. Не путать с прод-поведением.
 
-Эталон: [`plugins/alerter`](../../../plugins/alerter). Голос — отдельный `player` (`media.audio`) или `custom` `tts.request`, не «Core говорит».
+Эталон: `modus new alerter`. Голос — отдельный `player` (`media.audio`) или `custom` `tts.request`, не «Core говорит».
 
 Следующая глава — [слоты и panel](07-ui-slots-panel.md).

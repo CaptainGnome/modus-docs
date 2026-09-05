@@ -20,7 +20,7 @@ No grant — `"нет гранта bus.emit"`. Stamped event body > 64 KiB JSO
 
 `source.platform` comes from the manifest `platform_id`. You cannot forge `plugin_id`.
 
-Scaffold: `modus_sdk::text_message`, `donation`, `reward`, `money`, `text_fragment`. Emit reference — [`plugins/fixture`](../../../plugins/fixture); live platform — [`plugins/twitch`](../../../plugins/twitch).
+Scaffold: `modus_sdk::text_message`, `donation`, `reward`, `money`, `text_fragment`. Emit reference — [`modus-examples/emitter`](../../../modus-examples/emitter); live platform — `modus new connector`.
 
 ## Who may emit which payload
 
@@ -61,9 +61,9 @@ Chain:
 3. Connector in its `wait` gets `Ready::Act(req)` with job `id`. Runs the protocol (Twitch: PRIVMSG / Helix). Then `chat_complete::complete(&req.id, Ok(()) | Err(...))`. Foreign `id` — refuse. No `complete` within 15 s — error to the caller.
 4. Nothing is placed on the bus by itself. A message or ban appears only if the **platform** sends it in the protocol, and the connector does a **separate** `bus.emit` (`Message` / `Moderation`).
 
-The commander does not call `complete` and does not emit canon. In the `Act` branch the connector must not `emit` “from itself instead of the platform”: the fact comes from IRC/Helix, like a normal frame. [`plugins/fixture`](../../../plugins/fixture) also emits after `Act` — that is a platform **simulation** in `dev`, not a commander pattern.
+The commander does not call `complete` and does not emit canon. In the `Act` branch the connector must not `emit` “from itself instead of the platform”: the fact comes from IRC/Helix, like a normal frame. [`modus-examples/emitter`](../../../modus-examples/emitter) also emits after `Act` — that is a platform **simulation** in `dev`, not a commander pattern.
 
-Storm: 10 `act`/s per plugin, 5/s at Core. Send text ≤ 500. Job reference — [`plugins/commander`](../../../plugins/commander); execution — [`plugins/twitch`](../../../plugins/twitch) (`handle_act`). `Ready::Act` in [wait](02-wait.md).
+Storm: 10 `act`/s per plugin, 5/s at Core. Send text ≤ 500. Job reference — `modus new commander`; execution — `modus new connector` (`handle_act`). `Ready::Act` in [wait](02-wait.md).
 
 ## Canon fields
 
@@ -85,4 +85,4 @@ After Core filters the event has `flags`: `hide_chat`, `skip_alert`, `highlight`
 
 Inbox 64, full — drop, see [wait](02-wait.md).
 
-Listener reference: [`plugins/consumer`](../../../plugins/consumer) (logs kind, source, flags, text).
+Listener reference: [`modus-examples/consumer`](../../../modus-examples/consumer) (logs kind, source, flags, text).

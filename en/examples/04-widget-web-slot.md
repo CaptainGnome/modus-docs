@@ -12,7 +12,7 @@ Widget with `ui.slot` grant and `web` slot: wasm ↔ overlay page via `ui_slot::
 | Does not | network, emit |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/web-slot`](../../../plugins/web-slot). Silent web with no wasm channel — consumer + `slots: ["web"]` without `ui.slot`.
+Reference: [`modus-examples/widget`](../../../modus-examples/widget). Silent web with no wasm channel — consumer + `slots: ["web"]` without `ui.slot`.
 
 ## Manifest
 
@@ -76,9 +76,9 @@ fn run() {
 
 | Path | Purpose |
 | --- | --- |
-| [`assets/web/index.html`](../../../plugins/web-slot/assets/web/index.html) | HUD `#count` + `#inc`, `#feed` |
-| [`assets/web/overlay.js`](../../../plugins/web-slot/assets/web/overlay.js) | WS: snapshot/batch/catalog/`plugin` |
-| [`assets/web/overlay.css`](../../../plugins/web-slot/assets/web/overlay.css) | feed / emote styles |
+| [`assets/web/index.html`](../../../modus-examples/widget/assets/web/index.html) | HUD `#count` + `#inc`, `#feed` |
+| [`assets/web/overlay.js`](../../../modus-examples/widget/assets/web/overlay.js) | WS: snapshot/batch/catalog/`plugin` |
+| [`assets/web/overlay.css`](../../../modus-examples/widget/assets/web/overlay.css) | feed / emote styles |
 
 Emote images — `cache/{key}` (not an arbitrary origin).
 
@@ -86,7 +86,7 @@ Emote images — `cache/{key}` (not an arbitrary origin).
 
 ```powershell
 modus new widget --id com.you.overlay --dir overlay
-modus dev ../../../plugins/web-slot --ui click.json
+modus dev ../modus-examples/widget --ui click.json
 ```
 
 `--ui` emulates a click without a browser. Full overlay — Core / OBS browser source. See [api/07-ui-slots-panel](../api/07-ui-slots-panel.md).

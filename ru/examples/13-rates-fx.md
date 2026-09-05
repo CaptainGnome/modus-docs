@@ -106,10 +106,10 @@ rates.push(Rate {
 ## Запуск
 
 ```powershell
-modus dev plugins/fx
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Нужен сеть + whitelist хоста (и Core allowlist, если строже манифеста). Полный crate: [`../../../plugins/fx`](../../../plugins/fx).
+Нужен сеть + whitelist хоста (и Core allowlist, если строже манифеста). Полный crate: [`modus new rates`](modus new rates).
 
 В `dev` publish часто → stderr; convert у другого плагина зависит от того, сохранил ли учебный хост таблицу.
 

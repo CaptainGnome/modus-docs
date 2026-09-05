@@ -52,7 +52,7 @@ Listening and putting are different rights. A consumer only listens. Events on t
 
 `new` can create every role from help (including `store`, `commander`, `alerter`, …). A beginner should not go there — start with `consumer`. More precisely — [reference](../ref/01-roles.md).
 
-The reference consumer in the repo is [`plugins/consumer`](../../../plugins/consumer). You do not need to copy it: `new` writes a fresh scaffold.
+The reference consumer in the repo is [`modus-examples/consumer`](../../../modus-examples/consumer). You do not need to copy it: `new` writes a fresh scaffold.
 
 ## `id`
 

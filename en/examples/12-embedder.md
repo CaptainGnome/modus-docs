@@ -104,10 +104,10 @@ Without `embed_hosts` or without the grant the iframe will not open (CSP / API r
 ## Run
 
 ```powershell
-modus dev plugins/embedder --ui
+modus new embedder  # then: modus dev <dir> --ui
 ```
 
-Needs a message emitter with commands (fixture/twitch) or panel clicks. Full crate: [`../../../plugins/embedder`](../../../plugins/embedder).
+Needs a message emitter with commands (fixture/twitch) or panel clicks. Full crate: [`modus new embedder`](modus new embedder).
 
 ## Typical host errors
 

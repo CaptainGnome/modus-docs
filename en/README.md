@@ -4,9 +4,9 @@
 
 Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome.
 
-**Public repositories:** this hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk). Annotated walkthroughs — [examples/](examples/README.md). When docs sit next to a product `plugins/` tree, relative links like [`../../../plugins/twitch`](../../../plugins/twitch) also work.
+**Public repositories:** this hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); educational dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples). Annotated walkthroughs — [examples/](examples/README.md). Closed product `plugins/*` are not part of the public path.
 
-Author path: SDK → `new` → `dev` → `pack` → Core. Language — Rust. Do not put secrets in the package.
+Author path: SDK → `new` → `dev` → `pack` → install `.mplug` into the **shipped** Modus app. Language — Rust. Do not put secrets in the package.
 
 ## Tutorial
 

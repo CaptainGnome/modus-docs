@@ -12,7 +12,7 @@ Native-панель в раскладке Core: тот же feature `widget` и 
 | Режим эталона | native (`panel.json`), не web |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/panel`](../../../plugins/panel). Web-panel: `modus new panel --mode web`.
+Эталон: `modus new panel`. Web-panel: `modus new panel --mode web`.
 
 ## Манифест
 
@@ -78,8 +78,8 @@ fn on_ui(payload: &[u8]) {
 
 | Путь | Назначение |
 | --- | --- |
-| [`assets/panel.json`](../../../plugins/panel/assets/panel.json) | label, list, editable table, buttons |
-| [`assets/i18n/ru.json`](../../../plugins/panel/assets/i18n/ru.json) | подписи блоков |
+| [`assets/panel.json`](modus new panel/assets/panel.json) | label, list, editable table, buttons |
+| [`assets/i18n/ru.json`](modus new panel/assets/i18n/ru.json) | подписи блоков |
 
 Фрагмент схемы:
 
@@ -108,7 +108,7 @@ fn on_ui(payload: &[u8]) {
 ```powershell
 modus new panel --id com.you.panel --dir panel
 modus new panel --id com.you.panelweb --dir panelweb --mode web
-modus dev ../../../plugins/panel --ui skip.json
+modus dev modus new panel --ui skip.json
 ```
 
 `--ui` с `{"id":"skip"}` или table-op JSON. Визуально панель видна в Core, не в голом CLI.

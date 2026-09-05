@@ -56,7 +56,7 @@ Other `modus dev --help` flags are not needed in this chapter:
 
 ## What `new` wrote in `lib.rs`
 
-Open `bus/src/lib.rs`. Do not paste someone else's sample and do not copy [`plugins/consumer`](../../../plugins/consumer) — look at the **generated** file.
+Open `bus/src/lib.rs`. Do not paste someone else's sample and do not copy [`modus-examples/consumer`](../../../modus-examples/consumer) — look at the **generated** file.
 
 The host calls three functions in order. In the generated file it is the same without these comments — the meaning is:
 

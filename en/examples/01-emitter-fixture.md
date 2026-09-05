@@ -12,7 +12,7 @@ Role emits canon onto the bus without platform login. Fixture is a tutorial “f
 | Modules | `bus_emit`, `chat_complete` |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/fixture`](../../../plugins/fixture).
+Reference: [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 ## Manifest
 
@@ -91,7 +91,7 @@ fn handle_act(req: ActRequest) {
 
 | Path | Purpose |
 | --- | --- |
-| [`assets/sfx.mp3`](../../../plugins/fixture/assets/sfx.mp3) | short sound for `media_cache::put` in voice donation |
+| [`assets/sfx.mp3`](../../../modus-examples/emitter/assets/sfx.mp3) | short sound for `media_cache::put` in voice donation |
 
 No settings / web / panel on fixture.
 
@@ -99,7 +99,7 @@ No settings / web / panel on fixture.
 
 ```powershell
 modus new emitter --id com.you.fixture --dir fixture
-modus dev ../../../plugins/fixture
+modus dev ../modus-examples/emitter
 ```
 
 A consumer beside it will see `fixture hello`. Act check: `modus dev … --act <json>` ([api/11-cli-dev](../api/11-cli-dev.md)).

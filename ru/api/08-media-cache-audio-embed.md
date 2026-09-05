@@ -2,7 +2,7 @@
 
 **Правило.** Бинарники и звук идут через хост. Гость не открывает устройства и не качает файлы своим сокетом мимо `net.*` / cache. Embed — только iframe allowlist, не youtube-dl и не `play` чужого MP4 на хосте.
 
-Эталоны: cache/catalog — [`plugins/7tv`](../../../plugins/7tv); audio — [`plugins/player`](../../../plugins/player); embed — [`plugins/embedder`](../../../plugins/embedder).
+Эталоны: cache/catalog — `modus new provider`; audio — `modus new player`; embed — `modus new embedder`.
 
 ## `media.cache`
 

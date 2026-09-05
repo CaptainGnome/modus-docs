@@ -11,7 +11,7 @@
 | Модули | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/twitch`](../../../plugins/twitch). Auth/сеть — [ref/06-net-auth](../ref/06-net-auth.md).
+Эталон: `modus new connector`. Auth/сеть — [ref/06-net-auth](../ref/06-net-auth.md).
 
 ## Манифест (фрагмент)
 
@@ -43,7 +43,7 @@
 }
 ```
 
-Полный файл: [`plugins/twitch/manifest`](../../../plugins/twitch/manifest).
+Полный файл: `modus new connector`.
 
 ## Код: auth → WS → wait → emit
 
@@ -152,7 +152,7 @@ modus new connector --id com.you.twitch --dir twitch
 Офлайн без живого Twitch ([start/07-connector](../start/07-connector.md)):
 
 ```powershell
-modus dev ../../../plugins/twitch --token fake --replay frames.replay
+modus dev ../modus-examples/connector-replay --token fake --replay frames.replay
 ```
 
 Опционально `--http-file` для Helix. Живой OAuth — Core / брокер, не первый шаг отладки.

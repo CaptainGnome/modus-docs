@@ -64,7 +64,7 @@ set_label_i18n(key, label_key, params?) -> Result<(), String>
 
 Save в Core → `Ready::Settings`. В `dev`: `--settings file.json` — оверлей значений + один `Ready::Settings` после `init`. Неизвестный ключ в файле — отказ при старте `dev`.
 
-Эталон: [`plugins/store`](../../../plugins/store).
+Эталон: `modus new store`.
 
 ## `chat_complete`
 

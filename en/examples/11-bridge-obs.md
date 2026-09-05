@@ -91,10 +91,10 @@ Raw WASI/`net` to a private IP toward OBS is forbidden; bridge only.
 ## Run
 
 ```powershell
-modus dev plugins/obs-bridge
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-In `dev`, bridge is a stub/log, not a live OBS WebSocket. Full crate: [`../../../plugins/obs-bridge`](../../../plugins/obs-bridge).
+In `dev`, bridge is a stub/log, not a live OBS WebSocket. Full crate: [`modus new bridge`](modus new bridge).
 
 ## Typical host errors
 

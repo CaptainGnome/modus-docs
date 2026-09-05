@@ -98,10 +98,10 @@ fn log_bus(tag: &str, event: &Event) {
 ## Запуск
 
 ```powershell
-modus dev plugins/reader
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Учебные emit от `dev` появятся и в history (если хост пишет журнал), и как `Ready::Bus`. Полный crate: [`../../../plugins/reader`](../../../plugins/reader).
+Учебные emit от `dev` появятся и в history (если хост пишет журнал), и как `Ready::Bus`. Полный crate: [`modus new reader`](modus new reader).
 
 ## Типичные ошибки хоста
 

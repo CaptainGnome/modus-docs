@@ -2,7 +2,7 @@
 
 **Правило.** Файл `manifest` (без расширения) — JSON в корне crate и в корне `.mplug`. Хост читает его до wasm. Нет поля — нет права, кроме базы. `client_secret` в манифесте — всегда отказ.
 
-Каркас пишет `modus new`. Полная проверка — `modus check` / `pack`. Эталоны: [`plugins/twitch`](../../../plugins/twitch), [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/7tv`](../../../plugins/7tv).
+Каркас пишет `modus new`. Полная проверка — `modus check` / `pack`. Эталоны: `modus new connector`, [`modus-examples/widget`](../../../modus-examples/widget), `modus new provider`.
 
 ## Обязательные поля
 
@@ -101,7 +101,7 @@
 | `depends` | `{ "platform": "twitch" }` — площадка, без которой каталог бессмысленен. Пустой `platform` — отказ |
 | `consumes` | имена чужих provides; сейчас только `"emotes"` |
 
-Публикация снимка — грант `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Эталон: [`plugins/7tv`](../../../plugins/7tv).
+Публикация снимка — грант `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Эталон: `modus new provider`.
 
 ## i18n в labels
 

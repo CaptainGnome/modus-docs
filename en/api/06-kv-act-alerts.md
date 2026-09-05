@@ -22,7 +22,7 @@ list_keys(prefix) -> Result<list<string>, String>
 | value | ≤ 16 KiB |
 | set/delete storm | 60/s |
 
-`dev` restart — empty. In Core persist is bound to plugin `id`. Reference: [`plugins/store`](../../../plugins/store).
+`dev` restart — empty. In Core persist is bound to plugin `id`. Reference: `modus new store`.
 
 ## `chat.act` / `chat_complete`
 
@@ -49,7 +49,7 @@ chat_act::act(job) -> Result<string, string>   // job id
 | act storm | ~10/s per plugin (Core separately ~5/s) |
 | complete timeout | 15 s |
 
-In `dev`: `act` → id + log immediately; `--act file.json` (object or array) wakes emitter/connector as `Ready::Act`. Request reference — [`plugins/commander`](../../../plugins/commander); executor — [`plugins/twitch`](../../../plugins/twitch) / simulation [`plugins/fixture`](../../../plugins/fixture).
+In `dev`: `act` → id + log immediately; `--act file.json` (object or array) wakes emitter/connector as `Ready::Act`. Request reference — `modus new commander`; executor — `modus new connector` / simulation [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 Commander does not emit canon and does not call `complete`.
 
@@ -74,6 +74,6 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 
 In `dev`: enqueue/complete → stderr, **without** `AlertPlay`/`AlertStop` and without the queue of 32. Do not confuse with production behavior.
 
-Reference: [`plugins/alerter`](../../../plugins/alerter). Voice — separate `player` (`media.audio`) or `custom` `tts.request`, not “Core speaks”.
+Reference: `modus new alerter`. Voice — separate `player` (`media.audio`) or `custom` `tts.request`, not “Core speaks”.
 
 Next chapter — [slots and panel](07-ui-slots-panel.md).

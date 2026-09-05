@@ -88,10 +88,10 @@ No TTS in this reference: `Spec::Tts` / `custom` `tts.request` — a separate pa
 ## Run
 
 ```powershell
-modus dev plugins/player
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-In `dev`, audio is often a stub/log — do not expect Core parity. Full crate: [`../../../plugins/player`](../../../plugins/player).
+In `dev`, audio is often a stub/log — do not expect Core parity. Full crate: [`modus new player`](modus new player).
 
 ## Typical host errors
 

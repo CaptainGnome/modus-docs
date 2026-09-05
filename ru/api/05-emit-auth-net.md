@@ -2,7 +2,7 @@
 
 **Правило.** Секрет приложения и refresh — у Core (или брокера), не в wasm и не в git. Гость получает короткий access через `auth.token` и ходит в сеть только через хост. Emit — грант + `platform_id`.
 
-Сжатый обзор — [ref/06-net-auth](../ref/06-net-auth.md). Эталон: [`plugins/twitch`](../../../plugins/twitch), каркас `modus new connector`.
+Сжатый обзор — [ref/06-net-auth](../ref/06-net-auth.md). Эталон: `modus new connector`, каркас `modus new connector`.
 
 ## `bus.emit`
 

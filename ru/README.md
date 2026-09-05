@@ -4,9 +4,9 @@
 
 Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome.
 
-**Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk). Разборы эталонов с комментариями — [examples/](examples/README.md). Если docs лежит рядом с продуктовым `plugins/`, относительные ссылки вида [`../../../plugins/twitch`](../../../plugins/twitch) тоже работают.
+**Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples). Разборы с комментариями — [examples/](examples/README.md). Закрытые `plugins/*` продукта в публичный путь не входят.
 
-Путь автора: SDK → `new` → `dev` → `pack` → Core. Язык — Rust. Секреты в пакет не кладут.
+Путь автора: SDK → `new` → `dev` → `pack` → установка `.mplug` в **готовый** Modus. Язык — Rust. Секреты в пакет не кладут.
 
 ## Туториал
 

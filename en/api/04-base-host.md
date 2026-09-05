@@ -64,7 +64,7 @@ SDK wrapper: `modus_sdk::set_label_i18n(...)`.
 
 Save in Core → `Ready::Settings`. In `dev`: `--settings file.json` — value overlay + one `Ready::Settings` after `init`. Unknown key in file — rejected at `dev` start.
 
-Reference: [`plugins/store`](../../../plugins/store).
+Reference: `modus new store`.
 
 ## `chat_complete`
 

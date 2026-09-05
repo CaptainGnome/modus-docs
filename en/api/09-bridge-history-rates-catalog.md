@@ -2,7 +2,7 @@
 
 **Rule.** These APIs are separate capabilities. Not the canon bus: catalog/rates — snapshots at Core; history — journal pages; bridge — RPC through the host to OBS (type allowlist).
 
-References: [`plugins/obs-bridge`](../../../plugins/obs-bridge), [`plugins/reader`](../../../plugins/reader), [`plugins/fx`](../../../plugins/fx), [`plugins/7tv`](../../../plugins/7tv), convert — [`plugins/alerter`](../../../plugins/alerter).
+References: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
 ## `bridge.obs`
 
@@ -62,7 +62,7 @@ rates::convert_to_base(amount, from) -> Result<f64, string>
 | `base` | ISO-4217 base from Core settings |
 | `convert_to_base` | `amount` in `from` → base, floor to minor; no rate → `Err` |
 
-Do not put the rate in canon `opaque`. Publish reference — [`plugins/fx`](../../../plugins/fx).
+Do not put the rate in canon `opaque`. Publish reference — `modus new rates`.
 
 ## `catalog.publish`
 
@@ -81,6 +81,6 @@ Currently name `emotes`, schema `modus.emotes.v1` (bytes — JSON snapshot per s
 | emotes | 2048 |
 | publish | 10/s |
 
-In `dev`: publish → stderr. Reference — [`plugins/7tv`](../../../plugins/7tv) (+ `media.cache` for images).
+In `dev`: publish → stderr. Reference — `modus new provider` (+ `media.cache` for images).
 
 Next chapter — [package and signing](10-package-signing.md).

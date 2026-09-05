@@ -12,7 +12,7 @@ Commander reads canon from the bus and sends `chat.act` to the live platform con
 | Does not | `bus.emit`, network |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/commander`](../../../plugins/commander).
+Reference: `modus new commander`.
 
 ## Manifest
 
@@ -81,7 +81,7 @@ None: no settings / web / panel on the reference.
 
 ```powershell
 modus new commander --id com.you.cmd --dir cmd
-modus dev ../../../plugins/commander
+modus dev modus new commander
 ```
 
 In `dev`, `chat.act` is logged by the tutorial host (not the Core queue). Full path needs a live connector for the same `platform` (fixture also answers `Act`). Beside it: `modus dev …/fixture` + inject/`!say` from the bus, or `--inject` with a command message text.

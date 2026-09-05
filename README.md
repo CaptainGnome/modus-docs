@@ -2,7 +2,7 @@
 
 Guest-surface documentation (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) and the `modus` CLI.
 
-**Repos:** [modus-docs](https://github.com/CaptainGnome/modus-docs) (this hub) · [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (crate + CLI + WIT)
+**Repos:** [modus-docs](https://github.com/CaptainGnome/modus-docs) (this hub) · [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (crate + CLI + WIT) · [modus-examples](https://github.com/CaptainGnome/modus-examples) (educational dummies)
 
 Choose a language:
 

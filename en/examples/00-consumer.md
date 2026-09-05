@@ -11,7 +11,7 @@ Role with no grants: listen to bus canon and log it. Use when the plugin has not
 | Base | `wait`, `log`, `types` (and other no-cap APIs) |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/consumer`](../../../plugins/consumer).
+Reference: [`modus-examples/consumer`](../../../modus-examples/consumer).
 
 ## Manifest
 
@@ -93,7 +93,7 @@ fn log_bus(event: &Event) {
 
 ```powershell
 modus new consumer --id com.you.bus --dir bus
-modus dev ../../../plugins/consumer
+modus dev ../modus-examples/consumer
 ```
 
 Your scaffold: `modus dev bus`. With no flags, `dev` injects tutorial `message` / `donation` / `reward` right after `init`. See [start/03-dev](../start/03-dev.md); flags — [api/11-cli-dev](../api/11-cli-dev.md).

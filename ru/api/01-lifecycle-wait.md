@@ -2,7 +2,7 @@
 
 **Правило.** В `run` длинный цикл только через `wait::wait`. `Ready::Stop` и `HostError::is_stop()` выходят из цикла, не в backoff. Второго потока и колбэков из wasm нет: хост будит `wait`.
 
-Сжатый контракт — [ref/02-wait](../ref/02-wait.md). Эталоны: [`plugins/consumer`](../../../plugins/consumer), [`plugins/twitch`](../../../plugins/twitch).
+Сжатый контракт — [ref/02-wait](../ref/02-wait.md). Эталоны: [`modus-examples/consumer`](../../../modus-examples/consumer), `modus new connector`.
 
 ## Guest: три точки входа
 
@@ -52,7 +52,7 @@ wait::wait() -> Ready
 | `AlertPlay(cmd)` | касса Core выдала показ | alerter: свой overlay / SFX; потом `alert_enqueue::complete` |
 | `AlertStop(cmd)` | касса сняла показ (skip / timeout) | свернуть overlay; complete если ещё не |
 
-`alert-play` / `alert-stop`: поля `job-id`, `event-id`, `duration-ms`. Касса и очередь — **Core**, не гость. В `modus dev` (S5) enqueue пишет id в stderr **без** `AlertPlay`/`AlertStop`. Эталон показа — [`plugins/alerter`](../../../plugins/alerter).
+`alert-play` / `alert-stop`: поля `job-id`, `event-id`, `duration-ms`. Касса и очередь — **Core**, не гость. В `modus dev` (S5) enqueue пишет id в stderr **без** `AlertPlay`/`AlertStop`. Эталон показа — `modus new alerter`.
 
 ## Inbox 64
 

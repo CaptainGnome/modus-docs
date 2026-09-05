@@ -91,10 +91,10 @@ TTS в этом эталоне нет: `Spec::Tts` / `custom` `tts.request` — 
 ## Запуск
 
 ```powershell
-modus dev plugins/player
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-В `dev` audio часто заглушка/лог — не ждите паритета с Core. Полный crate: [`../../../plugins/player`](../../../plugins/player).
+В `dev` audio часто заглушка/лог — не ждите паритета с Core. Полный crate: [`modus new player`](modus new player).
 
 ## Типичные ошибки хоста
 

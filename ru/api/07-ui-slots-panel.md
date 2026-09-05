@@ -2,7 +2,7 @@
 
 **Правило.** Поверхность UI — манифест `ui.slot` + `slots: ["web"]` и/или `["panel"]`. Канал wasm ↔ поверхность: `ui_slot::post` / `Ready::Ui`. Окна плагин не создаёт: web — OBS/browser source; panel — док раскладки Core.
 
-Эталоны: [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel), overlay — [`plugins/alerter`](../../../plugins/alerter).
+Эталоны: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`, overlay — `modus new alerter`.
 
 ## Манифест
 

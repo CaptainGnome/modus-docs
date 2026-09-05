@@ -94,10 +94,10 @@ fn follow_scene() -> Option<String> {
 ## Запуск
 
 ```powershell
-modus dev plugins/obs-bridge
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-В `dev` bridge — заглушка/лог, не живой OBS WebSocket. Полный crate: [`../../../plugins/obs-bridge`](../../../plugins/obs-bridge).
+В `dev` bridge — заглушка/лог, не живой OBS WebSocket. Полный crate: [`modus new bridge`](modus new bridge).
 
 ## Типичные ошибки хоста
 

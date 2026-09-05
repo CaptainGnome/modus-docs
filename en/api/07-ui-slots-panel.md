@@ -2,7 +2,7 @@
 
 **Rule.** UI surface — manifest `ui.slot` + `slots: ["web"]` and/or `["panel"]`. wasm ↔ surface channel: `ui_slot::post` / `Ready::Ui`. The plugin does not create windows: web — OBS/browser source; panel — Core layout dock.
 
-References: [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel), overlay — [`plugins/alerter`](../../../plugins/alerter).
+References: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`, overlay — `modus new alerter`.
 
 ## Manifest
 

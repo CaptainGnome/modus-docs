@@ -53,14 +53,14 @@ cargo run --manifest-path cli/Cargo.toml --release -- <команда>
 
 | Каталог | Feature | Роль |
 | --- | --- | --- |
-| [`plugins/consumer`](../../../plugins/consumer) | `consumer` | слушает шину |
-| [`plugins/fixture`](../../../plugins/fixture) | `emitter` | кладёт канон без сети площадки |
-| [`plugins/twitch`](../../../plugins/twitch) | `connector` | площадка |
-| [`plugins/web-slot`](../../../plugins/web-slot) | `widget` | OBS-слот + канал wasm |
-| [`plugins/panel`](../../../plugins/panel) | `widget` | native-панель в доке |
-| [`plugins/alerter`](../../../plugins/alerter) | `alerter` | касса + web overlay |
-| [`plugins/store`](../../../plugins/store) | `store` | KV |
-| [`plugins/commander`](../../../plugins/commander) | `commander` | `chat.act` |
+| [`modus-examples/consumer`](../../../modus-examples/consumer) | `consumer` | слушает шину |
+| [`modus-examples/emitter`](../../../modus-examples/emitter) | `emitter` | кладёт канон без сети площадки |
+| [`modus-examples/connector-replay`](../../../modus-examples/connector-replay) | `connector` | replay / http-file без живой площадки |
+| [`modus-examples/widget`](../../../modus-examples/widget) | `widget` | OBS-слот + канал wasm |
+| `modus new panel` | `widget` | native-панель в доке |
+| `modus new alerter` | `alerter` | касса + web overlay |
+| `modus new store` | `store` | KV |
+| `modus new commander` | `commander` | `chat.act` |
 
 WIT хоста — [`wit/world.wit`](https://github.com/CaptainGnome/modus-sdk/blob/main/wit/world.wit) в [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (рядом: [`../../../modus-sdk/wit/world.wit`](../../../modus-sdk/wit/world.wit)). Смотреть при порте SDK или споре с хостом. Не копировать в плагин. Таблица capability → модуль SDK — [карта ролей](01-roles.md); WIT как приложение — [глава 11](11-wit.md).
 

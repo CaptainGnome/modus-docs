@@ -25,7 +25,7 @@ match HostError::classify(&err) {
 | `Network` | `только https/wss`, `квота http` / `квота ws`, `тело/ответ слишком большое`, `… вне манифеста`, `… не в whitelist Core`, `литеральный IP запрещён`, `запрещённый адрес …` |
 | `Other` | всё остальное (в т.ч. `нет platform_id`, `system только Core`, `TooLarge`) |
 
-`is_stop()` = `Stopped` | `Revoked`. Каркас коннектора и [`plugins/twitch`](../../../plugins/twitch) так выходят из `wait_backoff`.
+`is_stop()` = `Stopped` | `Revoked`. Каркас коннектора и `modus new connector` так выходят из `wait_backoff`.
 
 ## Частые строки
 

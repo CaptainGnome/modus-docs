@@ -12,7 +12,7 @@
 | Модули | `bus_emit`, `chat_complete` |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/fixture`](../../../plugins/fixture).
+Эталон: [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 ## Манифест
 
@@ -91,7 +91,7 @@ fn handle_act(req: ActRequest) {
 
 | Путь | Назначение |
 | --- | --- |
-| [`assets/sfx.mp3`](../../../plugins/fixture/assets/sfx.mp3) | короткий звук для `media_cache::put` в voice-донат |
+| [`assets/sfx.mp3`](../../../modus-examples/emitter/assets/sfx.mp3) | короткий звук для `media_cache::put` в voice-донат |
 
 Settings / web / panel у fixture нет.
 
@@ -99,7 +99,7 @@ Settings / web / panel у fixture нет.
 
 ```powershell
 modus new emitter --id com.you.fixture --dir fixture
-modus dev ../../../plugins/fixture
+modus dev ../modus-examples/emitter
 ```
 
 Consumer рядом увидит `fixture hello`. Проверка act: `modus dev … --act <json>` ([api/11-cli-dev](../api/11-cli-dev.md)).

@@ -12,7 +12,7 @@ Provider не эмитит канон чата: тянет HTTP/WS сторон�
 | Не делает | `platform_id`, `bus.emit` |
 | Карта | [ref/01-roles](../ref/01-roles.md) |
 
-Эталон: [`plugins/7tv`](../../../plugins/7tv).
+Эталон: `modus new provider`.
 
 ## Манифест
 
@@ -88,8 +88,8 @@ let handle = net_ws::connect(EVENTS_URL)?;
 
 | Путь | Назначение |
 | --- | --- |
-| [`assets/settings.json`](../../../plugins/7tv/assets/settings.json) | поле `channel` + label `status` |
-| [`assets/i18n/ru.json`](../../../plugins/7tv/assets/i18n/ru.json) | строки статуса / подписей |
+| [`assets/settings.json`](modus new provider/assets/settings.json) | поле `channel` + label `status` |
+| [`assets/i18n/ru.json`](modus new provider/assets/i18n/ru.json) | строки статуса / подписей |
 
 Пустой `channel` → статус `status.need_twitch`, ждём шину или `--settings`.
 
@@ -97,7 +97,7 @@ let handle = net_ws::connect(EVENTS_URL)?;
 
 ```powershell
 modus new provider --id com.you.7tv --dir seventv
-modus dev ../../../plugins/7tv --settings channel.json
+modus dev modus new provider --settings channel.json
 ```
 
 `channel.json` — оверлей ключей settings (см. [api/11-cli-dev](../api/11-cli-dev.md)). Для сети без интернета — `--http-file` / `--replay`. Рядом полезен живой/fixture Twitch, если канал берётся с шины.

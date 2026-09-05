@@ -14,7 +14,7 @@
 - Label — только поле `type: label`; иначе отказ.
 - Save в Core → `Ready::Settings`. В `dev`: `--settings` JSON-оверлей → тот же `Ready::Settings`.
 
-Эталон: [`plugins/store`](../../../plugins/store).
+Эталон: `modus new store`.
 
 ## KV
 
@@ -22,7 +22,7 @@
 
 Квота: 256 KiB / 256 ключей / значение ≤ 16 KiB. Шторм: 60 set/delete в секунду. Рестарт `dev` — пусто (не sqlite).
 
-Эталон: [`plugins/store`](../../../plugins/store).
+Эталон: `modus new store`.
 
 ## `chat.act`
 
@@ -30,23 +30,23 @@
 
 Текст send ≤ 500. Timeout 0 — отказ. Шторм: 10/с.
 
-Эталон: [`plugins/commander`](../../../plugins/commander); исполнитель без сети — [`plugins/fixture`](../../../plugins/fixture).
+Эталон: `modus new commander`; исполнитель без сети — [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 ## Алерты
 
 Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. В `dev`: enqueue/complete → stderr, без `AlertPlay`/`AlertStop` и без очереди 32.
 
-Эталон: [`plugins/alerter`](../../../plugins/alerter).
+Эталон: `modus new alerter`.
 
 ## Слоты (`ui.slot`)
 
 Манифест: `ui.slot` + `"slots": ["web"]` и/или `["panel"]`. Канал wasm ↔ поверхность: `ui_slot::post` / `Ready::Ui`. В `dev`: `--ui` → `Ready::Ui`; `post` → лог.
 
-Эталоны: [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel).
+Эталоны: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`.
 
 ## Cache / catalog (кратко)
 
-- `media.cache` — pin URL/байт; эталоны коннектор / [`plugins/7tv`](../../../plugins/7tv).
+- `media.cache` — pin URL/байт; эталоны коннектор / `modus new provider`.
 - `catalog.publish` — снимок словаря (не шина); в `dev` — publish в stderr. Эталон: 7tv.
 
 Полная карта грантов — [роли](01-roles.md). Флаги `dev` — [CLI](05-cli.md).

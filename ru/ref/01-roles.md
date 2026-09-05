@@ -41,19 +41,19 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 
 | Роль | Feature `new` | Обязательные гранты | Типичные модули сверх базы | Эталон | Не делает |
 | --- | --- | --- | --- | --- | --- |
-| `consumer` | `consumer` | нет | — | [`plugins/consumer`](../../../plugins/consumer), SDK | emit, сеть, `chat.act` |
-| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`plugins/fixture`](../../../plugins/fixture), SDK | логин и сокет площадки |
-| `connector` | `connector` | обычно `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | [`plugins/twitch`](../../../plugins/twitch), SDK | рисовать UI, KV, очередь алертов |
-| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | [`plugins/7tv`](../../../plugins/7tv), SDK | `platform_id`, канон, `bus.emit` |
-| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot` | [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel), SDK | сеть, emit |
-| `commander` | `commander` | `chat.act` | `chat_act` | [`plugins/commander`](../../../plugins/commander), SDK | emit канона, сеть |
-| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` для donation FX) | enqueue + web overlay + `rates` | [`plugins/alerter`](../../../plugins/alerter), SDK | касса Core; recovery через history |
-| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (база) | [`plugins/store`](../../../plugins/store), SDK | чужое KV, секреты |
-| `reader` | `reader` | `history.read` | `history_read` | [`plugins/reader`](../../../plugins/reader), SDK | emit, сеть, replay в `wait` |
-| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | [`plugins/player`](../../../plugins/player), SDK | открывать устройство, TTS в обход Core |
-| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | [`plugins/obs-bridge`](../../../plugins/obs-bridge), SDK | сырой сокет в обход allowlist |
-| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot`, `media_embed` | [`plugins/embedder`](../../../plugins/embedder), SDK | прокси MP4, `play` на хосте, youtube-dl |
-| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | [`plugins/fx`](../../../plugins/fx), SDK | emit, UI, KV; курс в `opaque` |
+| `consumer` | `consumer` | нет | — | [`modus-examples/consumer`](../../../modus-examples/consumer), SDK | emit, сеть, `chat.act` |
+| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`modus-examples/emitter`](../../../modus-examples/emitter), SDK | логин и сокет площадки |
+| `connector` | `connector` | обычно `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | `modus new connector`, SDK | рисовать UI, KV, очередь алертов |
+| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | `modus new provider`, SDK | `platform_id`, канон, `bus.emit` |
+| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot` | [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`, SDK | сеть, emit |
+| `commander` | `commander` | `chat.act` | `chat_act` | `modus new commander`, SDK | emit канона, сеть |
+| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` для donation FX) | enqueue + web overlay + `rates` | `modus new alerter`, SDK | касса Core; recovery через history |
+| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (база) | `modus new store`, SDK | чужое KV, секреты |
+| `reader` | `reader` | `history.read` | `history_read` | `modus new reader`, SDK | emit, сеть, replay в `wait` |
+| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player`, SDK | открывать устройство, TTS в обход Core |
+| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge`, SDK | сырой сокет в обход allowlist |
+| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder`, SDK | прокси MP4, `play` на хосте, youtube-dl |
+| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates`, SDK | emit, UI, KV; курс в `opaque` |
 | host | — | — | world `runtime` | нет гостя | гость этот world не ставит |
 
 `modus new` пишет все роли из таблицы (включая `panel` → feature `widget`). Новый пакет: одна feature SDK. Сырой bindgen без SDK допустим, но не эталон.
@@ -70,9 +70,9 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 - грант без слота — `ui.slot требует слот web или panel`;
 - иной слот — `слот … не поддерживается`.
 
-**Web / OBS.** Глухой слот — `consumer` + `"slots": ["web"]` (статика, wasm в DOM не пишет). Канал wasm ↔ страница — грант `ui.slot` + `ui_slot::post` (роль `widget`). Эталон: [`plugins/web-slot`](../../../plugins/web-slot). Ассеты `assets/web/`. Несколько `web` сразу ок. Картинки — `'self'` / `cache/{key}`. Кадр `plugin` только своему `plugin_id`. Чужой origin в iframe — роль `embedder` + грант `media.embed` + `embed_hosts`; без `embed_hosts` CSP `frame-src 'none'`; вызов без гранта — отказ.
+**Web / OBS.** Глухой слот — `consumer` + `"slots": ["web"]` (статика, wasm в DOM не пишет). Канал wasm ↔ страница — грант `ui.slot` + `ui_slot::post` (роль `widget`). Эталон: [`modus-examples/widget`](../../../modus-examples/widget). Ассеты `assets/web/`. Несколько `web` сразу ок. Картинки — `'self'` / `cache/{key}`. Кадр `plugin` только своему `plugin_id`. Чужой origin в iframe — роль `embedder` + грант `media.embed` + `embed_hosts`; без `embed_hosts` CSP `frame-src 'none'`; вызов без гранта — отказ.
 
-**Panel.** Док в раскладке Core, плагин окна не создаёт. Режим один: native (`assets/panel.json`) или web (`assets/panel/` либо те же `assets/web/`). Эталон native: [`plugins/panel`](../../../plugins/panel). `modus new panel` / `modus new panel --mode web`.
+**Panel.** Док в раскладке Core, плагин окна не создаёт. Режим один: native (`assets/panel.json`) или web (`assets/panel/` либо те же `assets/web/`). Эталон native: `modus new panel`. `modus new panel` / `modus new panel --mode web`.
 
 ## Следствие для `pack`
 

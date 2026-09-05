@@ -23,7 +23,7 @@ Manifest modes (`auth_mode`): `broker` / `pkce` / `device` / `api` / `custom`. `
 
 Core drives the OAuth shell. Platform protocol — the plugin's via `net.*` + `token`.
 
-Reference: [`plugins/twitch`](../../../plugins/twitch), scaffold `modus new connector`.
+Reference: `modus new connector`, scaffold `modus new connector`.
 
 ## HTTP
 

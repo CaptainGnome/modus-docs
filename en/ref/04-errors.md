@@ -25,7 +25,7 @@ match HostError::classify(&err) {
 | `Network` | `только https/wss`, `квота http` / `квота ws`, `тело/ответ слишком большое`, `… вне манифеста`, `… не в whitelist Core`, `литеральный IP запрещён`, `запрещённый адрес …` |
 | `Other` | everything else (incl. `нет platform_id`, `system только Core`, `TooLarge`) |
 
-`is_stop()` = `Stopped` | `Revoked`. Connector scaffold and [`plugins/twitch`](../../../plugins/twitch) exit `wait_backoff` this way.
+`is_stop()` = `Stopped` | `Revoked`. Connector scaffold and `modus new connector` exit `wait_backoff` this way.
 
 ## Common strings
 

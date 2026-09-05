@@ -2,7 +2,7 @@
 
 **Rule.** App secret and refresh live at Core (or broker), not in wasm and not in git. The guest gets a short access via `auth.token` and talks to the network only through the host. Emit — grant + `platform_id`.
 
-Compressed overview — [ref/06-net-auth](../ref/06-net-auth.md). Reference: [`plugins/twitch`](../../../plugins/twitch), scaffold `modus new connector`.
+Compressed overview — [ref/06-net-auth](../ref/06-net-auth.md). Reference: `modus new connector`, scaffold `modus new connector`.
 
 ## `bus.emit`
 

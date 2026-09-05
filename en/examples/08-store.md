@@ -94,11 +94,11 @@ In `run` the loop waits for `Stop` / `Settings` / `Resume`; it ignores bus and a
 ## Run
 
 ```powershell
-modus dev plugins/store
-# смена настроек в CLI: modus dev plugins/store --settings …
+modus new <role>  # scaffold, then modus dev <dir>
+# смена настроек в CLI: modus new store  # then: modus dev <dir> --settings …
 ```
 
-Full crate: [`../../../plugins/store`](../../../plugins/store).
+Full crate: [`modus new store`](modus new store).
 
 In `dev`, KV is process RAM (after CLI restart the counter starts at zero). In Core, persist is tied to the plugin `id`.
 

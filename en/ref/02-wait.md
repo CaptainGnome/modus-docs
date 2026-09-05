@@ -48,7 +48,7 @@ Successful login in Core: instance `reload`, `run` from scratch, `list_accounts`
 
 `HostError::classify` / `is_stop()` — [host errors](04-errors.md); detail — [api/03-errors](../api/03-errors.md). `Stopped` and `Revoked` are not network.
 
-`modus_sdk::wait_backoff(ms) -> bool`: sets a timer, spins `wait`, **true** if stop (including `Act` during backoff closing the job with “no connection”). `Resume` — like a fired timer: **false**, immediate retry. Scaffold `new connector` and [`plugins/twitch`](../../../plugins/twitch) do this. Do not write your own `sleep` + reconnect around `"остановлен"`.
+`modus_sdk::wait_backoff(ms) -> bool`: sets a timer, spins `wait`, **true** if stop (including `Act` during backoff closing the job with “no connection”). `Resume` — like a fired timer: **false**, immediate retry. Scaffold `new connector` and `modus new connector` do this. Do not write your own `sleep` + reconnect around `"остановлен"`.
 
 Constants: `BACKOFF_START_MS` 1 s, cap `BACKOFF_MAX_MS` 30 s, `next_backoff_ms`.
 
@@ -58,4 +58,4 @@ Trap in `init`/`run` is **Core**'s business, not `dev`: restart 1 s, then 2 
 
 Instance memory **16 MiB**. Disk is invisible to the guest. Wasm RAM dies on unload; KV, settings, accounts, journal — at Core.
 
-Loop reference: scaffold `modus new consumer` / `new connector`; live connector — [`plugins/twitch/src/lib.rs`](../../../plugins/twitch/src/lib.rs).
+Loop reference: scaffold `modus new consumer` / `new connector`; live connector — `modus new connector`.

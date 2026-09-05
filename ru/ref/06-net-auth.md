@@ -23,7 +23,7 @@ token(account-id) -> result<string, string>
 
 Оболочку OAuth гоняет Core. Протокол площадки — у плагина через `net.*` + `token`.
 
-Эталон: [`plugins/twitch`](../../../plugins/twitch), каркас `modus new connector`.
+Эталон: `modus new connector`, каркас `modus new connector`.
 
 ## HTTP
 

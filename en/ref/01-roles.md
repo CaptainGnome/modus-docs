@@ -41,19 +41,19 @@ Every package has: `self_info`, `log`, `wait`, `types`, `clock`, `settings`, `as
 
 | Role | `new` feature | Required grants | Typical modules beyond base | Reference | Does not |
 | --- | --- | --- | --- | --- | --- |
-| `consumer` | `consumer` | none | — | [`plugins/consumer`](../../../plugins/consumer), SDK | emit, network, `chat.act` |
-| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`plugins/fixture`](../../../plugins/fixture), SDK | platform login and socket |
-| `connector` | `connector` | usually `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | [`plugins/twitch`](../../../plugins/twitch), SDK | draw UI, KV, alert queue |
-| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | [`plugins/7tv`](../../../plugins/7tv), SDK | `platform_id`, canon, `bus.emit` |
-| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` and/or `["panel"]` | `ui_slot` | [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel), SDK | network, emit |
-| `commander` | `commander` | `chat.act` | `chat_act` | [`plugins/commander`](../../../plugins/commander), SDK | emit canon, network |
-| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` for donation FX) | enqueue + web overlay + `rates` | [`plugins/alerter`](../../../plugins/alerter), SDK | Core queue; recovery via history |
-| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (base) | [`plugins/store`](../../../plugins/store), SDK | others' KV, secrets |
-| `reader` | `reader` | `history.read` | `history_read` | [`plugins/reader`](../../../plugins/reader), SDK | emit, network, replay in `wait` |
-| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | [`plugins/player`](../../../plugins/player), SDK | open device, TTS bypassing Core |
-| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | [`plugins/obs-bridge`](../../../plugins/obs-bridge), SDK | raw socket bypassing allowlist |
-| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` and/or `["panel"]` | `ui_slot`, `media_embed` | [`plugins/embedder`](../../../plugins/embedder), SDK | proxy MP4, host `play`, youtube-dl |
-| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | [`plugins/fx`](../../../plugins/fx), SDK | emit, UI, KV; rate in `opaque` |
+| `consumer` | `consumer` | none | — | [`modus-examples/consumer`](../../../modus-examples/consumer), SDK | emit, network, `chat.act` |
+| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`modus-examples/emitter`](../../../modus-examples/emitter), SDK | platform login and socket |
+| `connector` | `connector` | usually `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | `modus new connector`, SDK | draw UI, KV, alert queue |
+| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | `modus new provider`, SDK | `platform_id`, canon, `bus.emit` |
+| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` and/or `["panel"]` | `ui_slot` | [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`, SDK | network, emit |
+| `commander` | `commander` | `chat.act` | `chat_act` | `modus new commander`, SDK | emit canon, network |
+| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` for donation FX) | enqueue + web overlay + `rates` | `modus new alerter`, SDK | Core queue; recovery via history |
+| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (base) | `modus new store`, SDK | others' KV, secrets |
+| `reader` | `reader` | `history.read` | `history_read` | `modus new reader`, SDK | emit, network, replay in `wait` |
+| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player`, SDK | open device, TTS bypassing Core |
+| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge`, SDK | raw socket bypassing allowlist |
+| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` and/or `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder`, SDK | proxy MP4, host `play`, youtube-dl |
+| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates`, SDK | emit, UI, KV; rate in `opaque` |
 | host | — | — | world `runtime` | no guest | guest does not set this world |
 
 `modus new` writes every role in the table (including `panel` → feature `widget`). New package: one SDK feature. Raw bindgen without SDK is allowed, but not the reference.
@@ -70,9 +70,9 @@ Manifest: `"capabilities": ["ui.slot"]` and `"slots": ["web"]` and/or `["panel"]
 - grant without a slot — `ui.slot требует слот web или panel`;
 - other slot — `слот … не поддерживается`.
 
-**Web / OBS.** Deaf slot — `consumer` + `"slots": ["web"]` (static; wasm does not write into the DOM). Wasm ↔ page channel — grant `ui.slot` + `ui_slot::post` (role `widget`). Reference: [`plugins/web-slot`](../../../plugins/web-slot). Assets `assets/web/`. Several `web` at once ok. Images — `'self'` / `cache/{key}`. Frame `plugin` only to its own `plugin_id`. Foreign origin in an iframe — role `embedder` + grant `media.embed` + `embed_hosts`; without `embed_hosts` CSP `frame-src 'none'`; call without grant — refuse.
+**Web / OBS.** Deaf slot — `consumer` + `"slots": ["web"]` (static; wasm does not write into the DOM). Wasm ↔ page channel — grant `ui.slot` + `ui_slot::post` (role `widget`). Reference: [`modus-examples/widget`](../../../modus-examples/widget). Assets `assets/web/`. Several `web` at once ok. Images — `'self'` / `cache/{key}`. Frame `plugin` only to its own `plugin_id`. Foreign origin in an iframe — role `embedder` + grant `media.embed` + `embed_hosts`; without `embed_hosts` CSP `frame-src 'none'`; call without grant — refuse.
 
-**Panel.** Dock in Core layout; the plugin does not create a window. One mode: native (`assets/panel.json`) or web (`assets/panel/` or the same `assets/web/`). Native reference: [`plugins/panel`](../../../plugins/panel). `modus new panel` / `modus new panel --mode web`.
+**Panel.** Dock in Core layout; the plugin does not create a window. One mode: native (`assets/panel.json`) or web (`assets/panel/` or the same `assets/web/`). Native reference: `modus new panel`. `modus new panel` / `modus new panel --mode web`.
 
 ## Consequence for `pack`
 

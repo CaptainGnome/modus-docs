@@ -2,7 +2,7 @@
 
 **Правило.** Эти API — отдельные capability. Не шина канона: catalog/rates — снимки у Core; history — страницы журнала; bridge — RPC через хост к OBS (allowlist типов).
 
-Эталоны: [`plugins/obs-bridge`](../../../plugins/obs-bridge), [`plugins/reader`](../../../plugins/reader), [`plugins/fx`](../../../plugins/fx), [`plugins/7tv`](../../../plugins/7tv), convert — [`plugins/alerter`](../../../plugins/alerter).
+Эталоны: `modus new bridge`, `modus new reader`, `modus new rates`, `modus new provider`, convert — `modus new alerter`.
 
 ## `bridge.obs`
 
@@ -62,7 +62,7 @@ rates::convert_to_base(amount, from) -> Result<f64, string>
 | `base` | ISO-4217 база из настроек Core |
 | `convert_to_base` | `amount` в `from` → base, floor до minor; нет курса → `Err` |
 
-Курс в `opaque` канона не кладут. Эталон publish — [`plugins/fx`](../../../plugins/fx).
+Курс в `opaque` канона не кладут. Эталон publish — `modus new rates`.
 
 ## `catalog.publish`
 
@@ -81,6 +81,6 @@ unpublish(name) -> Result<(), string>
 | эмоутов | 2048 |
 | publish | 10/с |
 
-В `dev`: publish → stderr. Эталон — [`plugins/7tv`](../../../plugins/7tv) (+ `media.cache` для картинок).
+В `dev`: publish → stderr. Эталон — `modus new provider` (+ `media.cache` для картинок).
 
 Следующая глава — [пакет и подпись](10-package-signing.md).

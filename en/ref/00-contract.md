@@ -53,14 +53,14 @@ Build **only** with the SDK (world always `plugin`, feature = preset):
 
 | Directory | Feature | Role |
 | --- | --- | --- |
-| [`plugins/consumer`](../../../plugins/consumer) | `consumer` | listens on the bus |
-| [`plugins/fixture`](../../../plugins/fixture) | `emitter` | puts canon without platform network |
-| [`plugins/twitch`](../../../plugins/twitch) | `connector` | platform |
-| [`plugins/web-slot`](../../../plugins/web-slot) | `widget` | OBS slot + wasm channel |
-| [`plugins/panel`](../../../plugins/panel) | `widget` | native panel in the dock |
-| [`plugins/alerter`](../../../plugins/alerter) | `alerter` | queue + web overlay |
-| [`plugins/store`](../../../plugins/store) | `store` | KV |
-| [`plugins/commander`](../../../plugins/commander) | `commander` | `chat.act` |
+| [`modus-examples/consumer`](../../../modus-examples/consumer) | `consumer` | listens on the bus |
+| [`modus-examples/emitter`](../../../modus-examples/emitter) | `emitter` | puts canon without platform network |
+| [`modus-examples/connector-replay`](../../../modus-examples/connector-replay) | `connector` | replay / http-file without a live platform |
+| [`modus-examples/widget`](../../../modus-examples/widget) | `widget` | OBS slot + wasm channel |
+| `modus new panel` | `widget` | native panel in the dock |
+| `modus new alerter` | `alerter` | queue + web overlay |
+| `modus new store` | `store` | KV |
+| `modus new commander` | `commander` | `chat.act` |
 
 Host WIT — [`wit/world.wit`](https://github.com/CaptainGnome/modus-sdk/blob/main/wit/world.wit) in [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (adjacent: [`../../../modus-sdk/wit/world.wit`](../../../modus-sdk/wit/world.wit)). Look when porting the SDK or arguing with the host. Do not copy into the plugin. Capability → SDK module table — [role map](01-roles.md); WIT as appendix — [chapter 11](11-wit.md).
 

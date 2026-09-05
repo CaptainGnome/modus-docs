@@ -10,8 +10,8 @@ In the plugin `Cargo.toml`:
 
 ```toml
 [dependencies]
-# sibling clones: ../modus-sdk/guest
-# product tree with plugins/: ../../modus-sdk/guest
+# sibling of modus-sdk clone: ../modus-sdk/guest
+# under product/examples tree: ../../modus-sdk/guest
 modus-sdk = { path = "../modus-sdk/guest", features = ["consumer"] }
 ```
 
@@ -105,4 +105,4 @@ Base always: `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`,
 
 WASI is not mixed into the SDK. `wasi:*` in the component — pack/load reject.
 
-CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Docs — [modus-docs](https://github.com/CaptainGnome/modus-docs). Product references: [`plugins/*`](../../../plugins/consumer); walkthroughs — [examples/](../examples/README.md).
+CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Docs — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples); walkthroughs — [examples/](../examples/README.md).

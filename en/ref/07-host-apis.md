@@ -14,7 +14,7 @@ Schema — `assets/settings.json` (no file — no form; broken — package will 
 - Label — only field `type: label`; else refuse.
 - Save in Core → `Ready::Settings`. In `dev`: `--settings` JSON overlay → same `Ready::Settings`.
 
-Reference: [`plugins/store`](../../../plugins/store).
+Reference: `modus new store`.
 
 ## KV
 
@@ -22,7 +22,7 @@ Grant `storage.kv`. Others' KV is invisible. Do not put secrets here.
 
 Quota: 256 KiB / 256 keys / value ≤ 16 KiB. Storm: 60 set/delete per second. `dev` restart — empty (not sqlite).
 
-Reference: [`plugins/store`](../../../plugins/store).
+Reference: `modus new store`.
 
 ## `chat.act`
 
@@ -30,23 +30,23 @@ Grant `chat.act`. Only path for send/delete/timeout/ban/unban. In Core the host 
 
 Send text ≤ 500. Timeout 0 — refuse. Storm: 10/s.
 
-Reference: [`plugins/commander`](../../../plugins/commander); performer without network — [`plugins/fixture`](../../../plugins/fixture).
+Reference: `modus new commander`; performer without network — [`modus-examples/emitter`](../../../modus-examples/emitter).
 
 ## Alerts
 
 Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. In `dev`: enqueue/complete → stderr, no `AlertPlay`/`AlertStop` and no queue of 32.
 
-Reference: [`plugins/alerter`](../../../plugins/alerter).
+Reference: `modus new alerter`.
 
 ## Slots (`ui.slot`)
 
 Manifest: `ui.slot` + `"slots": ["web"]` and/or `["panel"]`. Wasm ↔ surface channel: `ui_slot::post` / `Ready::Ui`. In `dev`: `--ui` → `Ready::Ui`; `post` → log.
 
-References: [`plugins/web-slot`](../../../plugins/web-slot), [`plugins/panel`](../../../plugins/panel).
+References: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`.
 
 ## Cache / catalog (brief)
 
-- `media.cache` — pin URL/bytes; references connector / [`plugins/7tv`](../../../plugins/7tv).
+- `media.cache` — pin URL/bytes; references connector / `modus new provider`.
 - `catalog.publish` — dictionary snapshot (not bus); in `dev` — publish to stderr. Reference: 7tv.
 
 Full grant map — [roles](01-roles.md). `dev` flags — [CLI](05-cli.md).

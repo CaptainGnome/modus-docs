@@ -12,7 +12,7 @@ Native panel in the Core layout: same `widget` feature and `ui.slot` grant, `pan
 | Reference mode | native (`panel.json`), not web |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/panel`](../../../plugins/panel). Web panel: `modus new panel --mode web`.
+Reference: `modus new panel`. Web panel: `modus new panel --mode web`.
 
 ## Manifest
 
@@ -79,8 +79,8 @@ fn on_ui(payload: &[u8]) {
 
 | Path | Purpose |
 | --- | --- |
-| [`assets/panel.json`](../../../plugins/panel/assets/panel.json) | label, list, editable table, buttons |
-| [`assets/i18n/ru.json`](../../../plugins/panel/assets/i18n/ru.json) | block labels |
+| [`assets/panel.json`](modus new panel/assets/panel.json) | label, list, editable table, buttons |
+| [`assets/i18n/ru.json`](modus new panel/assets/i18n/ru.json) | block labels |
 
 Schema fragment:
 
@@ -109,7 +109,7 @@ Schema fragment:
 ```powershell
 modus new panel --id com.you.panel --dir panel
 modus new panel --id com.you.panelweb --dir panelweb --mode web
-modus dev ../../../plugins/panel --ui skip.json
+modus dev modus new panel --ui skip.json
 ```
 
 `--ui` with `{"id":"skip"}` or table-op JSON. Visually the panel shows in Core, not bare CLI.

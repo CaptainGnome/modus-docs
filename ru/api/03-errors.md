@@ -2,7 +2,7 @@
 
 **Правило.** Строки ошибок — часть ABI 2. В коде: `HostError::classify(err)`, не разбор русских фраз своими `contains`. `is_stop()` — не глотать в реконнект.
 
-Сжатый обзор — [ref/04-errors](../ref/04-errors.md). Эталон выхода из backoff: [`plugins/twitch`](../../../plugins/twitch).
+Сжатый обзор — [ref/04-errors](../ref/04-errors.md). Эталон выхода из backoff: `modus new connector`.
 
 ## Classify
 

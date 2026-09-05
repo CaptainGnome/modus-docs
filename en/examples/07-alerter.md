@@ -1,6 +1,6 @@
 # Alerter
 
-The role places a ticket in Core's queue (`alert.enqueue`); display is its own: after `Ready::AlertPlay` it posts JSON to the web overlay. Queue, priorities, and skip belong to the host; the guest does not run its own queue. Reference — [`plugins/alerter`](../../../plugins/alerter) (~1900 lines of UI/tiers; below only the flow nodes).
+The role places a ticket in Core's queue (`alert.enqueue`); display is its own: after `Ready::AlertPlay` it posts JSON to the web overlay. Queue, priorities, and skip belong to the host; the guest does not run its own queue. Reference — `modus new alerter` (~1900 lines of UI/tiers; below only the flow nodes).
 
 ## Feature and grants
 
@@ -155,10 +155,10 @@ The web page does not fetch the network itself: `plugin` and `cache/{key}` frame
 From the repo root:
 
 ```powershell
-modus dev plugins/alerter
+modus new <role>  # scaffold, then modus dev <dir>
 ```
 
-Full crate: [`../../../plugins/alerter`](../../../plugins/alerter). With an event emitter — fixture/twitch nearby; rates for donation FX — [13-rates-fx](13-rates-fx.md).
+Full crate: [`modus new alerter`](modus new alerter). With an event emitter — fixture/twitch nearby; rates for donation FX — [13-rates-fx](13-rates-fx.md).
 
 ## Typical host errors
 

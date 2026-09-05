@@ -10,8 +10,8 @@
 
 ```toml
 [dependencies]
-# рядом: clone modus-sdk + ваш плагин (../modus-sdk/guest)
-# в продукте с plugins/: ../../modus-sdk/guest
+# sibling of modus-sdk clone: ../modus-sdk/guest
+# under product/examples tree: ../../modus-sdk/guest
 modus-sdk = { path = "../modus-sdk/guest", features = ["consumer"] }
 ```
 
@@ -105,4 +105,4 @@ use modus_sdk::{
 
 WASI SDK не подмешивает. `wasi:*` в компоненте — отказ pack/load.
 
-CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Документация — [modus-docs](https://github.com/CaptainGnome/modus-docs). Эталоны в продукте: [`plugins/*`](../../../plugins/consumer); разборы — [examples/](../examples/README.md).
+CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Документация — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples); разборы — [examples/](../examples/README.md).

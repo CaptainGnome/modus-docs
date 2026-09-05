@@ -1,8 +1,8 @@
 # Pack and install
 
-If this is your first plugin — get to a `.mplug` file on disk. The Core window is the last check, not a debugging method. If you need the zip and package fields table — [reference](../README.md#reference).
+If this is your first plugin — get to a `.mplug` file on disk. Installing into the app is the last check, not a debugging method. If you need the zip and package fields table — [reference](../README.md#reference).
 
-Commands — from the repo root. The `modus` function — [tools chapter](01-tools.md).
+Commands — from the `modus-sdk` clone root. The `modus` function — [tools chapter](01-tools.md). Keep [modus-examples](https://github.com/CaptainGnome/modus-examples) nearby.
 
 ## Pack
 
@@ -41,39 +41,27 @@ modus check bus/dist/bus.mplug
 
 Success: `ok com.you.bus …`. Rejection — on stderr; pack does not touch the file.
 
-## Install in Core
+## Install in Modus
 
-Debugging is still [`modus dev`](03-dev.md). The window is needed to see the package in the list, like a streamer.
+Debugging is still [`modus dev`](03-dev.md). To see the package in the list like a streamer, you need the **shipped** Modus app — not a product checkout and not `npm` / `tauri`.
 
-The app is not the plugin. For the window you need Node (dependencies once, then the Tauri script):
+1. Open Modus.
+2. In the header: **Install plugin** (or “Plugins” → “Install”). Choose `bus\dist\bus.mplug`. Or drag the `.mplug` onto the window.
+3. The **Allow plugin?** dialog shows name, id, version, author. For a consumer the rights are “basic API only”. No host list: there is no network in the manifest. Confirm.
 
-```powershell
-npm install
-npm run tauri dev
-```
+The package should appear in “Plugins” with status “running”. Guest log — the **Logs** button.
 
-- `npm install` — download dependencies from the root `package.json` into `node_modules`. Not needed for wasm builds; needed for the window.
-- `npm run` — run a script from `package.json`.
-- `tauri` — script name: the app CLI.
-- `dev` — start Core in development mode. First time is long.
+An empty feed with only a consumer — **not a bug**. A listener does not put events on the bus. In `dev` the teaching host did. In the app you need a source: the educational emitter or an already installed platform connector.
 
-In the header: **Установить плагин** (Install plugin) (or in the “Плагины” (Plugins) window → “Установить” (Install)). Choose `bus\dist\bus.mplug`. Or drag the `.mplug` onto the window.
-
-The **Разрешить плагин?** (Allow plugin?) dialog will show name, id, version, author. For a consumer the rights are “только базовый API” (basic API only). No host list: there is no network in the manifest. Confirm.
-
-The package should appear in “Плагины” with status “работает” (running). Guest log — the **Логи** (Logs) button.
-
-An empty feed with only a consumer — **not a bug**. A listener does not put events on the bus. In `dev` the teaching host did. In Core you need a source: a fixture from the repo or an already installed Twitch.
-
-Fixture:
+Bus source (educational emitter from [modus-examples](https://github.com/CaptainGnome/modus-examples)):
 
 ```powershell
-modus pack plugins/fixture
+modus pack ../modus-examples/emitter
 ```
 
-- `plugins/fixture` — the reference emitter directory in the repo, not your `bus`.
+- path — from the `modus-sdk` clone root when `modus-examples` is a sibling.
 
-Also install `plugins\fixture\dist\fixture.mplug`. Then fixture events appear in the consumer log (in `dev` that was the `fixture hello` text; in Core the source is this package). Only your `.mplug` without a source — silence; the scaffold is alive.
+Also install `..\modus-examples\emitter\dist\emitter.mplug`. Then events appear in the consumer log (in `dev` that was the `fixture hello` text; here the source is the emitter package). Only your `.mplug` without a source — silence; the scaffold is alive.
 
 Do not debug `lib.rs` edits by installing the package. Again `modus dev bus`, and only then `pack`.
 

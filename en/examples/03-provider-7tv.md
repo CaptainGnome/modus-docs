@@ -12,7 +12,7 @@ A provider does not emit chat canon: it pulls a third-party catalog over HTTP/WS
 | Does not | `platform_id`, `bus.emit` |
 | Map | [ref/01-roles](../ref/01-roles.md) |
 
-Reference: [`plugins/7tv`](../../../plugins/7tv).
+Reference: `modus new provider`.
 
 ## Manifest
 
@@ -85,8 +85,8 @@ let handle = net_ws::connect(EVENTS_URL)?;
 
 | Path | Purpose |
 | --- | --- |
-| [`assets/settings.json`](../../../plugins/7tv/assets/settings.json) | `channel` field + `status` label |
-| [`assets/i18n/ru.json`](../../../plugins/7tv/assets/i18n/ru.json) | status / label strings |
+| [`assets/settings.json`](modus new provider/assets/settings.json) | `channel` field + `status` label |
+| [`assets/i18n/ru.json`](modus new provider/assets/i18n/ru.json) | status / label strings |
 
 Empty `channel` → status `status.need_twitch`, wait for bus or `--settings`.
 
@@ -94,7 +94,7 @@ Empty `channel` → status `status.need_twitch`, wait for bus or `--settings`.
 
 ```powershell
 modus new provider --id com.you.7tv --dir seventv
-modus dev ../../../plugins/7tv --settings channel.json
+modus dev modus new provider --settings channel.json
 ```
 
 `channel.json` — settings key overlay (see [api/11-cli-dev](../api/11-cli-dev.md)). For network without internet — `--http-file` / `--replay`. A live/fixture Twitch beside it helps if the channel comes from the bus.
