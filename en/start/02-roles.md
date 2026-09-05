@@ -1,8 +1,8 @@
 # Roles: what to pick in `new`
 
-If this is your first plugin — chapter goal: choose **`consumer`** and invent an `id`. Connector and Twitch — not now. If you need the full role and grant list — [reference](../introduction.md#reference).
+If this is your first plugin — chapter goal: choose **`consumer`** and invent an `id`. Every other role in help exists and works; a beginner should not go there in part 1. Full feature × grant map — [reference](../ref/01-roles.md).
 
-First look at what the CLI can create at all.
+First look at what the CLI can create.
 
 ```powershell
 modus new --help
@@ -30,63 +30,79 @@ Options:
   -h, --help             Print help
 ```
 
-- `<ROLE>` — positional argument: a word **without** `--`. One of the values in `possible values` above. `new` knows no others. Full feature × grant map — [reference](../ref/01-roles.md).
-- `--id <ID>` — required flag. `<ID>` — plugin identifier, not a nick and not a folder name.
-- `--name` / `--author` — how the plugin is signed in the manifest. Optional: name is taken from the last segment of `id`, author is `author`.
-- `--dir <DIR>` — which folder to write the scaffold into. No flag — folder = last segment of `id`. Path is relative to the **current** directory (repo root).
-- `--lang` — scaffold language. Do not set it: Rust anyway. Any other value — rejection `S1 только Rust` (S1 Rust only).
+- `<ROLE>` — positional argument: a word **without** `--`. One of the values in `possible values`. `new` knows no others.
+- `--id <ID>` — required flag. Plugin identifier, not a nick and not a folder name.
+- `--name` / `--author` — how the plugin is signed in the manifest. Optional: name from the last segment of `id`, author `author`.
+- `--dir <DIR>` — scaffold folder. No flag — folder = last segment of `id`. Path relative to the **current** directory (`modus-sdk` clone root).
+- `--lang` — do not set it: Rust anyway. Any other value — rejection `S1 Rust only`.
 - `--mode` — only for `panel`: `native` or `web`.
-- `[OPTIONS]` in Usage — “flags are optional except those listed separately”. Here `--id` is separately required.
+- `[OPTIONS]` in Usage — flags are optional except those listed separately. Here `--id` is separately required.
 
-Order: `modus new consumer --id …` and `modus new --id … consumer` — both fine. Role without `--`, id only with `--id`.
+Order: `modus new consumer --id …` and `modus new --id … consumer` — both fine.
 
-## Three roles
+## Where to start (part 1)
 
-| Role in `new` | What it does | When to choose |
+| Role | What it does | When |
 | --- | --- | --- |
-| `consumer` | Listens to the bus: chat and other events | First plugin. Logic without ban and without its own platform |
-| `emitter` | Also **puts** events on the bus. No platform network | Fixture, test. Not the first step |
-| `connector` | Platform: login, network via host, emit canon | When you already have `dev` on a consumer and understand `wait` |
+| `consumer` | Listens to the bus | **First plugin** |
+| `emitter` | Puts canon on the bus without a platform network | After consumer; teaching source in the app |
+| `connector` | Login, network via host, emit canon | After `wait`; chapter [07](07-connector.md) with `--replay` |
 
-Listening and putting are different rights. A consumer only listens. Events on the bus in `dev` are put by the **host** (teaching fixture), not your code.
+Listening and putting are different rights. A consumer only listens. In `dev`, teaching bus events are put by the **host** (fixture), not your code.
 
-`new` can create every role from help (including `store`, `commander`, `alerter`, …). A beginner should not go there — start with `consumer`. More precisely — [reference](../ref/01-roles.md).
+Reference consumer — [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer). You do not need to copy it: `new` writes a fresh scaffold.
 
-The reference consumer in the repo is [`modus-examples/consumer`](../../../modus-examples/consumer). You do not need to copy it: `new` writes a fresh scaffold.
+## All `new` roles
+
+Short map. Grants and details — [ref/01-roles](../ref/01-roles.md); code walkthroughs — [examples/](../examples/overview.md).
+
+| Role | One line | Runnable |
+| --- | --- | --- |
+| `consumer` | listen to the bus | [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer) |
+| `emitter` | put message/donation without a platform | [`modus-examples/emitter`](https://github.com/CaptainGnome/modus-examples/tree/master/emitter) |
+| `connector` | platform via the host | [`modus-examples/connector-replay`](https://github.com/CaptainGnome/modus-examples/tree/master/connector-replay) |
+| `provider` | emote catalog (`catalog.publish`) | `modus new provider` |
+| `widget` | web slot, frames into the DOM | [`modus-examples/widget`](https://github.com/CaptainGnome/modus-examples/tree/master/widget) |
+| `panel` | dock in Core layout (`native` / `web`) | `modus new panel` |
+| `reader` | journal pages (`history.read`) | `modus new reader` |
+| `player` | audio via Core (`media.audio`) | `modus new player` |
+| `bridge` | OBS WebSocket (`bridge.obs`) | `modus new bridge` |
+| `embedder` | foreign-origin iframe (`media.embed`) | `modus new embedder` |
+| `rates` | FX table (`rates.publish`) | `modus new rates` |
+| `alerter` | alert till ticket + overlay | `modus new alerter` |
+| `commander` | `chat.act` (ban / timeout / …) | `modus new commander` |
+| `store` | `storage.kv` | `modus new store` |
+
+`panel` in the SDK is the same `widget` feature with a different manifest/assets. Beginner: only `consumer` until part 1 is done.
 
 ## `id`
 
-Format — reverse-DNS, like Android packages: **from the end** it reads “whose” and “what”.
+Format — reverse-DNS (**from the end**: “whose” and “what”).
 
-Rules (otherwise the CLI rejects with `plugin id: reverse-DNS required (com.publisher.name)` (plugin id: reverse-DNS required (com.publisher.name))):
+Rules (otherwise CLI: `plugin id: reverse-DNS required (com.publisher.name)`):
 
 - at least **three** segments separated by dots: `com.you.bus`;
-- only lowercase `a-z`, digits, and hyphen inside a segment;
+- lowercase `a-z`, digits, and hyphen inside a segment;
 - no capitals, no `_`, no two segments.
 
-Why not `twitch`: one word, not a namespace. The official connector is `com.modus.twitch`. A short name would steal someone else's meaning and fail the check.
+Why not `twitch`: one word, not a namespace. The official connector is `com.modus.twitch`.
 
-The last segment is the crate name and default folder. For `com.you.bus` that is `bus`. Changing `id` later = a **different** plugin (settings will not migrate). Do not touch KV yet — remember: id is stable.
+The last segment is the crate name and default folder. Changing `id` later = a **different** plugin (settings will not migrate).
 
-Example for the next chapter: `com.you.bus`. Put your own second segment instead of `you`.
+Example for the next chapter: `com.you.bus` (your own second segment instead of `you`).
 
-Check that a short id is rejected (does not create a folder):
+Check that a short id is rejected:
 
 ```powershell
 modus new consumer --id twitch
 ```
 
-- `consumer` — the role you **chose**.
-- `--id twitch` — deliberately wrong id.
-
-You will see `plugin id: reverse-DNS required (com.publisher.name)`. That is chapter success, not a broken CLI.
+You will see `plugin id: reverse-DNS required (com.publisher.name)`. That is chapter success.
 
 ## What not to choose now
 
-Not `connector`: without a teaching token the scaffold writes “no account” and waits for stop. That is normal, but as a first experience — a dead end. Not live Twitch: network and OAuth are not needed to see `fixture hello`.
+Not `connector` without chapter 7: without `--token` the scaffold logs `no account` and waits for stop — normal, but a dead end as a first experience.
 
-Not `emitter`: you have not looked at `wait` yet. Listener first.
+Not `emitter` / `provider` / UI / act / KV: listener and `wait` first.
 
-Not `provider`: an emote dictionary, not the first `wait` loop.
-
-Bottom line: role **`consumer`**, id like `com.you.bus`. Next chapter — [new and dev](03-dev.md).
+Bottom line: role **`consumer`**, id like `com.you.bus`. Next chapter — [new and `dev`](03-dev.md).

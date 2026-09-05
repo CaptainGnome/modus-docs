@@ -1,8 +1,8 @@
 # Роли: что жать в `new`
 
-Если это первый плагин — цель главы: выбрать **`consumer`** и придумать `id`. Коннектор и Twitch — не сейчас. Если нужен полный список ролей и грантов — [справочник](../introduction.md#справочник).
+Если это первый плагин — цель главы: выбрать **`consumer`** и придумать `id`. Остальные роли из help существуют и работают; новичку туда не идти в части 1. Полная карта feature × грант — [справочник](../ref/01-roles.md).
 
-Сначала посмотрите, что CLI вообще умеет создать.
+Сначала посмотрите, что CLI умеет создать.
 
 ```powershell
 modus new --help
@@ -30,63 +30,79 @@ Options:
   -h, --help             Print help
 ```
 
-- `<ROLE>` — позиционный аргумент: слово **без** `--`. Одно из значений в `possible values` выше. Других `new` не знает. Полная карта feature × грант — [справочник](../ref/01-roles.md).
-- `--id <ID>` — обязательный флаг. `<ID>` — идентификатор плагина, не ник и не имя папки.
-- `--name` / `--author` — как плагин подписан в манифесте. Можно не указывать: имя возьмётся из последнего куска `id`, автор — `author`.
-- `--dir <DIR>` — в какую папку писать каркас. Нет флага — папка = последний кусок `id`. Путь относительно **текущей** директории (корень репо).
-- `--lang` — язык каркаса. Не указывайте: и так Rust. Иное значение — отказ `S1 только Rust`.
+- `<ROLE>` — позиционный аргумент: слово **без** `--`. Одно из значений в `possible values`. Других `new` не знает.
+- `--id <ID>` — обязательный флаг. Идентификатор плагина, не ник и не имя папки.
+- `--name` / `--author` — подпись в манифесте. Можно не указывать: имя из последнего куска `id`, автор — `author`.
+- `--dir <DIR>` — папка каркаса. Нет флага — папка = последний кусок `id`. Путь относительно **текущей** директории (корень clone `modus-sdk`).
+- `--lang` — не указывайте: и так Rust. Иное значение — отказ `S1 Rust only`.
 - `--mode` — только для `panel`: `native` или `web`.
-- `[OPTIONS]` в Usage — «флаги необязательны, кроме тех, что перечислены отдельно». Здесь отдельно обязателен `--id`.
+- `[OPTIONS]` в Usage — флаги необязательны, кроме отдельно перечисленных. Здесь отдельно обязателен `--id`.
 
-Порядок: `modus new consumer --id …` и `modus new --id … consumer` — оба ок. Роль без `--`, id только с `--id`.
+Порядок: `modus new consumer --id …` и `modus new --id … consumer` — оба ок.
 
-## Три роли
+## С чего начать (часть 1)
 
-| Роль в `new` | Что делает | Когда выбирать |
+| Роль | Что делает | Когда |
 | --- | --- | --- |
-| `consumer` | Слушает шину: чат и прочие события | Первый плагин. Логика без бана и без своей площадки |
-| `emitter` | Ещё **кладёт** события на шину. Сети площадки нет | Фикстура, тест. Не первый шаг |
-| `connector` | Площадка: логин, сеть через хост, emit канона | Когда уже есть `dev` у consumer и понятен `wait` |
+| `consumer` | Слушает шину | **Первый плагин** |
+| `emitter` | Кладёт канон на шину без сети площадки | После consumer; учебный источник в приложении |
+| `connector` | Логин, сеть через хост, emit канона | После `wait`; глава [07](07-connector.md) с `--replay` |
 
-Слушать и класть — разные права. Consumer только слушает. События на шину в `dev` положит **хост** (учебная фикстура), не ваш код.
+Слушать и класть — разные права. Consumer только слушает. В `dev` учебные события на шину кладёт **хост** (фикстура), не ваш код.
 
-`new` умеет все роли из help (включая `store`, `commander`, `alerter`, …). Новичку туда не идти — сначала `consumer`. Точнее — [справочник](../ref/01-roles.md).
+Эталон consumer — [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer). Копировать не нужно: `new` пишет свежий каркас.
 
-Эталон consumer в репо — [`modus-examples/consumer`](../../../modus-examples/consumer). Копировать его не нужно: `new` напишет свежий каркас.
+## Все роли `new`
+
+Короткая карта. Детали и гранты — [ref/01-roles](../ref/01-roles.md); разборы кода — [examples/](../examples/overview.md).
+
+| Роль | Одной фразой | Runnable |
+| --- | --- | --- |
+| `consumer` | слушать шину | [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer) |
+| `emitter` | класть message/donation без площадки | [`modus-examples/emitter`](https://github.com/CaptainGnome/modus-examples/tree/master/emitter) |
+| `connector` | площадка через хост | [`modus-examples/connector-replay`](https://github.com/CaptainGnome/modus-examples/tree/master/connector-replay) |
+| `provider` | каталог эмоутов (`catalog.publish`) | `modus new provider` |
+| `widget` | web-слот, кадры в DOM | [`modus-examples/widget`](https://github.com/CaptainGnome/modus-examples/tree/master/widget) |
+| `panel` | док в раскладке Core (`native` / `web`) | `modus new panel` |
+| `reader` | страницы журнала (`history.read`) | `modus new reader` |
+| `player` | звук через Core (`media.audio`) | `modus new player` |
+| `bridge` | OBS WebSocket (`bridge.obs`) | `modus new bridge` |
+| `embedder` | iframe чужого origin (`media.embed`) | `modus new embedder` |
+| `rates` | таблица курсов (`rates.publish`) | `modus new rates` |
+| `alerter` | талон в кассу алертов + оверлей | `modus new alerter` |
+| `commander` | `chat.act` (бан / timeout / …) | `modus new commander` |
+| `store` | `storage.kv` | `modus new store` |
+
+`panel` в SDK — та же feature `widget`, другой манифест/ассеты. Новичок: только `consumer`, пока не закроете часть 1.
 
 ## `id`
 
-Формат — reverse-DNS, как у пакетов Android: **с конца** читается «чьё» и «что».
+Формат — reverse-DNS (**с конца** «чьё» и «что»).
 
-Правила (иначе CLI откажет строкой `plugin id: reverse-DNS required (com.publisher.name)`):
+Правила (иначе CLI: `plugin id: reverse-DNS required (com.publisher.name)`):
 
-- минимум **три** куска, разделённых точкой: `com.you.bus`;
-- только строчные `a-z`, цифры и дефис внутри куска;
+- минимум **три** куска через точку: `com.you.bus`;
+- строчные `a-z`, цифры и дефис внутри куска;
 - без заглавных, без `_`, без двух кусков.
 
-Почему нельзя `twitch`: это одно слово, не пространство имён. Официальный коннектор — `com.modus.twitch`. Короткое имя заняло бы чужой смысл и не прошло бы проверку.
+Почему нельзя `twitch`: одно слово, не пространство имён. Официальный коннектор — `com.modus.twitch`.
 
-Последний кусок — имя crate и папки по умолчанию. У `com.you.bus` это `bus`. Смена `id` позже = **другой** плагин (настройки не переедут). Пока не трогайте KV — запомните: id стабильный.
+Последний кусок — имя crate и папки по умолчанию. Смена `id` позже = **другой** плагин (настройки не переедут).
 
-Пример, который пойдёт в следующей главе: `com.you.bus`. Подставьте свой второй кусок вместо `you`.
+Пример для следующей главы: `com.you.bus` (свой второй кусок вместо `you`).
 
-Проверка, что короткий id отвергается (папку не создаёт):
+Проверка, что короткий id отвергается:
 
 ```powershell
 modus new consumer --id twitch
 ```
 
-- `consumer` — роль, которую вы **выбрали**.
-- `--id twitch` — нарочно неверный id.
-
-Вы увидите `plugin id: reverse-DNS required (com.publisher.name)`. Это успех главы, не поломка CLI.
+Вы увидите `plugin id: reverse-DNS required (com.publisher.name)`. Это успех главы.
 
 ## Что не выбирать сейчас
 
-Не `connector`: без учебного токена каркас напишет «нет аккаунта» и будет ждать стоп. Это штатно, но как первый опыт — тупик. Не живой Twitch: сеть и OAuth не нужны, чтобы увидеть `fixture hello`.
+Не `connector` без главы 7: без `--token` каркас пишет `no account` и ждёт стоп — штатно, но как первый опыт тупик.
 
-Не `emitter`: вы ещё не смотрели `wait`. Сначала слушатель.
+Не `emitter` / `provider` / UI / act / KV: сначала слушатель и `wait`.
 
-Не `provider`: словарь эмоутов, не первый цикл `wait`.
-
-Итог: роль **`consumer`**, id вида `com.you.bus`. Следующая глава — [new и dev](03-dev.md).
+Итог: роль **`consumer`**, id вида `com.you.bus`. Следующая глава — [new и `dev`](03-dev.md).

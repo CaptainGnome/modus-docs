@@ -55,14 +55,16 @@ SDK пока не на crates.io. Публично:
 
 - SDK / CLI / WIT — [CaptainGnome/modus-sdk](https://github.com/CaptainGnome/modus-sdk)
 - эта документация — [CaptainGnome/modus-docs](https://github.com/CaptainGnome/modus-docs)
+- учебные dummy — [CaptainGnome/modus-examples](https://github.com/CaptainGnome/modus-examples)
 
 ```powershell
 git clone https://github.com/CaptainGnome/modus-sdk.git
 git clone https://github.com/CaptainGnome/modus-docs.git
+git clone https://github.com/CaptainGnome/modus-examples.git
 cd modus-sdk
 ```
 
-Команды CLI ниже — **из корня clone `modus-sdk`**. Рядом удобно держать `modus-docs` для чтения гайда. Плагин можно создать в соседней папке (`modus new … --dir ..\my-plugin`) и в `Cargo.toml` указать `path = "../modus-sdk/guest"`.
+Команды CLI ниже — **из корня clone `modus-sdk`**. Рядом удобно держать `modus-docs` (гайд) и `modus-examples` (учебные dummy). Плагин можно создать в соседней папке (`modus new … --dir ..\my-plugin`) и в `Cargo.toml` указать `path = "../modus-sdk/guest"`.
 
 ## CLI
 

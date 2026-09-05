@@ -22,7 +22,7 @@ You will see `created bus`. Inside:
 - `bus/src/lib.rs` — your code;
 - `bus/.gitignore` — do not commit `target/`.
 
-Folder already exists and is not empty — rejection `bus уже существует` (bus already exists). Pick another `--dir` (and align the last segment of `--id` if you want the names to match).
+Folder already exists and is not empty — rejection `bus already exists`. Pick another `--dir` (and align the last segment of `--id` if you want the names to match).
 
 ## Run `dev`
 
@@ -56,7 +56,7 @@ Other `modus dev --help` flags are not needed in this chapter:
 
 ## What `new` wrote in `lib.rs`
 
-Open `bus/src/lib.rs`. Do not paste someone else's sample and do not copy [`modus-examples/consumer`](../../../modus-examples/consumer) — look at the **generated** file.
+Open `bus/src/lib.rs`. Do not paste someone else's sample and do not copy [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer) — look at the **generated** file.
 
 The host calls three functions in order. In the generated file it is the same without these comments — the meaning is:
 
@@ -80,14 +80,18 @@ impl Guest for Plugin {
                 Ready::Stop => return,
                 // Foreign event from the bus (fixture, inject, connector). log_bus prints the text.
                 Ready::Bus(event) => log_bus(&event),
-                // Ignore for now: no socket, timer, or commands for a consumer in dev.
+                // Ignore for now: no socket, timer, UI, act, or alerts for a consumer in dev.
                 // Resume — only after Windows sleep in Core; not emulated in dev.
                 Ready::WsText(_)
                 | Ready::WsClosed(_)
                 | Ready::Timer
                 | Ready::Act(_)
                 | Ready::Settings
-                | Ready::Resume => {}
+                | Ready::Resume
+                | Ready::Ui(_)
+                | Ready::MediaEnded(_)
+                | Ready::AlertPlay(_)
+                | Ready::AlertStop(_) => {}
             }
         }
     }

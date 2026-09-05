@@ -26,6 +26,6 @@ Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a gree
 | WIT | [appendix](../ref/11-wit.md) | — |
 | Annotated reference by role | [examples/](../examples/overview.md) | — |
 
-Table of contents — [README](../introduction.md).
+Table of contents — [hub](../introduction.md).
 
-The author path does not change: SDK → `new` → `dev` → `pack` → Core. Secrets do not go into the package.
+The author path does not change: SDK → `new` → `dev` → `pack` → shipped Modus. Secrets do not go into the package. All `new` roles — [map](../ref/01-roles.md); teaching dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples).

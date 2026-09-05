@@ -22,7 +22,7 @@ modus new consumer --id com.you.bus --dir bus
 - `bus/src/lib.rs` — ваш код;
 - `bus/.gitignore` — не коммитить `target/`.
 
-Папка уже есть и не пустая — отказ `bus уже существует`. Возьмите другой `--dir` (и согласуйте последний кусок `--id`, если хотите, чтобы имена совпадали).
+Папка уже есть и не пустая — отказ `bus already exists`. Возьмите другой `--dir` (и согласуйте последний кусок `--id`, если хотите, чтобы имена совпадали).
 
 ## Запустить `dev`
 
@@ -56,7 +56,7 @@ Ctrl+C — хост будит `Ready::Stop`, процесс выходит. Э�
 
 ## Что написал `new` в `lib.rs`
 
-Откройте `bus/src/lib.rs`. Не подставляйте чужой образец и не копируйте [`modus-examples/consumer`](../../../modus-examples/consumer) — смотрите **сгенерированный** файл.
+Откройте `bus/src/lib.rs`. Не подставляйте чужой образец и не копируйте [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer) — смотрите **сгенерированный** файл.
 
 Хост зовёт три функции по очереди. В сгенерированном файле то же самое без этих комментариев — смысл такой:
 
@@ -80,14 +80,18 @@ impl Guest for Plugin {
                 Ready::Stop => return,
                 // Чужое событие с шины (фикстура, inject, коннектор). log_bus печатает текст.
                 Ready::Bus(event) => log_bus(&event),
-                // Пока игнорируйте: сокета, таймера и команд у consumer в dev нет.
+                // Пока игнорируйте: у consumer в dev нет сокета, таймера, UI, act, алертов.
                 // Resume — только после сна Windows в Core; в dev не эмулируется.
                 Ready::WsText(_)
                 | Ready::WsClosed(_)
                 | Ready::Timer
                 | Ready::Act(_)
                 | Ready::Settings
-                | Ready::Resume => {}
+                | Ready::Resume
+                | Ready::Ui(_)
+                | Ready::MediaEnded(_)
+                | Ready::AlertPlay(_)
+                | Ready::AlertStop(_) => {}
             }
         }
     }

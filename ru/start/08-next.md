@@ -26,6 +26,6 @@
 | WIT | [приложение](../ref/11-wit.md) | — |
 | Разбор эталона по роли | [examples/](../examples/overview.md) | — |
 
-Оглавление — [README](../introduction.md).
+Оглавление — [hub](../introduction.md).
 
-Путь автора не меняется: SDK → `new` → `dev` → `pack` → Core. Секреты в пакет не кладут.
+Путь автора не меняется: SDK → `new` → `dev` → `pack` → shipped Modus. Секреты в пакет не кладут. Все роли `new` — [карта](../ref/01-roles.md); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples).

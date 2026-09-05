@@ -40,18 +40,18 @@ Part 1 (no connector, about 2–4 hours):
 5. pack a `.mplug` and know where to put it in the app;
 6. tell consumer from connector and not start with Twitch.
 
-You will write a **bus listener**, not a Twitch clone. This tutorial does not promise a platform, OAuth, an OBS overlay, or a commander.
+You will write a **bus listener**, not a Twitch clone. Part 1 does not promise a platform, OAuth, an OBS overlay, or a commander — other `new` roles cover those after the tutorial.
 
-Panel, chat history, sound, bridges — **not available in a plugin**. One sentence, no “later” chapters.
+Other roles (panel, reader, player, bridge, widget, …) **exist** in the ABI; this tutorial does not walk through them. Map — [roles chapter](02-roles.md) and [reference](../ref/01-roles.md).
 
 ## What you need
 
 - Windows — same as the product.
 - Rust stable and the `wasm32-unknown-unknown` target (we install them in the next chapter).
-- This repository: the SDK lives here for now, not on crates.io.
+- Public clones: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (CLI); keep [modus-docs](https://github.com/CaptainGnome/modus-docs) and [modus-examples](https://github.com/CaptainGnome/modus-examples) nearby. The SDK is not on crates.io yet.
 - PowerShell, so you can copy commands.
 
-Node is not needed for the plugin itself. The streamer app (Tauri) — only at the end of part 1, when you install the `.mplug`. Debugging is `modus dev` in the terminal, not the Core window.
+Node is not needed for the plugin itself. The **shipped** Modus app — only at the end of part 1, when you install the `.mplug`. Debugging is `modus dev` in the terminal, not the Core window.
 
 One language: **Rust**. We do not promise others.
 
