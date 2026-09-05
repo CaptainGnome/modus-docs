@@ -176,10 +176,10 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта alert.enqueue` | вызов без capability |
-| `slots требуют грант ui.slot` / `ui.slot требует слот…` | манифест слотов |
-| отказ `history.read` | нет гранта → recovery молча пустой |
-| `нет гранта rates.convert` / нет курса | donation без convert; тир может не матчиться |
+| `no grant alert.enqueue` | вызов без capability |
+| `slots require grant ui.slot` / `ui.slot requires web or panel slot` | манифест слотов |
+| отказ `history.read` | no grant → recovery молча пустой |
+| `no grant rates.convert` / нет курса | donation без convert; тир может не матчиться |
 | в `dev` нет play | ожидаемо: касса Core не эмулируется |
 
 См. [ref/04-errors](../ref/04-errors.md), [api/01-lifecycle-wait](../api/01-lifecycle-wait.md).

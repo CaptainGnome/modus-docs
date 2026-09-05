@@ -7,7 +7,7 @@
 ## Следствие
 
 - Сырой `wit_bindgen::generate` хост примет, если компонент валиден.
-- В одном crate с `modus-sdk` — `pack` / `check` отказ: `WIT вручную плюс SDK — два bindgen`.
+- В одном crate с `modus-sdk` — `pack` / `check` отказ: `manual WIT plus SDK — dual bindgen`.
 - Мажор crate SDK = ABI. Ломающий WIT — новый мажор SDK в тот же релиз, что ABI.
 - Правда при расхождении обёртки и WIT — у WIT (хост); баг чинится в SDK.
 

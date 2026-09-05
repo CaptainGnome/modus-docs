@@ -8,11 +8,11 @@
 
 | Поле | Тип | Смысл |
 | --- | --- | --- |
-| `id` | string | reverse-DNS ≥3 сегмента, ≤128 символов (`com.publisher.name`). Смена `id` = другой плагин (KV/settings не переносятся). Короткий `twitch` — отказ: `plugin id: нужен reverse-DNS …` |
+| `id` | string | reverse-DNS ≥3 сегмента, ≤128 символов (`com.publisher.name`). Смена `id` = другой плагин (KV/settings не переносятся). Короткий `twitch` — отказ: `plugin id: reverse-DNS required (com.publisher.name)` |
 | `name` | string **или** `{ "key", "fallback" }` | имя в UI. Plain — как есть; key — i18n (см. ниже) |
 | `version` | string | версия **пакета** (`0.1.0`), не ABI |
 | `author` | string | подпись автора |
-| `abi` | number | только **`2`**. Иначе: `ABI N не поддерживается (нужен 2)` |
+| `abi` | number | только **`2`**. Иначе: `ABI N not supported (need 2)` |
 
 Минимум consumer:
 
@@ -28,7 +28,7 @@
 
 ## Capabilities
 
-Массив строк. Пустой / отсутствует — только база (`wait`, settings, assets, log, …). Импорт WIT без гранта — soft-link ок; вызов без cap — `нет гранта …`.
+Массив строк. Пустой / отсутствует — только база (`wait`, settings, assets, log, …). Импорт WIT без гранта — soft-link ок; вызов без cap — `no grant …`.
 
 | Capability | Зачем |
 | --- | --- |
@@ -55,14 +55,14 @@
 
 | Поле | Правило |
 | --- | --- |
-| `platform_id` | короткое имя площадки (`twitch`), **не** `id` пакета. Обязателен при `bus.emit` и при любом `auth_mode`. Один живой плагин на значение; второй — `platform_id … уже занят` |
+| `platform_id` | короткое имя площадки (`twitch`), **не** `id` пакета. Обязателен при `bus.emit` и при любом `auth_mode`. Один живой плагин на значение; второй — `platform_id … already taken` |
 | `platform_logo` | путь **относительно** `assets/` (без префикса `assets/`, без `..`, без `\`). Расширения: svg/png/webp/jpg. Требует `platform_id`. Файл ≤ 128 KiB |
 
 ## `slots` / `user_theme`
 
 | Поле | Правило |
 | --- | --- |
-| `slots` | `"web"` и/или `"panel"`. Дубль / неизвестный слот — отказ. Есть слоты без `ui.slot` — `slots требуют грант ui.slot`. Грант без слота — `ui.slot требует слот web или panel` |
+| `slots` | `"web"` и/или `"panel"`. Дубль / неизвестный слот — отказ. Есть слоты без `ui.slot` — `slots require grant ui.slot`. Грант без слота — `ui.slot requires web or panel slot` |
 | `user_theme` | `true` — стример может подменить тему zip поверх web/panel. Требует `ui.slot` и слот web или panel |
 
 Ассеты: web — `assets/web/`; panel native — `assets/panel.json`; panel web — `assets/panel/` **или** те же `assets/web/`. Вместе `panel.json` и `panel/index.html` — отказ. Подробнее — [07-ui-slots-panel](07-ui-slots-panel.md).
@@ -79,7 +79,7 @@
 
 ## Auth (`auth_mode`)
 
-Без `auth_mode` поля `auth_url` / `token_url` / `device_url` ставить нельзя (`нужен auth.mode`). С режимом обязательны грант `auth.token` и `platform_id`.
+Без `auth_mode` поля `auth_url` / `token_url` / `device_url` ставить нельзя (`need auth.mode`). С режимом обязательны грант `auth.token` и `platform_id`.
 
 | Режим | Обязательно | Опционально |
 | --- | --- | --- |
@@ -91,7 +91,7 @@
 
 `client_secret` — запрещён. Оболочку OAuth гоняет Core; wasm видит только короткий access через `auth.token`. В `dev` — `--token` / `--token-file`, не сейф Core.
 
-`api` без вставленного токена: `режим api: вставьте токен`. Broker в проде требует verified подпись пакета — [10-package-signing](10-package-signing.md).
+`api` без вставленного токена: `api mode: paste token`. Broker в проде требует verified подпись пакета — [10-package-signing](10-package-signing.md).
 
 ## Catalog: `provides` / `depends` / `consumes`
 
@@ -123,13 +123,13 @@ Runtime label в форме settings: `settings::set_label_i18n` / `modus_sdk::s
 
 | Ошибка | Когда |
 | --- | --- |
-| `client_secret запрещён в манифесте` | поле есть |
-| `нет platform_id` | `bus.emit` или auth без поля |
+| `client_secret forbidden in manifest` | поле есть |
+| `no platform_id` | `bus.emit` или auth без поля |
 | `auth.mode требует грант auth.token` | режим без cap |
-| `нужен auth.mode` | URL auth без режима |
-| `slots требуют грант ui.slot` / обратное | рассинхрон слотов и cap |
+| `need auth.mode` | URL auth без режима |
+| `slots require grant ui.slot` / обратное | рассинхрон слотов и cap |
 | `user_theme требует …` | theme без ui surface |
 | `provides: неизвестное имя` / плохая схема | catalog |
-| `bridge_requests: тип … в denylist Core` | запрещённый OBS request |
+| `bridge_requests: type … is on Core denylist` | запрещённый OBS request |
 
 Следующая глава — [lifecycle и wait](01-lifecycle-wait.md).

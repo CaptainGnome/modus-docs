@@ -107,7 +107,7 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта history.read` | вызов без capability |
+| `no grant history.read` | вызов без capability |
 | пустая страница | журнал ещё пуст / другой инстанс |
 | ожидание history в `wait` | ошибка модели: history только через `read` |
 

@@ -16,9 +16,9 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 | --- | --- |
 | `channel` | канал площадки, не id плагина |
 | `payload` | `types::Payload` |
-| `opaque` | `Option<&str>`: пусто или **валидный JSON-текст**. Не JSON — `opaque не JSON`. Потребители хвост не разбирают. Секреты не класть |
+| `opaque` | `Option<&str>`: пусто или **валидный JSON-текст**. Не JSON — `opaque is not JSON`. Потребители хвост не разбирают. Секреты не класть |
 
-Нет гранта — `нет гранта bus.emit`. Тело штампованного события > 64 KiB — drop, `TooLarge`.
+Нет гранта — `no grant bus.emit`. Тело штампованного события > 64 KiB — drop, `TooLarge`.
 
 `source.platform` ← `platform_id` манифеста. Подделать `plugin_id` нельзя.
 
@@ -28,9 +28,9 @@ Helpers SDK (`emitter`/`connector`/`consumer`): `text_message`, `donation`, `fol
 
 | Payload | Нужен `platform_id` | Кто |
 | --- | --- | --- |
-| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | да, иначе `нет platform_id` | коннектор / emitter этой площадки |
+| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | да, иначе `no platform_id` | коннектор / emitter этой площадки |
 | `Custom` | нет (пусто ок) | любой с `bus.emit` |
-| `System` | — | только Core; гость — `system только Core` |
+| `System` | — | только Core; гость — `system is Core-only` |
 
 Один живой плагин на `platform_id`.
 
@@ -76,7 +76,7 @@ Helpers SDK (`emitter`/`connector`/`consumer`): `text_message`, `donation`, `fol
 
 ### Custom
 
-`Custom { kind, fields }`. `kind` не имя канона (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`) — иначе `custom не может маскировать канон`. TTS-запрос — `custom` kind `tts.request`, не голос в Core.
+`Custom { kind, fields }`. `kind` не имя канона (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`) — иначе `custom cannot mask canon`. TTS-запрос — `custom` kind `tts.request`, не голос в Core.
 
 ### System (только Core)
 

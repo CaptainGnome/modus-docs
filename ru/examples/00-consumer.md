@@ -101,8 +101,8 @@ modus dev ../modus-examples/consumer
 
 | Ситуация | Строка / эффект |
 | --- | --- |
-| Вызов emit / сети без гранта | `нет гранта …` (`HostError::Grant`) |
-| Ctrl+C / выкл | `остановлен` → `Ready::Stop` |
+| Вызов emit / сети без гранта | `no grant …` (`HostError::Grant`) |
+| Ctrl+C / выкл | `stopped` → `Ready::Stop` |
 | Забыли `subscribe` | в логе есть `emit … fixture hello`, нет `bus message …` |
 
 Полный список — [api/03-errors](../api/03-errors.md).

@@ -117,6 +117,6 @@ modus dev modus new panel --ui skip.json
 
 | Ситуация | Строка |
 | --- | --- |
-| слот/грант несогласованы | `slots требуют грант ui.slot` / `ui.slot требует слот web или panel` |
+| слот/грант несогласованы | `slots require grant ui.slot` / `ui.slot requires web or panel slot` |
 | нет `panel.json` при native | отказ `check`/`pack` (ассеты) |
-| post без гранта | `нет гранта ui.slot` |
+| post без гранта | `no ui slot` |

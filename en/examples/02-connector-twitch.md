@@ -156,10 +156,10 @@ Optional `--http-file` for Helix. Live OAuth — Core / broker, not the first de
 
 | Situation | String |
 | --- | --- |
-| Missing cap | `нет гранта auth.token` / `net.ws` / `bus.emit` |
-| Host not in `hosts` | `… вне манифеста` |
-| Not https/wss | `только https/wss` |
-| Foreign / revoked token | `чужой аккаунт`, `refresh отозван` (`is_stop`) |
-| No `platform_id` | `нет platform_id` |
-| Platform taken | `platform_id … уже занят` |
-| Stop during backoff | `остановлен` — exit, do not `Retry` |
+| Missing cap | `no grant auth.token` / `net.ws` / `bus.emit` |
+| Host not in `hosts` | `… not in manifest` |
+| Not https/wss | `https/wss only` |
+| Foreign / revoked token | `foreign account`, `refresh revoked` (`is_stop`) |
+| No `platform_id` | `no platform_id` |
+| Platform taken | `platform_id … already taken` |
+| Stop during backoff | `stopped` — exit, do not `Retry` |

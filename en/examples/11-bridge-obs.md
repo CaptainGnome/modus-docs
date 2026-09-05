@@ -100,10 +100,10 @@ In `dev`, bridge is a stub/log, not a live OBS WebSocket. Full crate: [`modus ne
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта bridge.obs` | call without capability |
+| `no grant bridge.obs` | call without capability |
 | type not in `bridge_requests` | manifest whitelist |
 | Core denylist | sensitive OBS request |
 | no connection / bad settings | error from Core → status |
-| own TCP to OBS | `запрещённый импорт` / network |
+| own TCP to OBS | `forbidden import` / network |
 
 See [ref/04-errors](../ref/04-errors.md), [ref/06-net-auth](../ref/06-net-auth.md).

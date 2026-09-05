@@ -2,7 +2,7 @@
 
 If this is your first plugin — stop in plain terms in the [`dev` tutorial](../start/03-dev.md). If you need the string table — this chapter.
 
-**Rule.** Error strings are part of ABI 2. In code: `HostError::classify(err)`, not parsing Russian phrases with your own `contains`. `is_stop()` — do not swallow into reconnect.
+**Rule.** Error strings are part of ABI 2. In code: `HostError::classify(err)`, do not parse literals with your own `contains`. `is_stop()` — do not swallow into reconnect.
 
 ## Classify
 
@@ -19,11 +19,11 @@ match HostError::classify(&err) {
 
 | Variant | Typical strings |
 | --- | --- |
-| `Stopped` | `остановлен` |
-| `Grant` | `нет гранта …` |
-| `Revoked` | `refresh отозван`, `чужой аккаунт` |
-| `Network` | `только https/wss`, `квота http` / `квота ws`, `тело/ответ слишком большое`, `… вне манифеста`, `… не в whitelist Core`, `литеральный IP запрещён`, `запрещённый адрес …` |
-| `Other` | everything else (incl. `нет platform_id`, `system только Core`, `TooLarge`) |
+| `Stopped` | `stopped` |
+| `Grant` | `no grant …` |
+| `Revoked` | `refresh revoked`, `foreign account` |
+| `Network` | `https/wss only`, `http quota` / `ws quota`, `body/response too large`, `… not in manifest`, `… not in Core whitelist`, `literal IP forbidden`, `forbidden address …` |
+| `Other` | everything else (incl. `no platform_id`, `system is Core-only`, `TooLarge`) |
 
 `is_stop()` = `Stopped` | `Revoked`. Connector scaffold and `modus new connector` exit `wait_backoff` this way.
 
@@ -31,18 +31,18 @@ match HostError::classify(&err) {
 
 | String | Meaning |
 | --- | --- |
-| `остановлен` | disable / remove / instance stop / Ctrl+C in `dev` |
-| `нет гранта …` | no capability |
-| `нет platform_id` | canon without the field in the manifest |
-| `system только Core` | plugin emits `system` |
-| `custom не может маскировать канон` | `custom.kind` took a canon name |
-| `opaque не JSON` | tail cannot be parsed |
-| `чужой аккаунт` | `token` not of your account |
-| `refresh отозван` | re-login |
-| `plugin id: нужен reverse-DNS (com.publisher.name)` | short id like `twitch` |
-| `client_secret запрещён в манифесте` | secret in the package |
-| `режим api: вставьте токен` | api not via browser “Sign in” |
-| `хост X вне манифеста` / `не в whitelist Core` | network |
+| `stopped` | disable / remove / instance stop / Ctrl+C in `dev` |
+| `no grant …` | no capability |
+| `no platform_id` | canon without the field in the manifest |
+| `system is Core-only` | plugin emits `system` |
+| `custom cannot mask canon` | `custom.kind` took a canon name |
+| `opaque is not JSON` | tail cannot be parsed |
+| `foreign account` | `token` not of your account |
+| `refresh revoked` | re-login |
+| `plugin id: reverse-DNS required (com.publisher.name)` | short id like `twitch` |
+| `client_secret forbidden in manifest` | secret in the package |
+| `api mode: paste token` | api not via browser “Sign in” |
+| `host X not in manifest` / `not in Core whitelist` | network |
 | `TooLarge` | bus event > 64 KiB |
 
 Next chapter — [CLI](05-cli.md).

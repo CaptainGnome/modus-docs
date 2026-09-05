@@ -15,9 +15,9 @@
 
 | Ошибка | Когда |
 | --- | --- |
-| `slots требуют грант ui.slot` | слоты без cap |
-| `ui.slot требует слот web или panel` | cap без слота |
-| `слот … не поддерживается` | не `web`/`panel` |
+| `slots require grant ui.slot` | слоты без cap |
+| `ui.slot requires web or panel slot` | cap без слота |
+| `slot … is not supported` | не `web`/`panel` |
 
 Опционально `"user_theme": true` — импорт темы стримером (нужен web или panel).
 

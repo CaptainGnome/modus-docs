@@ -58,7 +58,7 @@ The reference consumer in the repo is [`modus-examples/consumer`](../../../modus
 
 Format — reverse-DNS, like Android packages: **from the end** it reads “whose” and “what”.
 
-Rules (otherwise the CLI rejects with `plugin id: нужен reverse-DNS (com.publisher.name)` (plugin id: reverse-DNS required (com.publisher.name))):
+Rules (otherwise the CLI rejects with `plugin id: reverse-DNS required (com.publisher.name)` (plugin id: reverse-DNS required (com.publisher.name))):
 
 - at least **three** segments separated by dots: `com.you.bus`;
 - only lowercase `a-z`, digits, and hyphen inside a segment;
@@ -79,7 +79,7 @@ modus new consumer --id twitch
 - `consumer` — the role you **chose**.
 - `--id twitch` — deliberately wrong id.
 
-You will see `plugin id: нужен reverse-DNS (com.publisher.name)`. That is chapter success, not a broken CLI.
+You will see `plugin id: reverse-DNS required (com.publisher.name)`. That is chapter success, not a broken CLI.
 
 ## What not to choose now
 

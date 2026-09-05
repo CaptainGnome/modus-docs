@@ -108,8 +108,8 @@ Consumer рядом увидит `fixture hello`. Проверка act: `modus d
 
 | Ситуация | Строка |
 | --- | --- |
-| Нет `bus.emit` | `нет гранта bus.emit` |
-| Пустой / нет `platform_id` | `нет platform_id` |
-| Второй живой плагин той же площадки | `platform_id … уже занят` |
-| Emit `system` | `system только Core` |
+| Нет `bus.emit` | `no grant bus.emit` |
+| Пустой / нет `platform_id` | `no platform_id` |
+| Второй живой плагин той же площадки | `platform_id … already taken` |
+| Emit `system` | `system is Core-only` |
 | Событие > 64 KiB | `TooLarge` |

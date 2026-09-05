@@ -21,7 +21,7 @@ Not in WIT — not in the SDK. The SDK does not inject WASI: `wasi:*` in the com
 
 If an SDK wrapper disagrees with WIT — **WIT (host) wins**. Fix the bug in the SDK; official plugins are not taken off it.
 
-Raw `wit_bindgen::generate` is accepted by the host if the component is valid. Directory `pack` / `check` **refuse** if the same crate has both `modus-sdk` and `wit_bindgen::generate` in `src/**/*.rs`. String: `WIT вручную плюс SDK — два bindgen`.
+Raw `wit_bindgen::generate` is accepted by the host if the component is valid. Directory `pack` / `check` **refuse** if the same crate has both `modus-sdk` and `wit_bindgen::generate` in `src/**/*.rs`. String: `manual WIT plus SDK — dual bindgen`.
 
 New package: SDK feature; do not copy a `lib.rs` with raw bindgen.
 

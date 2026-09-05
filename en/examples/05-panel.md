@@ -118,6 +118,6 @@ modus dev modus new panel --ui skip.json
 
 | Situation | String |
 | --- | --- |
-| slot/grant mismatch | `slots требуют грант ui.slot` / `ui.slot требует слот web или panel` |
+| slot/grant mismatch | `slots require grant ui.slot` / `ui.slot requires web or panel slot` |
 | no `panel.json` for native | `check`/`pack` refuse (assets) |
-| post without grant | `нет гранта ui.slot` |
+| post without grant | `no ui slot` |

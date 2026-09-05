@@ -31,7 +31,7 @@ wait::wait() -> Ready
 | Вариант | Когда | Что делать |
 | --- | --- | --- |
 | `Stop` | выкл / удаление / Ctrl+C в `dev` | `return` из `run`. Флаг стопа важнее очереди: даже если в inbox ещё кадры |
-| `Bus` | событие шины после `subscribe` | consumer / логика бота. Inbox **64**; полный — drop (`шина: inbox {id} полный, drop`), не блок |
+| `Bus` | событие шины после `subscribe` | consumer / логика бота. Inbox **64**; полный — drop (`bus: inbox {id} full, drop`), не блок |
 | `WsText` / `WsClosed` | кадр / обрыв WS | коннектор. Ping/pong хост закрывает сам |
 | `Timer` | сработал `set_timer` | свой таймер. Не путать с backoff |
 | `Settings` | Core сохранил форму этого плагина | перечитать `settings.get`. В `init` `get` без `wait` ок |
@@ -40,7 +40,7 @@ wait::wait() -> Ready
 | `Ui` | кадр со страницы слота | грант `ui.slot` + слот |
 | `MediaEnded` | конец / `stop` у `media.audio` play | роль `player`: `release` cache-key, если был |
 
-После стопа вызовы хоста отдают `"остановлен"` (`HostError::Stopped`). `clock::sleep_ms` смотрит стоп каждые 50 ms — не замена `wait`.
+После стопа вызовы хоста отдают `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` смотрит стоп каждые 50 ms — не замена `wait`.
 
 Успешный логин в Core: `reload` инстанса, `run` с нуля, `list_accounts` уже не пуст. Нет аккаунта — ждать `Stop`, чат не выдумывать.
 
@@ -48,13 +48,13 @@ wait::wait() -> Ready
 
 `HostError::classify` / `is_stop()` — [ошибки хоста](04-errors.md), подробно — [api/03-errors](../api/03-errors.md). `Stopped` и `Revoked` — не сеть.
 
-`modus_sdk::wait_backoff(ms) -> bool`: ставит таймер, крутит `wait`, **true** если стоп (в т.ч. `Act` во время backoff закрывает job ошибкой «нет соединения»). `Resume` — как сработавший таймер: **false**, немедленный retry. Каркас `new connector` и `modus new connector` так и делают. Не писать свой `sleep` + реконнект вокруг `"остановлен"`.
+`modus_sdk::wait_backoff(ms) -> bool`: ставит таймер, крутит `wait`, **true** если стоп (в т.ч. `Act` во время backoff закрывает job ошибкой «no connection»). `Resume` — как сработавший таймер: **false**, немедленный retry. Каркас `new connector` и `modus new connector` так и делают. Не писать свой `sleep` + реконнект вокруг `"stopped"`.
 
 Константы: `BACKOFF_START_MS` 1 s, потолок `BACKOFF_MAX_MS` 30 s, `next_backoff_ms`.
 
 ## Trap, `dev`, память
 
-Trap в `init`/`run` — дело **Core**, не `dev`: рестарт 1 s, затем 2 s; 3 падения за 60 s → карантин, пока стример не включит снова. В `dev` Ctrl+C = `Stop`, join потока 5 s (`не остановить` — гость застрял вне `wait`).
+Trap в `init`/`run` — дело **Core**, не `dev`: рестарт 1 s, затем 2 s; 3 падения за 60 s → карантин, пока стример не включит снова. В `dev` Ctrl+C = `Stop`, join потока 5 s (`cannot stop` — гость застрял вне `wait`).
 
 Память инстанса **16 MiB**. Диск гостю не виден. RAM wasm сгорает при выгрузке; KV, settings, аккаунты, журнал — у Core.
 

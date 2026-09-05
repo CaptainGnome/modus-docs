@@ -92,7 +92,7 @@ Flags: [api/11-cli-dev](../api/11-cli-dev.md). Act contract — [api/06-kv-act-a
 
 | Situation | String / effect |
 | --- | --- |
-| No grant | `нет гранта chat.act` |
+| No grant | `no grant chat.act` |
 | No live platform connector | error immediately on `act` (host has nobody to wake) |
-| Connector in backoff | `нет соединения` on the complete path |
-| Stop | `остановлен` |
+| Connector in backoff | `no connection` on the complete path |
+| Stop | `stopped` |

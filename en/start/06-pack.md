@@ -22,7 +22,7 @@ Inside the zip two required files:
 
 The consumer scaffold has no `assets/` folder — it will not be in the zip. That is how it should be.
 
-No file after an error — `pack` does not write one. Common texts: `Нужен target wasm32-unknown-unknown` (Need target wasm32-unknown-unknown), `cargo build не удался` (cargo build failed), no `manifest`. Fix the cause; do not copy someone else's `.mplug`.
+No file after an error — `pack` does not write one. Common texts: `Need target wasm32-unknown-unknown` (Need target wasm32-unknown-unknown), `cargo build failed` (cargo build failed), no `manifest`. Fix the cause; do not copy someone else's `.mplug`.
 
 Token and `inject.json` do **not** go into the package. Only what is in the crate directory (manifest, wasm, `assets/`) goes in.
 

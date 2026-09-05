@@ -12,7 +12,7 @@ See full canon — [02-canon-bus](02-canon-bus.md).
 bus_emit::emit(channel, payload, opaque?) -> Result<(), String>
 ```
 
-Short: Core stamp; `system` forbidden to guest; body > 64 KiB → `TooLarge`; no grant → `нет гранта bus.emit`.
+Short: Core stamp; `system` forbidden to guest; body > 64 KiB → `TooLarge`; no grant → `no grant bus.emit`.
 
 ## `auth.token`
 
@@ -26,8 +26,8 @@ token(account_id) -> Result<string, string>
 | Situation | Behavior |
 | --- | --- |
 | no grant / stop | empty list; `token` → rejected |
-| foreign `account_id` | `чужой аккаунт` (`HostError::Revoked`) |
-| refresh revoked | `refresh отозван` |
+| foreign `account_id` | `foreign account` (`HostError::Revoked`) |
+| refresh revoked | `refresh revoked` |
 | successful login in Core | instance **reload**, `run` from scratch |
 | no account | scaffold waits for `Stop`, do not invent chat |
 
@@ -97,6 +97,6 @@ In `dev`: `--replay file` (text frames per line) **or** one live `wss://` from `
 
 ## Consequence
 
-Import without grant — soft-link ok; call without cap — `нет гранта …`. Network past the host (WASI / own socket) — `pack` rejects. `dev` vs Core network divergence = SDK bug.
+Import without grant — soft-link ok; call without cap — `no grant …`. Network past the host (WASI / own socket) — `pack` rejects. `dev` vs Core network divergence = SDK bug.
 
 Next chapter — [KV, act, alerts](06-kv-act-alerts.md).

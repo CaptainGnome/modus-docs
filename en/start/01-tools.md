@@ -45,7 +45,7 @@ rustup target list --installed
 - `list` — show targets.
 - `--installed` — only ones already on the machine, not the full rustup catalog.
 
-The list must contain the line `wasm32-unknown-unknown`. If it is missing — `dev` and `pack` will later fail with `Нужен target wasm32-unknown-unknown` (Need target wasm32-unknown-unknown). Catch it here, not there.
+The list must contain the line `wasm32-unknown-unknown`. If it is missing — `dev` and `pack` will later fail with `Need target wasm32-unknown-unknown` (Need target wasm32-unknown-unknown). Catch it here, not there.
 
 **Important.** This target does not give the guest files or sockets (in wasm that is called WASI). Otherwise the sandbox could be bypassed. More precisely — [reference](../README.md#reference).
 

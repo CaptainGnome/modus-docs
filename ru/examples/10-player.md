@@ -100,8 +100,8 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта media.audio` | `play` без capability |
-| `нет гранта media.cache` | `release` / ensure без гранта |
+| `no grant media.audio` | `play` без capability |
+| `no grant media.cache` | `release` / ensure без гранта |
 | отказ URL | политика сети / нет pin в кэше |
 | нет `MediaEnded` в `dev` | возможная заглушка CLI |
 

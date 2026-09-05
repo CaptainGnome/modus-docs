@@ -113,9 +113,9 @@ Needs a message emitter with commands (fixture/twitch) or panel clicks. Full cra
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта media.embed` | call without capability |
+| `no grant media.embed` | call without capability |
 | `allowed` = false / warn in log | host not in `embed_hosts` |
-| `slots требуют грант ui.slot` | slots without grant |
+| `slots require grant ui.slot` | slots without grant |
 | duplicates in `embed_hosts` | manifest refuse at pack/load |
 | CSP `frame-src 'none'` | empty allowlist |
 

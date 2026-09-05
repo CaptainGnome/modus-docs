@@ -97,8 +97,8 @@ In `dev`, audio is often a stub/log — do not expect Core parity. Full crate: [
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта media.audio` | `play` without capability |
-| `нет гранта media.cache` | `release` / ensure without grant |
+| `no grant media.audio` | `play` without capability |
+| `no grant media.cache` | `release` / ensure without grant |
 | URL refused | network policy / no pin in cache |
 | no `MediaEnded` in `dev` | possible CLI stub |
 

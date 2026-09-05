@@ -103,8 +103,8 @@ modus dev modus new provider --settings channel.json
 
 | Situation | String |
 | --- | --- |
-| No `catalog.publish` | `нет гранта catalog.publish` |
-| CDN/API outside `hosts` | `… вне манифеста` |
-| Quota / size | `квота http`, `тело слишком большое` |
-| Stop | `остановлен` → do not spin `Retry` |
+| No `catalog.publish` | `no grant catalog.publish` |
+| CDN/API outside `hosts` | `… not in manifest` |
+| Quota / size | `http quota`, `body too large` |
+| Stop | `stopped` → do not spin `Retry` |
 | Canon emit from provider | roles do not; no `bus.emit` grant |

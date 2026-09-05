@@ -12,7 +12,7 @@
 bus_emit::emit(channel, payload, opaque?) -> Result<(), String>
 ```
 
-Кратко: штамп Core; `system` запрещён гостю; тело > 64 KiB → `TooLarge`; нет гранта → `нет гранта bus.emit`.
+Кратко: штамп Core; `system` запрещён гостю; тело > 64 KiB → `TooLarge`; no grant → `no grant bus.emit`.
 
 ## `auth.token`
 
@@ -25,9 +25,9 @@ token(account_id) -> Result<string, string>
 
 | Ситуация | Поведение |
 | --- | --- |
-| нет гранта / стоп | пустой список; `token` → отказ |
-| чужой `account_id` | `чужой аккаунт` (`HostError::Revoked`) |
-| refresh отозван | `refresh отозван` |
+| no grant / стоп | пустой список; `token` → отказ |
+| чужой `account_id` | `foreign account` (`HostError::Revoked`) |
+| refresh revoked | `refresh revoked` |
 | успешный логин в Core | инстанс **reload**, `run` с нуля |
 | нет аккаунта | каркас ждёт `Stop`, чат не выдумывать |
 
@@ -97,6 +97,6 @@ close(handle) -> Result<(), String>
 
 ## Следствие
 
-Импорт без гранта — soft-link ок; вызов без cap — `нет гранта …`. Сеть в обход хоста (WASI / свой сокет) — `pack` отказ. Расхождение `dev` и Core по сети = баг SDK.
+Импорт без гранта — soft-link ок; вызов без cap — `no grant …`. Сеть в обход хоста (WASI / свой сокет) — `pack` отказ. Расхождение `dev` и Core по сети = баг SDK.
 
 Следующая глава — [KV, act, алерты](06-kv-act-alerts.md).

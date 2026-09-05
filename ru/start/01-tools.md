@@ -45,7 +45,7 @@ rustup target list --installed
 - `list` — показать цели.
 - `--installed` — только уже стоящие на машине, не весь каталог rustup.
 
-В списке должна быть строка `wasm32-unknown-unknown`. Нет её — `dev` и `pack` позже упадут с текстом `Нужен target wasm32-unknown-unknown`. Ловим здесь, не там.
+В списке должна быть строка `wasm32-unknown-unknown`. Нет её — `dev` и `pack` позже упадут с текстом `Need target wasm32-unknown-unknown`. Ловим здесь, не там.
 
 **Важно.** Эта цель не даёт гостю файлы и сокеты (в wasm это зовут WASI). Иначе песочницу можно обойти. Точнее — [справочник](../README.md#справочник).
 

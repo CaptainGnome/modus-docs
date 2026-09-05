@@ -16,9 +16,9 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 | --- | --- |
 | `channel` | platform channel, not plugin id |
 | `payload` | `types::Payload` |
-| `opaque` | `Option<&str>`: empty or **valid JSON text**. Not JSON — `opaque не JSON`. Consumers do not parse the tail. Do not put secrets |
+| `opaque` | `Option<&str>`: empty or **valid JSON text**. Not JSON — `opaque is not JSON`. Consumers do not parse the tail. Do not put secrets |
 
-No grant — `нет гранта bus.emit`. Stamped event body > 64 KiB — drop, `TooLarge`.
+No grant — `no grant bus.emit`. Stamped event body > 64 KiB — drop, `TooLarge`.
 
 `source.platform` ← manifest `platform_id`. Forging `plugin_id` is impossible.
 
@@ -28,9 +28,9 @@ SDK helpers (`emitter`/`connector`/`consumer`): `text_message`, `donation`, `fol
 
 | Payload | Needs `platform_id` | Who |
 | --- | --- | --- |
-| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | yes, else `нет platform_id` | connector / emitter of that platform |
+| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | yes, else `no platform_id` | connector / emitter of that platform |
 | `Custom` | no (empty ok) | anyone with `bus.emit` |
-| `System` | — | Core only; guest — `system только Core` |
+| `System` | — | Core only; guest — `system is Core-only` |
 
 One live plugin per `platform_id`.
 
@@ -76,7 +76,7 @@ Fact from the platform, **not** `chat.act`. Fields: `action` (`delete`/`timeout`
 
 ### Custom
 
-`Custom { kind, fields }`. `kind` must not be a canon name (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`) — else `custom не может маскировать канон`. TTS request — `custom` kind `tts.request`, not voice in Core.
+`Custom { kind, fields }`. `kind` must not be a canon name (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`) — else `custom cannot mask canon`. TTS request — `custom` kind `tts.request`, not voice in Core.
 
 ### System (Core only)
 

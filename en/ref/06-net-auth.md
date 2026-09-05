@@ -14,8 +14,8 @@ token(account-id) -> result<string, string>
 ```
 
 - Without grant / on stop — empty list; `token` → refuse.
-- Foreign id → `чужой аккаунт` (`HostError::Revoked`).
-- Refresh revoked → `refresh отозван`.
+- Foreign id → `foreign account` (`HostError::Revoked`).
+- Refresh revoked → `refresh revoked`.
 - After successful login in Core the plugin **restarts**: `run` sees accounts again.
 - No account → scaffold waits for `Stop`; do not invent chat.
 
@@ -41,6 +41,6 @@ In `dev`: `--replay` (file lines) or one live URL from `hosts`.
 
 ## Consequence
 
-Import without grant — soft-link ok; call without cap — `нет гранта …`. Network bypassing the host (WASI / own socket) — `pack` refuse.
+Import without grant — soft-link ok; call without cap — `no grant …`. Network bypassing the host (WASI / own socket) — `pack` refuse.
 
 Next chapter — [settings / KV / act / alerts / slots](07-host-apis.md).

@@ -35,7 +35,7 @@ modus dev mine --token fake --replay mine/frames.replay
 
 Каркас после `token` коннектится к `wss://example.com/` (из кода), но с `--replay` сокет учебный: кадры из файла. Плагин эмитит сообщение на шину — в терминале видно текст кадра (например `hello-dev`).
 
-Ctrl+C — `Ready::Stop`. `"остановлен"` / `HostError::is_stop()` не глотать в реконнект: каркас зовёт `wait_backoff`, стоп выходит из цикла.
+Ctrl+C — `Ready::Stop`. `"stopped"` / `HostError::is_stop()` не глотать в реконнект: каркас зовёт `wait_backoff`, стоп выходит из цикла.
 
 Без `--replay` CLI может открыть один live `wss://` из `hosts` манифеста (не private). Для первого раза replay достаточно.
 

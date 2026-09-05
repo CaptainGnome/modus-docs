@@ -30,7 +30,7 @@
 3. soft-link импортов (известный modus без гранта — ок; WASI / чужое — отказ);
 4. zip → `dist/<имя>.mplug`.
 
-Без успешного `check` файла нет. В одном crate `modus-sdk` + `wit_bindgen::generate` в `src` — отказ: `WIT вручную плюс SDK — два bindgen`.
+Без успешного `check` файла нет. В одном crate `modus-sdk` + `wit_bindgen::generate` в `src` — отказ: `manual WIT plus SDK — dual bindgen`.
 
 ## Подпись (для автора)
 

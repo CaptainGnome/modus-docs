@@ -35,7 +35,7 @@ modus dev mine --token fake --replay mine/frames.replay
 
 After `token` the scaffold connects to `wss://example.com/` (from code), but with `--replay` the socket is teaching: frames from the file. The plugin emits a message on the bus — the frame text appears in the terminal (for example `hello-dev`).
 
-Ctrl+C — `Ready::Stop`. Do not swallow `"остановлен"` (stopped) / `HostError::is_stop()` into reconnect: the scaffold calls `wait_backoff`, stop leaves the loop.
+Ctrl+C — `Ready::Stop`. Do not swallow `"stopped"` / `HostError::is_stop()` into reconnect: the scaffold calls `wait_backoff`, stop leaves the loop.
 
 Without `--replay` the CLI may open one live `wss://` from the manifest `hosts` (not private). For the first time replay is enough.
 

@@ -15,9 +15,9 @@ References: [`modus-examples/widget`](../../../modus-examples/widget), `modus ne
 
 | Error | When |
 | --- | --- |
-| `slots требуют грант ui.slot` | slots without cap |
-| `ui.slot требует слот web или panel` | cap without slot |
-| `слот … не поддерживается` | not `web`/`panel` |
+| `slots require grant ui.slot` | slots without cap |
+| `ui.slot requires web or panel slot` | cap without slot |
+| `slot … is not supported` | not `web`/`panel` |
 
 Optional `"user_theme": true` — streamer theme import (needs web or panel).
 

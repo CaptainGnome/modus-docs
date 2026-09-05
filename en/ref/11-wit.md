@@ -7,7 +7,7 @@ If this is your first plugin — you do not need WIT: [contract](00-contract.md)
 ## Consequence
 
 - Raw `wit_bindgen::generate` is accepted by the host if the component is valid.
-- In one crate with `modus-sdk` — `pack` / `check` refuse: `WIT вручную плюс SDK — два bindgen`.
+- In one crate with `modus-sdk` — `pack` / `check` refuse: `manual WIT plus SDK — dual bindgen`.
 - SDK crate major = ABI. Breaking WIT — new SDK major in the same release as the ABI.
 - On disagreement between wrapper and WIT — WIT (host) wins; fix the bug in the SDK.
 

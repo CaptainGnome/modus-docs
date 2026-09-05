@@ -2,7 +2,7 @@
 
 Если это первый плагин — стоп на пальцах в [туториале `dev`](../start/03-dev.md). Если нужна таблица строк — эта глава.
 
-**Правило.** Строки ошибок — часть ABI 2. В коде: `HostError::classify(err)`, не разбор русских фраз своими `contains`. `is_stop()` — не глотать в реконнект.
+**Правило.** Строки ошибок — часть ABI 2. В коде: `HostError::classify(err)`, не парсить литералы своими `contains`. `is_stop()` — не глотать в реконнект.
 
 ## Classify
 
@@ -19,11 +19,11 @@ match HostError::classify(&err) {
 
 | Вариант | Типичные строки |
 | --- | --- |
-| `Stopped` | `остановлен` |
-| `Grant` | `нет гранта …` |
-| `Revoked` | `refresh отозван`, `чужой аккаунт` |
-| `Network` | `только https/wss`, `квота http` / `квота ws`, `тело/ответ слишком большое`, `… вне манифеста`, `… не в whitelist Core`, `литеральный IP запрещён`, `запрещённый адрес …` |
-| `Other` | всё остальное (в т.ч. `нет platform_id`, `system только Core`, `TooLarge`) |
+| `Stopped` | `stopped` |
+| `Grant` | `no grant …` |
+| `Revoked` | `refresh revoked`, `foreign account` |
+| `Network` | `https/wss only`, `http quota` / `ws quota`, `body/response too large`, `… not in manifest`, `… not in Core whitelist`, `literal IP forbidden`, `forbidden address …` |
+| `Other` | всё остальное (в т.ч. `no platform_id`, `system is Core-only`, `TooLarge`) |
 
 `is_stop()` = `Stopped` | `Revoked`. Каркас коннектора и `modus new connector` так выходят из `wait_backoff`.
 
@@ -31,18 +31,18 @@ match HostError::classify(&err) {
 
 | Строка | Смысл |
 | --- | --- |
-| `остановлен` | выкл / удаление / стоп инстанса / Ctrl+C в `dev` |
-| `нет гранта …` | нет capability |
-| `нет platform_id` | канон без поля в манифесте |
-| `system только Core` | плагин эмитит `system` |
-| `custom не может маскировать канон` | `custom.kind` занял имя канона |
-| `opaque не JSON` | хвост не разобрать |
-| `чужой аккаунт` | `token` не вашего аккаунта |
-| `refresh отозван` | перелогин |
-| `plugin id: нужен reverse-DNS (com.publisher.name)` | короткий id вроде `twitch` |
-| `client_secret запрещён в манифесте` | секрет в пакете |
-| `режим api: вставьте токен` | api не через «Войти» в браузер |
-| `хост X вне манифеста` / `не в whitelist Core` | сеть |
+| `stopped` | выкл / удаление / стоп инстанса / Ctrl+C в `dev` |
+| `no grant …` | нет capability |
+| `no platform_id` | канон без поля в манифесте |
+| `system is Core-only` | плагин эмитит `system` |
+| `custom cannot mask canon` | `custom.kind` занял имя канона |
+| `opaque is not JSON` | хвост не разобрать |
+| `foreign account` | `token` не вашего аккаунта |
+| `refresh revoked` | перелогин |
+| `plugin id: reverse-DNS required (com.publisher.name)` | короткий id вроде `twitch` |
+| `client_secret forbidden in manifest` | секрет в пакете |
+| `api mode: paste token` | api не через «Войти» в браузер |
+| `host X not in manifest` / `not in Core whitelist` | сеть |
 | `TooLarge` | событие шины > 64 KiB |
 
 Следующая глава — [CLI](05-cli.md).

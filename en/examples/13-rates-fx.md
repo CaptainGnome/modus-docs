@@ -22,7 +22,7 @@ Map — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates
   "abi": 2,
   // fetch snapshot + push pair table into Core FX
   "capabilities": ["net.http", "rates.publish"],
-  // only this origin may be fetched — else «вне манифеста»
+  // only this origin may be fetched — else «not in manifest»
   "hosts": ["open.er-api.com"]
   // no UI / KV / emit — role is rate table only
 }
@@ -32,7 +32,7 @@ Map — [ref/01-roles](../ref/01-roles.md). API — [api/09-bridge-history-rates
 | --- | --- |
 | `net.http` | `net_http::fetch` |
 | `rates.publish` | pair snapshot → Core FX table |
-| `hosts` | origin allowlist; else `… вне манифеста` |
+| `hosts` | origin allowlist; else `… not in manifest` |
 | no UI / KV / emit | role is rate table only |
 
 ## Code
@@ -114,11 +114,11 @@ In `dev`, publish often goes to stderr; convert in another plugin depends on whe
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта net.http` / `rates.publish` | no capability |
-| `хост … вне манифеста` / `не в whitelist Core` | URL not in allowlist |
-| `только https/wss` | scheme |
-| `квота http` | rate limit |
-| empty snapshot / `нет rates` | broken response JSON |
+| `no grant net.http` / `rates.publish` | no capability |
+| `host … not in manifest` / `not in Core whitelist` | URL not in allowlist |
+| `https/wss only` | scheme |
+| `http quota` | rate limit |
+| empty snapshot / `missing rates` | broken response JSON |
 | convert without publish | alerter `Err` on donation FX |
 
 See [ref/04-errors](../ref/04-errors.md), [ref/06-net-auth](../ref/06-net-auth.md).

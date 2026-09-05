@@ -108,8 +108,8 @@ A consumer beside it will see `fixture hello`. Act check: `modus dev … --act <
 
 | Situation | String |
 | --- | --- |
-| No `bus.emit` | `нет гранта bus.emit` |
-| Empty / missing `platform_id` | `нет platform_id` |
-| Second live plugin for same platform | `platform_id … уже занят` |
-| Emit `system` | `system только Core` |
+| No `bus.emit` | `no grant bus.emit` |
+| Empty / missing `platform_id` | `no platform_id` |
+| Second live plugin for same platform | `platform_id … already taken` |
+| Emit `system` | `system is Core-only` |
 | Event > 64 KiB | `TooLarge` |

@@ -98,7 +98,7 @@ modus dev ../modus-examples/widget --ui click.json
 
 | Ситуация | Строка |
 | --- | --- |
-| `slots` без гранта | `slots требуют грант ui.slot` |
-| грант без слота | `ui.slot требует слот web или panel` |
-| чужой слот | `слот … не поддерживается` |
-| post без `ui.slot` | `нет гранта ui.slot` |
+| `slots` без гранта | `slots require grant ui.slot` |
+| грант без слота | `ui.slot requires web or panel slot` |
+| чужой слот | `slot … is not supported` |
+| post без `ui.slot` | `no ui slot` |

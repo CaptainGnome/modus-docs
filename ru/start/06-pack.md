@@ -22,7 +22,7 @@ modus pack bus
 
 Папки `assets/` у каркаса consumer нет — в zip её не будет. Так и должно быть.
 
-Нет файла после ошибки — `pack` его не пишет. Частые тексты: `Нужен target wasm32-unknown-unknown`, `cargo build не удался`, нет `manifest`. Чините причину, не копируйте чужой `.mplug`.
+Нет файла после ошибки — `pack` его не пишет. Частые тексты: `Need target wasm32-unknown-unknown`, `cargo build failed`, нет `manifest`. Чините причину, не копируйте чужой `.mplug`.
 
 Токен и `inject.json` в пакет **не** попадают. Туда попадает только то, что в каталоге crate (манифест, wasm, `assets/`).
 

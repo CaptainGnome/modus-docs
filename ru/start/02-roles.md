@@ -58,7 +58,7 @@ Options:
 
 Формат — reverse-DNS, как у пакетов Android: **с конца** читается «чьё» и «что».
 
-Правила (иначе CLI откажет строкой `plugin id: нужен reverse-DNS (com.publisher.name)`):
+Правила (иначе CLI откажет строкой `plugin id: reverse-DNS required (com.publisher.name)`):
 
 - минимум **три** куска, разделённых точкой: `com.you.bus`;
 - только строчные `a-z`, цифры и дефис внутри куска;
@@ -79,7 +79,7 @@ modus new consumer --id twitch
 - `consumer` — роль, которую вы **выбрали**.
 - `--id twitch` — нарочно неверный id.
 
-Вы увидите `plugin id: нужен reverse-DNS (com.publisher.name)`. Это успех главы, не поломка CLI.
+Вы увидите `plugin id: reverse-DNS required (com.publisher.name)`. Это успех главы, не поломка CLI.
 
 ## Что не выбирать сейчас
 

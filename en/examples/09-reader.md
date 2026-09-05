@@ -104,7 +104,7 @@ Teaching emits from `dev` appear both in history (if the host writes the journal
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта history.read` | call without capability |
+| `no grant history.read` | call without capability |
 | empty page | journal still empty / other instance |
 | expecting history in `wait` | model error: history only via `read` |
 

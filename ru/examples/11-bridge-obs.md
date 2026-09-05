@@ -103,10 +103,10 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта bridge.obs` | вызов без capability |
+| `no grant bridge.obs` | вызов без capability |
 | тип не в `bridge_requests` | whitelist манифеста |
 | denylist Core | чувствительные OBS request |
-| нет соединения / неверные settings | ошибка от Core → в status |
-| попытка своего TCP к OBS | запрещённый импорт / сеть |
+| no connection / неверные settings | ошибка от Core → в status |
+| попытка своего TCP к OBS | `forbidden import` / network |
 
 См. [ref/04-errors](../ref/04-errors.md), [ref/06-net-auth](../ref/06-net-auth.md).

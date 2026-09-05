@@ -18,7 +18,7 @@ Panel, chat history, sound, bridges — **not available in a plugin**. Not “la
 
 **Learn chat history before subscribe.** The journal is in Core. `wait` after `subscribe` gives only new letters. Old messages from a file or database are not given to the guest.
 
-**Emit `system`.** Service messages are written only by Core. Even a connector with the right to put events on the bus gets rejection `system только Core` (system Core only). A consumer has not reached emit yet — and should not.
+**Emit `system`.** Service messages are written only by Core. Even a connector with the right to put events on the bus gets rejection `system is Core-only` (system Core only). A consumer has not reached emit yet — and should not.
 
 **Put a password in the log.** Do not write a token, `bearer`, or `client_secret` in `log::log`. The host will replace some strings with `[redacted]`, but that is a safety net, not a place for secrets. The secret is not in wasm and not in `inject.json`.
 

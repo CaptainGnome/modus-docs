@@ -22,7 +22,7 @@
   "abi": 2,
   /* fetch snapshot + publish таблицы в Core */
   "capabilities": ["net.http", "rates.publish"],
-  /* allowlist origin; иначе «… вне манифеста» */
+  /* allowlist origin; else `… not in manifest` */
   "hosts": ["open.er-api.com"]
   /* UI / KV / emit нет — только таблица курсов */
 }
@@ -32,7 +32,7 @@
 | --- | --- |
 | `net.http` | `net_http::fetch` |
 | `rates.publish` | снимок пар → FX table Core |
-| `hosts` | allowlist origin; иначе `… вне манифеста` |
+| `hosts` | allowlist origin; else `… not in manifest` |
 | нет UI / KV / emit | роль только таблица курсов |
 
 ## Код
@@ -117,11 +117,11 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта net.http` / `rates.publish` | нет capability |
-| `хост … вне манифеста` / `не в whitelist Core` | URL не в allowlist |
-| `только https/wss` | схема |
-| `квота http` | rate limit |
-| пустой снимок / `нет rates` | битый JSON ответа |
+| `no grant net.http` / `rates.publish` | нет capability |
+| `host … not in manifest` / `not in Core whitelist` | URL не в allowlist |
+| `https/wss only` | схема |
+| `http quota` | rate limit |
+| пустой снимок / `missing rates` | битый JSON ответа |
 | convert без publish | у alerter `Err` на donation FX |
 
 См. [ref/04-errors](../ref/04-errors.md), [ref/06-net-auth](../ref/06-net-auth.md).

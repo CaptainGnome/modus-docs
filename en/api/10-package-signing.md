@@ -30,7 +30,7 @@ Compressed layout — [ref/08-package](../ref/08-package.md). Full signing polic
 3. soft-link imports (known modus without grant — ok; WASI / foreign — rejected);
 4. zip → `dist/<name>.mplug`.
 
-Without a successful `check` there is no file. In one crate `modus-sdk` + `wit_bindgen::generate` in `src` — rejected: `WIT вручную плюс SDK — два bindgen`.
+Without a successful `check` there is no file. In one crate `modus-sdk` + `wit_bindgen::generate` in `src` — rejected: `manual WIT plus SDK — dual bindgen`.
 
 ## Signing (for the author)
 

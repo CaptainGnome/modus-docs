@@ -2,7 +2,7 @@
 
 If this is your first plugin — `new` roles in the [tutorial](../start/02-roles.md). If you need feature × grant × reference — this chapter. Annotated code walkthroughs — [examples/](../examples/README.md).
 
-**Rule.** The guest is always on world **`plugin`** (full guest API). Rights — only manifest + approve + deny on the call. Soft-link: a known modus import without a grant — `pack`/load ok; call without cap — `Err`. `wasi:*` / foreign — always refuse (`запрещённый импорт …` / `лишний импорт …`).
+**Rule.** The guest is always on world **`plugin`** (full guest API). Rights — only manifest + approve + deny on the call. Soft-link: a known modus import without a grant — `pack`/load ok; call without cap — `Err`. `wasi:*` / foreign — always refuse (`forbidden import …` / `extra import …`).
 
 SDK: **one** Cargo feature = code preset (helpers / re-export), not another WIT world. Host — world `runtime` (same superset); the guest does not choose it.
 
@@ -35,7 +35,7 @@ Every package has: `self_info`, `log`, `wait`, `types`, `clock`, `settings`, `as
 | `rates.publish` | `rates_publish` (`rates`) | |
 | `rates.convert` | `rates` (`alerter`) | convert → base; rate table — Core / `rates.publish` |
 
-`bus.emit` in the manifest requires a non-empty `platform_id`. Canon without the field — `нет platform_id`. One live plugin per `platform_id`; a second — `platform_id … уже занят`. `platform_id` is a short platform name, not the package `id`.
+`bus.emit` in the manifest requires a non-empty `platform_id`. Canon without the field — `no platform_id`. One live plugin per `platform_id`; a second — `platform_id … already taken`. `platform_id` is a short platform name, not the package `id`.
 
 ## Roles
 
@@ -66,9 +66,9 @@ Commander: `chat.act` → host wakes the connector with `Ready::Act` → `chat_c
 
 Manifest: `"capabilities": ["ui.slot"]` and `"slots": ["web"]` and/or `["panel"]`.
 
-- no grant with non-empty `slots` — `slots требуют грант ui.slot`;
-- grant without a slot — `ui.slot требует слот web или panel`;
-- other slot — `слот … не поддерживается`.
+- no grant with non-empty `slots` — `slots require grant ui.slot`;
+- grant without a slot — `ui.slot requires web or panel slot`;
+- other slot — `slot … is not supported`.
 
 **Web / OBS.** Deaf slot — `consumer` + `"slots": ["web"]` (static; wasm does not write into the DOM). Wasm ↔ page channel — grant `ui.slot` + `ui_slot::post` (role `widget`). Reference: [`modus-examples/widget`](../../../modus-examples/widget). Assets `assets/web/`. Several `web` at once ok. Images — `'self'` / `cache/{key}`. Frame `plugin` only to its own `plugin_id`. Foreign origin in an iframe — role `embedder` + grant `media.embed` + `embed_hosts`; without `embed_hosts` CSP `frame-src 'none'`; call without grant — refuse.
 

@@ -2,7 +2,7 @@
 
 Если это первый плагин — роли `new` в [туториале](../start/02-roles.md). Если нужен feature × грант × эталон — эта глава. Подробный разбор кода эталонов — [examples/](../examples/README.md).
 
-**Правило.** Гость всегда на world **`plugin`** (полный guest API). Права — только манифест + апрув + deny на вызове. Soft-link: известный modus-импорт без гранта — `pack`/load ок; вызов без cap — `Err`. `wasi:*` / чужое — всегда отказ (`запрещённый импорт …` / `лишний импорт …`).
+**Правило.** Гость всегда на world **`plugin`** (полный guest API). Права — только манифест + апрув + deny на вызове. Soft-link: известный modus-импорт без гранта — `pack`/load ок; вызов без cap — `Err`. `wasi:*` / чужое — всегда отказ (`forbidden import …` / `extra import …`).
 
 SDK: **одна** Cargo feature = пресет кода (helpers / re-export), не другой WIT-world. Хост — world `runtime` (тот же суперсет); гость его не выбирает.
 
@@ -35,7 +35,7 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 | `rates.publish` | `rates_publish` (`rates`) | |
 | `rates.convert` | `rates` (`alerter`) | convert → base; таблица курсов — Core / `rates.publish` |
 
-`bus.emit` в манифесте требует непустой `platform_id`. Канон без поля — `нет platform_id`. Один живой плагин на `platform_id`; второй — `platform_id … уже занят`. `platform_id` — короткое имя площадки, не `id` пакета.
+`bus.emit` в манифесте требует непустой `platform_id`. Канон без поля — `no platform_id`. Один живой плагин на `platform_id`; второй — `platform_id … already taken`. `platform_id` — короткое имя площадки, не `id` пакета.
 
 ## Роли
 
@@ -66,9 +66,9 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 
 Манифест: `"capabilities": ["ui.slot"]` и `"slots": ["web"]` и/или `["panel"]`.
 
-- нет гранта при непустых `slots` — `slots требуют грант ui.slot`;
-- грант без слота — `ui.slot требует слот web или panel`;
-- иной слот — `слот … не поддерживается`.
+- no grant при непустых `slots` — `slots require grant ui.slot`;
+- грант без слота — `ui.slot requires web or panel slot`;
+- иной слот — `slot … is not supported`.
 
 **Web / OBS.** Глухой слот — `consumer` + `"slots": ["web"]` (статика, wasm в DOM не пишет). Канал wasm ↔ страница — грант `ui.slot` + `ui_slot::post` (роль `widget`). Эталон: [`modus-examples/widget`](../../../modus-examples/widget). Ассеты `assets/web/`. Несколько `web` сразу ок. Картинки — `'self'` / `cache/{key}`. Кадр `plugin` только своему `plugin_id`. Чужой origin в iframe — роль `embedder` + грант `media.embed` + `embed_hosts`; без `embed_hosts` CSP `frame-src 'none'`; вызов без гранта — отказ.
 

@@ -21,7 +21,7 @@ flowchart LR
 
 Расхождение обёртки SDK и WIT — **правда у WIT** (хост). Баг чинится в SDK, официальные плагины с него не снимают.
 
-Сырой `wit_bindgen::generate` хост примет, если компонент валиден. `pack` / `check` каталога **откажут**, если в том же crate есть и `modus-sdk`, и `wit_bindgen::generate` в `src/**/*.rs`. Строка: `WIT вручную плюс SDK — два bindgen`.
+Сырой `wit_bindgen::generate` хост примет, если компонент валиден. `pack` / `check` каталога **откажут**, если в том же crate есть и `modus-sdk`, и `wit_bindgen::generate` в `src/**/*.rs`. Строка: `manual WIT plus SDK — dual bindgen`.
 
 Новый пакет: feature SDK, не копировать `lib.rs` с сырым bindgen.
 

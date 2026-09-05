@@ -31,7 +31,7 @@ wait::wait() -> Ready
 | Variant | When | What to do |
 | --- | --- | --- |
 | `Stop` | disable / remove / Ctrl+C in `dev` | `return` from `run`. Stop flag beats the queue: even if inbox still has frames |
-| `Bus` | bus event after `subscribe` | consumer / bot logic. Inbox **64**; full — drop (`шина: inbox {id} полный, drop`), not block |
+| `Bus` | bus event after `subscribe` | consumer / bot logic. Inbox **64**; full — drop (`bus: inbox {id} full, drop`), not block |
 | `WsText` / `WsClosed` | frame / WS break | connector. Host closes ping/pong itself |
 | `Timer` | `set_timer` fired | your timer. Do not confuse with backoff |
 | `Settings` | Core saved this plugin's form | re-read `settings.get`. In `init`, `get` without `wait` is ok |
@@ -40,7 +40,7 @@ wait::wait() -> Ready
 | `Ui` | frame from the slot page | grant `ui.slot` + slot |
 | `MediaEnded` | end / `stop` of `media.audio` play | role `player`: `release` cache-key if any |
 
-After stop, host calls return `"остановлен"` (`HostError::Stopped`). `clock::sleep_ms` checks stop every 50 ms — not a substitute for `wait`.
+After stop, host calls return `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` checks stop every 50 ms — not a substitute for `wait`.
 
 Successful login in Core: instance `reload`, `run` from scratch, `list_accounts` no longer empty. No account — wait for `Stop`; do not invent chat.
 
@@ -48,13 +48,13 @@ Successful login in Core: instance `reload`, `run` from scratch, `list_accounts`
 
 `HostError::classify` / `is_stop()` — [host errors](04-errors.md); detail — [api/03-errors](../api/03-errors.md). `Stopped` and `Revoked` are not network.
 
-`modus_sdk::wait_backoff(ms) -> bool`: sets a timer, spins `wait`, **true** if stop (including `Act` during backoff closing the job with “no connection”). `Resume` — like a fired timer: **false**, immediate retry. Scaffold `new connector` and `modus new connector` do this. Do not write your own `sleep` + reconnect around `"остановлен"`.
+`modus_sdk::wait_backoff(ms) -> bool`: sets a timer, spins `wait`, **true** if stop (including `Act` during backoff closing the job with “no connection”). `Resume` — like a fired timer: **false**, immediate retry. Scaffold `new connector` and `modus new connector` do this. Do not write your own `sleep` + reconnect around `"stopped"`.
 
 Constants: `BACKOFF_START_MS` 1 s, cap `BACKOFF_MAX_MS` 30 s, `next_backoff_ms`.
 
 ## Trap, `dev`, memory
 
-Trap in `init`/`run` is **Core**'s business, not `dev`: restart 1 s, then 2 s; 3 crashes in 60 s → quarantine until the streamer enables again. In `dev` Ctrl+C = `Stop`, thread join 5 s (`не остановить` — guest stuck outside `wait`).
+Trap in `init`/`run` is **Core**'s business, not `dev`: restart 1 s, then 2 s; 3 crashes in 60 s → quarantine until the streamer enables again. In `dev` Ctrl+C = `Stop`, thread join 5 s (`cannot stop` — guest stuck outside `wait`).
 
 Instance memory **16 MiB**. Disk is invisible to the guest. Wasm RAM dies on unload; KV, settings, accounts, journal — at Core.
 

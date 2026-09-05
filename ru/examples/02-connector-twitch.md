@@ -33,7 +33,7 @@
   "platform_id": "twitch",
   /* OAuth через брокер Core/CLI, не свой redirect-сервер */
   "auth_mode": "broker",
-  /* DNS allowlist: всё вне списка → «… вне манифеста» */
+  /* DNS allowlist: всё вне списка → `… not in manifest` */
   "hosts": [
     "id.twitch.tv",
     "api.twitch.tv",
@@ -66,7 +66,7 @@ fn run_session(account_id: &str) -> Outcome {
     // токен только через грант auth.token; чужой id → ошибка
     let token = match auth_token::token(account_id) {
         Ok(token) => token,
-        // is_stop (отозван / остановлен) — не глотать в backoff
+        // is_stop (revoked / stopped) — не глотать в backoff
         Err(err) => return fail(&err),
     };
     // helix_user(&token) → nick / user_id для IRC NICK и Helix
@@ -116,7 +116,7 @@ Line::Privmsg(msg) => {
     let payload = Payload::Message(Message { /* user, fragments, color… */ });
     // канал = IRC channel без #; opaque обычно None
     if let Err(err) = bus_emit::emit(&msg.channel, &payload, None) {
-        // остановлен во время emit — выйти из сессии, не Retry
+        // stopped during emit — выйти из сессии, не Retry
         if HostError::classify(&err).is_stop() {
             return Some(Outcome::Stopped);
         }
@@ -161,10 +161,10 @@ modus dev ../modus-examples/connector-replay --token fake --replay frames.replay
 
 | Ситуация | Строка |
 | --- | --- |
-| Нет cap | `нет гранта auth.token` / `net.ws` / `bus.emit` |
-| Хост не в `hosts` | `… вне манифеста` |
-| Не https/wss | `только https/wss` |
-| Токен чужой / отозван | `чужой аккаунт`, `refresh отозван` (`is_stop`) |
-| Нет `platform_id` | `нет platform_id` |
-| Площадка занята | `platform_id … уже занят` |
-| Стоп во время backoff | `остановлен` — выйти, не `Retry` |
+| Нет cap | `no grant auth.token` / `net.ws` / `bus.emit` |
+| Хост не в `hosts` | `… not in manifest` |
+| Не https/wss | `https/wss only` |
+| Токен чужой / отозван | `foreign account`, `refresh revoked` (`is_stop`) |
+| Нет `platform_id` | `no platform_id` |
+| Площадка занята | `platform_id … already taken` |
+| Стоп во время backoff | `stopped` — выйти, не `Retry` |

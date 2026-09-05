@@ -164,10 +164,10 @@ Full crate: [`modus new alerter`](modus new alerter). With an event emitter — 
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта alert.enqueue` | call without capability |
-| `slots требуют грант ui.slot` / `ui.slot требует слот…` | slot manifest |
+| `no grant alert.enqueue` | call without capability |
+| `slots require grant ui.slot` / `ui.slot requires web or panel slot` | slot manifest |
 | `history.read` refused | no grant → recovery silently empty |
-| `нет гранта rates.convert` / no rate | donation without convert; tier may not match |
+| `no grant rates.convert` / no rate | donation without convert; tier may not match |
 | no play in `dev` | expected: Core queue is not emulated |
 
 See [ref/04-errors](../ref/04-errors.md), [api/01-lifecycle-wait](../api/01-lifecycle-wait.md).

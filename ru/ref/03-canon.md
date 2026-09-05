@@ -14,9 +14,9 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 - `channel` — канал площадки, не id плагина.
 - `payload` — `types::Payload`.
-- `opaque` — `Option<&str>`: пусто или **JSON-текст**. Не JSON — `"opaque не JSON"`. Потребители хвост не разбирают. Секреты не класть.
+- `opaque` — `Option<&str>`: пусто или **JSON-текст**. Не JSON — `"opaque is not JSON"`. Потребители хвост не разбирают. Секреты не класть.
 
-Нет гранта — `"нет гранта bus.emit"`. Тело штампованного события > 64 KiB JSON — drop, `"TooLarge"`.
+Нет гранта — `"no grant bus.emit"`. Тело штампованного события > 64 KiB JSON — drop, `"TooLarge"`.
 
 `source.platform` берётся из `platform_id` манифеста. Подделать `plugin_id` нельзя.
 
@@ -27,12 +27,12 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 | Payload                                                           | Нужен `platform_id`           | Кто                                                |
 | ----------------------------------------------------------------- | ----------------------------- | -------------------------------------------------- |
-| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | да, иначе `"нет platform_id"` | коннектор (или emitter-фикстура) **этой** площадки |
+| `Message` / `Donation` / `Sub` / `Follow` / `Raid` / `ViewerCount` / `Reward` / `Moderation` | да, иначе `"no platform_id"` | коннектор (или emitter-фикстура) **этой** площадки |
 | `Custom`                                                          | нет (пусто ок)                | любой с `bus.emit`                                 |
-| `System`                                                          | —                             | только Core; гость — `"system только Core"`        |
+| `System`                                                          | —                             | только Core; гость — `"system is Core-only"`        |
 
 
-Один живой плагин на `platform_id`; второй не встанет: `"platform_id … уже занят"`. `platform_id` — короткое имя площадки (`twitch`), не `id` пакета.
+Один живой плагин на `platform_id`; второй не встанет: `"platform_id … already taken"`. `platform_id` — короткое имя площадки (`twitch`), не `id` пакета.
 
 `Moderation` на шине — факт с площадки, не `chat.act`. Поля: `target_user_id` (id, не ник), `target_display_name`, опционально модератор, `message_id` у delete, `duration_sec` у timeout. Лента прячет строки по событию; журнал не трём. Как это стыкуется с командиром — ниже.
 
@@ -40,7 +40,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 `ViewerCount` — gauge зрителей канала: `count` (u32). Канал/площадка в `source`. Core всегда ставит `hide_chat` и `skip_alert`, **не** пишет в journal и **не** кладёт в ленту; fanout подписчикам и snapshot в UI (`viewers:update`) остаются. Offline / нет стрима — `count: 0`.
 
-`Custom { kind, fields }` — `kind` не имя канона (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`). Иначе `"custom не может маскировать канон"`. TTS-запрос — `custom` kind `tts.request`, не голос в Core.
+`Custom { kind, fields }` — `kind` не имя канона (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`, `system`). Иначе `"custom cannot mask canon"`. TTS-запрос — `custom` kind `tts.request`, не голос в Core.
 
 ## `chat.act` — не emit
 

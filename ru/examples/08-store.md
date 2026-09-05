@@ -106,7 +106,7 @@ modus new <role>  # scaffold, then modus dev <dir>
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта storage.kv` | вызов без capability |
+| `no grant storage.kv` | вызов без capability |
 | квота KV (256 KiB / 256 ключей / 16 KiB value) | слишком большой `set` |
 | шторм set/delete ~60/с | rate limit |
 | пустой KV после рестарта `dev` | ожидаемо для S5 |

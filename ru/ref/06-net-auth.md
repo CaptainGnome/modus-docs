@@ -14,8 +14,8 @@ token(account-id) -> result<string, string>
 ```
 
 - Без гранта / на стопе — пустой список; `token` → отказ.
-- Чужой id → `чужой аккаунт` (`HostError::Revoked`).
-- Refresh отозван → `refresh отозван`.
+- Чужой id → `foreign account` (`HostError::Revoked`).
+- Refresh отозван → `refresh revoked`.
 - После успешного логина в Core плагин **перезапускается**: `run` снова видит аккаунты.
 - Нет аккаунта → каркас ждёт `Stop`, чат не выдумывать.
 
@@ -41,6 +41,6 @@ token(account-id) -> result<string, string>
 
 ## Следствие
 
-Импорт без гранта — soft-link ок; вызов без cap — `нет гранта …`. Сеть в обход хоста (WASI / свой сокет) — `pack` отказ.
+Импорт без гранта — soft-link ок; вызов без cap — `no grant …`. Сеть в обход хоста (WASI / свой сокет) — `pack` отказ.
 
 Следующая глава — [settings / KV / act / алерты / слоты](07-host-apis.md).

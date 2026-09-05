@@ -8,11 +8,11 @@ Scaffold is written by `modus new`. Full check — `modus check` / `pack`. Refer
 
 | Field | Type | Meaning |
 | --- | --- | --- |
-| `id` | string | reverse-DNS ≥3 segments, ≤128 characters (`com.publisher.name`). Changing `id` = a different plugin (KV/settings are not migrated). Short `twitch` — rejected: `plugin id: нужен reverse-DNS …` |
+| `id` | string | reverse-DNS ≥3 segments, ≤128 characters (`com.publisher.name`). Changing `id` = a different plugin (KV/settings are not migrated). Short `twitch` — rejected: `plugin id: reverse-DNS required (com.publisher.name)` |
 | `name` | string **or** `{ "key", "fallback" }` | name in UI. Plain — as-is; key — i18n (see below) |
 | `version` | string | **package** version (`0.1.0`), not ABI |
 | `author` | string | author credit |
-| `abi` | number | only **`2`**. Otherwise: `ABI N не поддерживается (нужен 2)` |
+| `abi` | number | only **`2`**. Otherwise: `ABI N not supported (need 2)` |
 
 Minimum consumer:
 
@@ -28,7 +28,7 @@ Minimum consumer:
 
 ## Capabilities
 
-Array of strings. Empty / absent — base only (`wait`, settings, assets, log, …). WIT import without a grant — soft-link ok; call without cap — `нет гранта …`.
+Array of strings. Empty / absent — base only (`wait`, settings, assets, log, …). WIT import without a grant — soft-link ok; call without cap — `no grant …`.
 
 | Capability | Purpose |
 | --- | --- |
@@ -55,14 +55,14 @@ Role × grant × reference map — [ref/01-roles](../ref/01-roles.md).
 
 | Field | Rule |
 | --- | --- |
-| `platform_id` | short platform name (`twitch`), **not** package `id`. Required with `bus.emit` and with any `auth_mode`. One live plugin per value; second — `platform_id … уже занят` |
+| `platform_id` | short platform name (`twitch`), **not** package `id`. Required with `bus.emit` and with any `auth_mode`. One live plugin per value; second — `platform_id … already taken` |
 | `platform_logo` | path **relative** to `assets/` (no `assets/` prefix, no `..`, no `\`). Extensions: svg/png/webp/jpg. Requires `platform_id`. File ≤ 128 KiB |
 
 ## `slots` / `user_theme`
 
 | Field | Rule |
 | --- | --- |
-| `slots` | `"web"` and/or `"panel"`. Duplicate / unknown slot — rejected. Slots without `ui.slot` — `slots требуют грант ui.slot`. Grant without slot — `ui.slot требует слот web или panel` |
+| `slots` | `"web"` and/or `"panel"`. Duplicate / unknown slot — rejected. Slots without `ui.slot` — `slots require grant ui.slot`. Grant without slot — `ui.slot requires web or panel slot` |
 | `user_theme` | `true` — streamer may overlay a theme zip on web/panel. Requires `ui.slot` and a web or panel slot |
 
 Assets: web — `assets/web/`; panel native — `assets/panel.json`; panel web — `assets/panel/` **or** the same `assets/web/`. Both `panel.json` and `panel/index.html` — rejected. Details — [07-ui-slots-panel](07-ui-slots-panel.md).
@@ -79,7 +79,7 @@ Concept: manifest ∩ Core policy. The guest does not “open” a URL itself �
 
 ## Auth (`auth_mode`)
 
-Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be set (`нужен auth.mode`). With a mode, grant `auth.token` and `platform_id` are required.
+Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be set (`need auth.mode`). With a mode, grant `auth.token` and `platform_id` are required.
 
 | Mode | Required | Optional |
 | --- | --- | --- |
@@ -91,7 +91,7 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 
 `client_secret` — forbidden. Core runs the OAuth shell; wasm sees only a short access via `auth.token`. In `dev` — `--token` / `--token-file`, not the Core safe.
 
-`api` without a pasted token: `режим api: вставьте токен`. Broker in production requires a verified package signature — [10-package-signing](10-package-signing.md).
+`api` without a pasted token: `api mode: paste token`. Broker in production requires a verified package signature — [10-package-signing](10-package-signing.md).
 
 ## Catalog: `provides` / `depends` / `consumes`
 
@@ -123,13 +123,13 @@ Runtime label in settings form: `settings::set_label_i18n` / `modus_sdk::set_lab
 
 | Error | When |
 | --- | --- |
-| `client_secret запрещён в манифесте` | field present |
-| `нет platform_id` | `bus.emit` or auth without the field |
+| `client_secret forbidden in manifest` | field present |
+| `no platform_id` | `bus.emit` or auth without the field |
 | `auth.mode требует грант auth.token` | mode without cap |
-| `нужен auth.mode` | auth URL without mode |
-| `slots требуют грант ui.slot` / reverse | slots and cap out of sync |
+| `need auth.mode` | auth URL without mode |
+| `slots require grant ui.slot` / reverse | slots and cap out of sync |
 | `user_theme требует …` | theme without ui surface |
 | `provides: неизвестное имя` / bad schema | catalog |
-| `bridge_requests: тип … в denylist Core` | forbidden OBS request |
+| `bridge_requests: type … is on Core denylist` | forbidden OBS request |
 
 Next chapter — [lifecycle and wait](01-lifecycle-wait.md).

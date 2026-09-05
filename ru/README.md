@@ -2,7 +2,7 @@
 
 **Языки:** [Русский](README.md) · [English](../en/README.md)
 
-Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome.
+Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome. Строки ошибок ABI — на английском (`stopped`, `no grant …`); в коде — `HostError::classify`, не парсить литералы.
 
 **Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples). Разборы с комментариями — [examples/](examples/README.md). Закрытые `plugins/*` продукта в публичный путь не входят.
 
@@ -36,7 +36,7 @@
 | 1 | [Карта ролей](ref/01-roles.md) | feature-пресет + манифест; soft-link; deny на call |
 | 2 | [Жизненный цикл и `wait`](ref/02-wait.md) | в `run` только `wait`; стоп не реконнект |
 | 3 | [Канон шины](ref/03-canon.md) | штамп Core; `system` только Core |
-| 4 | [Ошибки хоста](ref/04-errors.md) | `HostError::classify`, не парсить строки глазами |
+| 4 | [Ошибки хоста](ref/04-errors.md) | `HostError::classify`, не парсить литералы глазами |
 | 5 | [CLI](ref/05-cli.md) | `dev` debug, `pack` release; флаги `--settings` / `--act` / `--ui` |
 | 6 | [Сеть и auth](ref/06-net-auth.md) | оболочка OAuth у Core; секрет не в wasm |
 | 7 | [Settings, KV, act, алерты, слоты](ref/07-host-apis.md) | грант + потолки; `dev` vs Core |

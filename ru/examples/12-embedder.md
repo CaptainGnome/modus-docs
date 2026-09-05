@@ -115,9 +115,9 @@ modus new embedder  # then: modus dev <dir> --ui
 
 | Строка / ситуация | Смысл |
 | --- | --- |
-| `нет гранта media.embed` | вызов без capability |
+| `no grant media.embed` | вызов без capability |
 | `allowed` = false / warn в логе | хост не в `embed_hosts` |
-| `slots требуют грант ui.slot` | слоты без гранта |
+| `slots require grant ui.slot` | слоты без гранта |
 | дубликаты в `embed_hosts` | отказ манифеста при pack/load |
 | CSP `frame-src 'none'` | пустой allowlist |
 

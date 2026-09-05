@@ -41,7 +41,7 @@ wait::wait() -> Ready
 | Variant | When | Guest action |
 | --- | --- | --- |
 | `Stop` | disable / remove / Ctrl+C in `dev` | `return` from `run`. Stop flag outranks the inbox queue |
-| `Bus(event)` | bus event after `subscribe` | consumer / bot / alerter. Inbox **64**; full — drop (`шина: inbox {id} полный, drop`), no block |
+| `Bus(event)` | bus event after `subscribe` | consumer / bot / alerter. Inbox **64**; full — drop (`bus: inbox {id} full, drop`), no block |
 | `WsText` / `WsClosed` | frame / WS disconnect | connector. Host closes ping/pong |
 | `Timer` | `set_timer` fired | own timer; do not confuse with backoff |
 | `Settings` | Core (or `dev --settings`) saved the form | re-read `settings.get` |
@@ -60,7 +60,7 @@ Delivery queue into the guest per instance: **64** events. Overflow — drop inc
 
 ## Stop and backoff
 
-After stop, host calls → `"остановлен"` (`HostError::Stopped`). `clock::sleep_ms` polls stop every 50 ms — not a `wait` replacement.
+After stop, host calls → `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` polls stop every 50 ms — not a `wait` replacement.
 
 ```rust
 use modus_sdk::{wait_backoff, HostError, BACKOFF_START_MS, next_backoff_ms};
@@ -85,7 +85,7 @@ loop {
 - sets a timer, spins `wait`;
 - **true** — `Stop` (exit);
 - **false** — `Timer` or `Resume` (retry);
-- during backoff `Act` → `chat_complete(..., Err("нет соединения"))` (emitter/connector);
+- during backoff `Act` → `chat_complete(..., Err("no connection"))` (emitter/connector);
 - other `Ready` variants are swallowed until timer/stop.
 
 Constants: start 1 s, ceiling 30 s, doubling via `next_backoff_ms`.
@@ -95,7 +95,7 @@ Constants: start 1 s, ceiling 30 s, doubling via `next_backoff_ms`.
 | Topic | Behavior |
 | --- | --- |
 | Trap in Core | restart 1 s, then 2 s; 3 crashes / 60 s → quarantine until manual enable |
-| Trap in `dev` | process/thread; Ctrl+C = `Stop`; join 5 s (`не остановить` — guest outside `wait`) |
+| Trap in `dev` | process/thread; Ctrl+C = `Stop`; join 5 s (`cannot stop` — guest outside `wait`) |
 | Wasm memory | 16 MiB; disk not visible to guest |
 | Persist | KV, settings, accounts, journal — at Core (in `dev` KV/settings — process RAM) |
 

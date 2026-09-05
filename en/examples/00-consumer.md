@@ -102,8 +102,8 @@ Your scaffold: `modus dev bus`. With no flags, `dev` injects tutorial `message` 
 
 | Situation | String / effect |
 | --- | --- |
-| emit / network call without grant | `нет гранта …` (`HostError::Grant`) |
-| Ctrl+C / shutdown | `остановлен` → `Ready::Stop` |
+| emit / network call without grant | `no grant …` (`HostError::Grant`) |
+| Ctrl+C / shutdown | `stopped` → `Ready::Stop` |
 | Forgot `subscribe` | log shows `emit … fixture hello`, no `bus message …` |
 
 Full list — [api/03-errors](../api/03-errors.md).

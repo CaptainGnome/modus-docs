@@ -80,7 +80,7 @@ use modus_sdk::{
 | `BACKOFF_MAX_MS` | 30000 |
 | `next_backoff_ms` | ×2 до потолка |
 
-На `Resume` backoff возвращает `false` (немедленный retry). Во время backoff `Act` → complete с `нет соединения` (emitter/connector).
+На `Resume` backoff возвращает `false` (немедленный retry). Во время backoff `Act` → complete с `no connection` (emitter/connector).
 
 ## Canon helpers
 
@@ -99,7 +99,7 @@ use modus_sdk::{
 | | Правило |
 | --- | --- |
 | Хост | примет валидный компонент с сырым bindgen |
-| `pack` / `check` каталога с SDK | откажут, если в `src/**/*.rs` есть `wit_bindgen::generate`: `WIT вручную плюс SDK — два bindgen` |
+| `pack` / `check` каталога с SDK | откажут, если в `src/**/*.rs` есть `wit_bindgen::generate`: `manual WIT plus SDK — dual bindgen` |
 | Новый пакет | только feature SDK |
 | Правда при споре SDK vs WIT | у WIT (хост); баг чинят в SDK |
 

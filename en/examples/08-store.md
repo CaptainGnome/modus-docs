@@ -106,7 +106,7 @@ In `dev`, KV is process RAM (after CLI restart the counter starts at zero). In C
 
 | String / situation | Meaning |
 | --- | --- |
-| `нет гранта storage.kv` | call without capability |
+| `no grant storage.kv` | call without capability |
 | KV quota (256 KiB / 256 keys / 16 KiB value) | `set` too large |
 | set/delete storm ~60/s | rate limit |
 | empty KV after `dev` restart | expected for S5 |

@@ -41,7 +41,7 @@ wait::wait() -> Ready
 | Вариант | Когда | Действие гостя |
 | --- | --- | --- |
 | `Stop` | выкл / удаление / Ctrl+C в `dev` | `return` из `run`. Флаг стопа важнее очереди inbox |
-| `Bus(event)` | событие шины после `subscribe` | consumer / бот / alerter. Inbox **64**; полный — drop (`шина: inbox {id} полный, drop`), не блок |
+| `Bus(event)` | событие шины после `subscribe` | consumer / бот / alerter. Inbox **64**; полный — drop (`bus: inbox {id} full, drop`), не блок |
 | `WsText` / `WsClosed` | кадр / обрыв WS | коннектор. Ping/pong закрывает хост |
 | `Timer` | сработал `set_timer` | свой таймер; не путать с backoff |
 | `Settings` | Core (или `dev --settings`) сохранил форму | перечитать `settings.get` |
@@ -60,7 +60,7 @@ wait::wait() -> Ready
 
 ## Стоп и backoff
 
-После стопа вызовы хоста → `"остановлен"` (`HostError::Stopped`). `clock::sleep_ms` смотрит стоп каждые 50 ms — не замена `wait`.
+После стопа вызовы хоста → `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` смотрит стоп каждые 50 ms — не замена `wait`.
 
 ```rust
 use modus_sdk::{wait_backoff, HostError, BACKOFF_START_MS, next_backoff_ms};
@@ -85,7 +85,7 @@ loop {
 - ставит таймер, крутит `wait`;
 - **true** — `Stop` (выйти);
 - **false** — `Timer` или `Resume` (retry);
-- во время backoff `Act` → `chat_complete(..., Err("нет соединения"))` (emitter/connector);
+- во время backoff `Act` → `chat_complete(..., Err("no connection"))` (emitter/connector);
 - прочие `Ready` глотаются до таймера/стопа.
 
 Константы: старт 1 s, потолок 30 s, удвоение через `next_backoff_ms`.
@@ -95,7 +95,7 @@ loop {
 | Тема | Поведение |
 | --- | --- |
 | Trap в Core | рестарт 1 s, затем 2 s; 3 падения / 60 s → карантин до ручного вкл |
-| Trap в `dev` | процесс/поток; Ctrl+C = `Stop`; join 5 s (`не остановить` — гость вне `wait`) |
+| Trap в `dev` | процесс/поток; Ctrl+C = `Stop`; join 5 s (`cannot stop` — гость вне `wait`) |
 | Память wasm | 16 MiB; диск гостю не виден |
 | Persist | KV, settings, аккаунты, journal — у Core (в `dev` KV/settings — RAM процесса) |
 
