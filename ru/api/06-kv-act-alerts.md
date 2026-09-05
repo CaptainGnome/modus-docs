@@ -70,9 +70,22 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 2. **Касса — Core**: очередь, приоритеты, skip, конфликт оверлеев. Гость очередь не ведёт.
 3. Когда пора показать — Core будит alerter `Ready::AlertPlay { job_id, event_id, duration_ms }`.
 4. Плагин гоняет свой `ui.slot` web (post JSON) / SFX; по окончании — `complete`.
-5. Досрочный skip — `Ready::AlertStop` с тем же job.
+5. Досрочный skip — `Ready::AlertStop` с тем же job; тоже `complete` (если ещё не вызван).
 
-В `dev`: enqueue/complete → stderr, **без** `AlertPlay`/`AlertStop` и без очереди 32. Не путать с прод-поведением.
+### Показанные алерты (`alert_shown`)
+
+Канон события **не** меняется: в journal / на шине нет флага «уже показали». Отдельная таблица Core:
+
+| | Правило |
+| --- | --- |
+| Когда пишется | успешный `alert_enqueue::complete(job_id, Ok(()))` |
+| Ключ | `(event_id, plugin_id)` + `shown_at` |
+| `Err` в complete | строку **не** ставит |
+| Чтение | `history_read::Page.alert_shown` — id с этой страницы, уже shown **этим** плагином |
+| Зачем | recovery без mangling payload: alerter пропускает id из `alert_shown` и не enqueue’ит снова |
+| Retention | ~1 ч и cap ~2000 строк (старые вычищаются) |
+
+В `dev`: enqueue/complete → stderr, **без** `AlertPlay`/`AlertStop`, без очереди 32 и **без** записи `alert_shown`. Не путать с прод-поведением.
 
 Эталон: `modus new alerter`. Голос — отдельный `player` (`media.audio`) или `custom` `tts.request`, не «Core говорит».
 

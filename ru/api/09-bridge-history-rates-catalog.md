@@ -36,9 +36,9 @@ read(cursor?, limit) -> Result<Page, string>
 | --- | --- |
 | `events` | список тех же `wait::Event` (канон + flags) |
 | `next` | курсор следующей страницы или пусто |
-| `alert_shown` | `event-id` из этой страницы, уже успешно shown этим `plugin_id` (после complete) |
+| `alert_shown` | `event-id` с этой страницы, уже успешно shown **этим** `plugin_id`. Пишется в таблицу Core `alert_shown` только после `alert_enqueue::complete(..., Ok(()))`. Payload событий не меняется (не mangling канона). Retention ~1 ч / cap ~2000. В `dev` таблица не ведётся |
 
-Это **не** replay в `Ready::Bus`. `wait` историю не отдаёт. Alerter использует read для recovery после рестарта.
+Это **не** replay в `Ready::Bus`. `wait` историю не отдаёт. Alerter использует read + `alert_shown` для recovery после рестарта / `Resume` — подробнее [алерты](06-kv-act-alerts.md#показанные-алерты-alert_shown).
 
 ## `rates.publish` / `rates.convert`
 

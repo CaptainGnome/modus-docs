@@ -34,9 +34,9 @@
 
 ## Алерты
 
-Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. В `dev`: enqueue/complete → stderr, без `AlertPlay`/`AlertStop` и без очереди 32.
+Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. Успешный `complete` → строка в `alert_shown` (не правка канона); recovery читает `history.Page.alert_shown`. В `dev`: enqueue/complete → stderr, без `AlertPlay`/`AlertStop`, без очереди 32 и без `alert_shown`.
 
-Эталон: `modus new alerter`.
+Эталон: `modus new alerter`. Полный контракт — [api/06](../api/06-kv-act-alerts.md#показанные-алерты-alert_shown).
 
 ## Слоты (`ui.slot`)
 

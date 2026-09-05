@@ -70,9 +70,22 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 2. **Cashier is Core**: queue, priorities, skip, overlay conflicts. Guest does not run the queue.
 3. When it is time to show — Core wakes alerter with `Ready::AlertPlay { job_id, event_id, duration_ms }`.
 4. Plugin runs its `ui.slot` web (post JSON) / SFX; when done — `complete`.
-5. Early skip — `Ready::AlertStop` with the same job.
+5. Early skip — `Ready::AlertStop` with the same job; also `complete` (if not already called).
 
-In `dev`: enqueue/complete → stderr, **without** `AlertPlay`/`AlertStop` and without the queue of 32. Do not confuse with production behavior.
+### Shown alerts (`alert_shown`)
+
+The event canon is **not** mutated: journal / bus have no “already shown” flag. Separate Core table:
+
+| | Rule |
+| --- | --- |
+| When written | successful `alert_enqueue::complete(job_id, Ok(()))` |
+| Key | `(event_id, plugin_id)` + `shown_at` |
+| `Err` on complete | row is **not** written |
+| Read path | `history_read::Page.alert_shown` — ids on this page already shown by **this** plugin |
+| Why | recovery without mangling payload: alerter skips ids in `alert_shown` and does not enqueue again |
+| Retention | ~1 h and ~2000-row cap (older rows pruned) |
+
+In `dev`: enqueue/complete → stderr, **without** `AlertPlay`/`AlertStop`, without the queue of 32, and **without** writing `alert_shown`. Do not confuse with production behavior.
 
 Reference: `modus new alerter`. Voice — separate `player` (`media.audio`) or `custom` `tts.request`, not “Core speaks”.
 

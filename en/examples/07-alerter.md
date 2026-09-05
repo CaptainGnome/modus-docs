@@ -122,7 +122,7 @@ fn on_stop(cmd: &AlertCommand) {
 }
 ```
 
-**Recovery.** Not a replay in `wait`: `history_read::read`, skip already `alert_shown`, re-enqueue high priorities.
+**Recovery.** Not a replay in `wait`: `history_read::read`, skip ids in `page.alert_shown` (Core wrote them after successful `complete` into table `alert_shown`, payload untouched), re-enqueue high priorities.
 
 ```rust
 fn recover() {

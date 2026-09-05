@@ -36,9 +36,9 @@ read(cursor?, limit) -> Result<Page, string>
 | --- | --- |
 | `events` | list of the same `wait::Event` (canon + flags) |
 | `next` | next page cursor or empty |
-| `alert_shown` | `event-id` from this page already successfully shown by this `plugin_id` (after complete) |
+| `alert_shown` | `event-id` values on this page already successfully shown by **this** `plugin_id`. Written to Core table `alert_shown` only after `alert_enqueue::complete(..., Ok(()))`. Event payloads stay untouched (no canon mangling). Retention ~1 h / cap ~2000. Not tracked in `dev` |
 
-This is **not** replay into `Ready::Bus`. `wait` does not return history. Alerter uses read for recovery after restart.
+This is **not** replay into `Ready::Bus`. `wait` does not return history. Alerter uses read + `alert_shown` for recovery after restart / `Resume` — details in [alerts](06-kv-act-alerts.md#shown-alerts-alert_shown).
 
 ## `rates.publish` / `rates.convert`
 

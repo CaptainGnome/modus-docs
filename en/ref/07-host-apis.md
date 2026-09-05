@@ -34,9 +34,9 @@ Reference: `modus new commander`; performer without network — [`modus-examples
 
 ## Alerts
 
-Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. In `dev`: enqueue/complete → stderr, no `AlertPlay`/`AlertStop` and no queue of 32.
+Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. Successful `complete` → row in `alert_shown` (canon untouched); recovery reads `history.Page.alert_shown`. In `dev`: enqueue/complete → stderr, no `AlertPlay`/`AlertStop`, no queue of 32, no `alert_shown`.
 
-Reference: `modus new alerter`.
+Reference: `modus new alerter`. Full contract — [api/06](../api/06-kv-act-alerts.md#shown-alerts-alert_shown).
 
 ## Slots (`ui.slot`)
 

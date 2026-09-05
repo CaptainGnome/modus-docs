@@ -134,7 +134,7 @@ fn on_stop(cmd: &AlertCommand) {
 }
 ```
 
-**Recovery.** Не replay в `wait`: `history_read::read`, пропуск уже `alert_shown`, повторный enqueue высоких приоритетов.
+**Recovery.** Не replay в `wait`: `history_read::read`, пропуск id из `page.alert_shown` (их Core записал после успешного `complete` в таблицу `alert_shown`, payload не трогал), повторный enqueue высоких приоритетов.
 
 ```rust
 fn recover() {
