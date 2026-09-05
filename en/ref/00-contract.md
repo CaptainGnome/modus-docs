@@ -33,13 +33,14 @@ The host loads only `abi: 2`. An old package with ABI 1 will not load. Pin the S
 
 One package — **one** SDK role-feature (`consumer` | `emitter` | … | `commander` | `store`). The WIT world is always **`plugin`**. Two features at once — `compile_error`. This is not “one product role”: listen on the bus and emit — `emitter` or `connector`, not two features. Map — [next chapter](01-roles.md).
 
-CLI from this repository, not crates.io:
+CLI from [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (not crates.io). From the SDK clone root:
 
 ```powershell
-cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <command>
+cargo run --manifest-path cli/Cargo.toml --release -- <command>
 ```
 
-- `--manifest-path modus-sdk/cli/Cargo.toml` — CLI package; you stand at the repo root.
+- `--manifest-path cli/Cargo.toml` — CLI package; you are at the `modus-sdk` root.
+- At the product root (submodule): `modus-sdk/cli/Cargo.toml`.
 - `--release` — optimized `modus` binary.
 - `--` — further args are for `modus`, not cargo.
 - Alias `modus` — [tutorial, chapter 1](../start/01-tools.md). Below we write `modus`.
@@ -61,6 +62,6 @@ Build **only** with the SDK (world always `plugin`, feature = preset):
 | [`plugins/store`](../../../plugins/store) | `store` | KV |
 | [`plugins/commander`](../../../plugins/commander) | `commander` | `chat.act` |
 
-Host WIT — [`modus-sdk/wit/world.wit`](../../../modus-sdk/wit/world.wit). Look when porting the SDK or arguing with the host. Do not copy into the plugin. Capability → SDK module table — [role map](01-roles.md); WIT as appendix — [chapter 11](11-wit.md).
+Host WIT — [`wit/world.wit`](https://github.com/CaptainGnome/modus-sdk/blob/main/wit/world.wit) in [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (adjacent: [`../../../modus-sdk/wit/world.wit`](../../../modus-sdk/wit/world.wit)). Look when porting the SDK or arguing with the host. Do not copy into the plugin. Capability → SDK module table — [role map](01-roles.md); WIT as appendix — [chapter 11](11-wit.md).
 
 Secrets: not in wasm, not in the manifest (`client_secret` — refuse), not in logs. `new connector` does not set `broker`, the official Twitch `client_id`, or Twitch hosts.

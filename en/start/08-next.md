@@ -24,6 +24,7 @@ Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a gree
 | SDK crate | [Contract](../ref/00-contract.md) | [SDK](../api/13-sdk-crate.md) |
 | What is not in ABI 2 | [Not in this ABI](../ref/10-not-in-abi.md) | — |
 | WIT | [appendix](../ref/11-wit.md) | — |
+| Annotated reference by role | [examples/](../examples/README.md) | — |
 
 Table of contents — [README](../README.md).
 

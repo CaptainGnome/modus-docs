@@ -1,10 +1,10 @@
 # Modus plugins
 
-**Languages:** [English](README.md) · [Русский](../README.md)
+**Languages:** [English](README.md) · [Русский](../ru/README.md)
 
-Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through `modus-sdk` and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome.
+Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome.
 
-Plugin references live in the adjacent product tree (`plugins/…`) when this hub sits as `modus-docs/` next to `modus-sdk/` and `plugins/`. Chapters under `en/` use one extra `../` versus the Russian tree (e.g. [`../../../plugins/twitch`](../../plugins/twitch)).
+**Public repositories:** this hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk). Annotated walkthroughs — [examples/](examples/README.md). When docs sit next to a product `plugins/` tree, relative links like [`../../../plugins/twitch`](../../../plugins/twitch) also work.
 
 Author path: SDK → `new` → `dev` → `pack` → Core. Language — Rust. Do not put secrets in the package.
 
@@ -65,3 +65,12 @@ Reference depth: fields, tables, call semantics. Core only enough to understand 
 | 11 | [CLI](api/11-cli-dev.md) |
 | 12 | [Limits](api/12-limits.md) |
 | 13 | [Crate `modus-sdk`](api/13-sdk-crate.md) |
+
+## Examples
+
+Walkthroughs of reference plugins: manifest + key code with comments.
+
+| | Chapter | Reference |
+| --- | --- | --- |
+| — | [table of contents](examples/README.md) | |
+| 0–13 | consumer … rates | [`examples/`](examples/README.md) |

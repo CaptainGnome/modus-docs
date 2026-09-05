@@ -39,7 +39,7 @@ Ctrl+C — `Ready::Stop`. Do not swallow `"остановлен"` (stopped) / `H
 
 Without `--replay` the CLI may open one live `wss://` from the manifest `hosts` (not private). For the first time replay is enough.
 
-`--http-file` — JSON responses for offline `net.http` (key = URL without query). Need Helix/API without network — see [`modus-sdk/cli/tests/fixtures`](../../../modus-sdk/cli/tests/fixtures) and the reference [`plugins/twitch`](../../../plugins/twitch).
+`--http-file` — JSON responses for offline `net.http` (key = URL without query). Need Helix/API without network — see [CLI fixtures](https://github.com/CaptainGnome/modus-sdk/tree/main/cli/tests/fixtures) and the reference [`plugins/twitch`](../../../plugins/twitch) (when you have a product checkout).
 
 ## What not to touch in this chapter
 

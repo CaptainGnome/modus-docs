@@ -2,13 +2,13 @@
 
 **Rule.** `dev` builds **debug**-wasm and starts a host in the same process. `pack` — **release** + component + `.mplug`. Debug with `dev`, not “install mplug into Core”.
 
-Compressed overview — [ref/05-cli](../ref/05-cli.md). Run from the **Modus** root (parent of `modus-docs/` as submodule):
+Compressed overview — [ref/05-cli](../ref/05-cli.md). From the [modus-sdk](https://github.com/CaptainGnome/modus-sdk) clone root:
 
 ```powershell
-cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <command>
+cargo run --manifest-path cli/Cargo.toml --release -- <command>
 ```
 
-Toolchain — [start/01-tools](../start/01-tools.md).
+At the product root (submodule): `modus-sdk/cli/Cargo.toml`. Toolchain — [start/01-tools](../start/01-tools.md).
 
 ## Commands
 

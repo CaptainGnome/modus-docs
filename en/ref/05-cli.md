@@ -14,13 +14,13 @@ If this is your first plugin — commands in the [tutorial](../start/01-tools.md
 | `pack [PATH]` | `dist/<name>.mplug` |
 | `keygen` / `pack --sign` | signing (see [`docs/signing.md`](../../../docs/signing.md)) |
 
-CLI from the repository (not on crates.io yet):
+CLI from [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (not on crates.io yet). From the clone root:
 
 ```powershell
-cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- <command>
+cargo run --manifest-path cli/Cargo.toml --release -- <command>
 ```
 
-Or the `modus` function from the [tutorial](../start/01-tools.md).
+At the product root (submodule): `modus-sdk/cli/Cargo.toml`. Or the `modus` function from the [tutorial](../start/01-tools.md).
 
 `new connector` does not set `broker`, the official Twitch `client_id`, or Twitch hosts. No `wit_bindgen::generate` in `src`. Two bindgens (SDK + `generate` in one crate) — `pack`/`check` refuse.
 

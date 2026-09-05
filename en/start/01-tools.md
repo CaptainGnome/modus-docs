@@ -51,27 +51,30 @@ The list must contain the line `wasm32-unknown-unknown`. If it is missing — `d
 
 ## Repository
 
-The SDK is not on crates.io yet. The CLI (`modus-sdk/cli`) and the `modus-sdk` crate (`modus-sdk/guest`) live in the product tree next to this documentation. Docs are the `modus-docs/` directory (this text).
+The SDK is not on crates.io yet. Publicly:
 
-Commands below are **from the tree root** where `modus-sdk/`, `plugins/`, and `modus-docs/` sit side by side. If docs are a submodule, that root is the parent of `modus-docs/`.
+- SDK / CLI / WIT — [CaptainGnome/modus-sdk](https://github.com/CaptainGnome/modus-sdk)
+- this documentation — [CaptainGnome/modus-docs](https://github.com/CaptainGnome/modus-docs)
 
 ```powershell
-cd path\to\product-root
+git clone https://github.com/CaptainGnome/modus-sdk.git
+git clone https://github.com/CaptainGnome/modus-docs.git
+cd modus-sdk
 ```
 
-At the root there is `rust-toolchain.toml`: rustup will pick stable and the same wasm target itself. The `target add` step is still required — so the target exists before the first long build.
+CLI commands below are **from the `modus-sdk` clone root**. Keep `modus-docs` nearby for reading. You can create a plugin in a sibling folder (`modus new … --dir ..\my-plugin`) and set `path = "../modus-sdk/guest"` in `Cargo.toml`.
 
 ## CLI
 
 The first run builds `modus` for several minutes. That is normal, not “hung”.
 
 ```powershell
-cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- --help
+cargo run --manifest-path cli/Cargo.toml --release -- --help
 ```
 
 - `cargo` — the Rust builder: reads `Cargo.toml`, compiles, runs.
 - `run` — build the binary and run it immediately.
-- `--manifest-path modus-sdk/cli/Cargo.toml` — do not look for a package in the current folder; take the CLI manifest. Path is **relative**: you stand at the repo root; the file is `modus-sdk/cli/Cargo.toml`.
+- `--manifest-path cli/Cargo.toml` — the CLI package inside the `modus-sdk` clone (you are at the SDK root).
 - `--release` — optimized build of **the CLI itself** (not the plugin). Without the flag every call is debug and a different file.
 - `--` — everything to the right is **not** cargo flags, but arguments to the `modus` program. Without this, `--help` shows cargo help, not modus.
 - `--help` — already modus: print the subcommand list and exit.
@@ -97,13 +100,14 @@ Commands:
 To avoid dragging the long line, for **this** PowerShell session:
 
 ```powershell
-function modus { cargo run --manifest-path modus-sdk/cli/Cargo.toml --release -- @args }
+function modus { cargo run --manifest-path cli/Cargo.toml --release -- @args }
 modus --help
 ```
 
 - `function modus { … }` — give a short name to a long command. Lives while this PowerShell stays open.
 - `@args` — pass to cargo everything you wrote after `modus`. So `modus --help` = `cargo run … -- --help`, and later `modus new …` = `cargo run … -- new …`.
 - The second `--` inside the function is already there: your words go as **modus** arguments, not cargo.
+- If you are at the product root where `modus-sdk` is a submodule: `--manifest-path modus-sdk/cli/Cargo.toml`.
 
 Further in the tutorial `modus` means this function until the CLI is a separate program on PATH. Session closed — define the function again or write the full `cargo run …`.
 

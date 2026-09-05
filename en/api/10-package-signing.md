@@ -2,7 +2,7 @@
 
 **Rule.** `.mplug` is a zip. At the root: `manifest`, `module.wasm`, optional `assets/` (posix, no `..`) and optional `signature`. Any other root — rejected. Written by `modus pack`.
 
-Compressed layout — [ref/08-package](../ref/08-package.md). Full signing policy — [`docs/signing.md`](../../../docs/signing.md) in the Modus checkout (from submodule `modus-docs`: `../docs/signing.md` from the docs-repo root; from this chapter — `../../../docs/signing.md`).
+Compressed layout — [ref/08-package](../ref/08-package.md). Full signing policy — [`docs/signing.md`](../../../docs/signing.md) in the product tree (from this chapter — `../../../docs/signing.md`).
 
 ## Zip layout
 

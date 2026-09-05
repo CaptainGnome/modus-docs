@@ -2,7 +2,7 @@
 
 If this is your first plugin — you do not need WIT: [contract](00-contract.md). If you look at host sources — this chapter.
 
-**Rule.** The author path does not copy `world.wit` and does not write `wit_bindgen::generate`. Bindings live inside `modus-sdk`. Host contract — [`modus-sdk/wit/world.wit`](../../../modus-sdk/wit/world.wit), package `modus:abi@2.0.0`. Guest always on world **`plugin`**.
+**Rule.** The author path does not copy `world.wit` and does not write `wit_bindgen::generate`. Bindings live inside `modus-sdk`. Host contract — [`wit/world.wit`](https://github.com/CaptainGnome/modus-sdk/blob/main/wit/world.wit) in [modus-sdk](https://github.com/CaptainGnome/modus-sdk), package `modus:abi@2.0.0`. Guest always on world **`plugin`**.
 
 ## Consequence
 
