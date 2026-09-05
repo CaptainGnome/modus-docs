@@ -1,12 +1,14 @@
 # Карта ролей
 
-Если это первый плагин — роли `new` в [туториале](../start/02-roles.md). Если нужен feature × грант × эталон — эта глава. Подробный разбор кода эталонов — [examples/](../examples/overview.md).
+Если это первый плагин — роли `new` в [туториале](../start/02-roles.md). Если нужен feature × грант × эталон — эта глава. Разборы кода — [examples/](../examples/overview.md).
 
-**Правило.** Гость всегда на world **`plugin`** (полный guest API). Права — только манифест + апрув + deny на вызове. Soft-link: известный modus-импорт без гранта — `pack`/load ок; вызов без cap — `Err`. `wasi:*` / чужое — всегда отказ (`forbidden import …` / `extra import …`).
+**Правило.** Роли **не** делят WIT-world’ы. У любого гостя один world — **`plugin`** (полный guest API). Что можно вызвать — только манифест + апрув + deny на вызове.
 
-SDK: **одна** Cargo feature = пресет кода (helpers / re-export), не другой WIT-world. Хост — world `runtime` (тот же суперсет); гость его не выбирает.
+- Soft-link: известный modus-импорт без гранта — `pack`/load ок; вызов без cap — `Err`.
+- `wasi:*` / чужое — всегда отказ (`forbidden import …` / `extra import …`).
+- `modus new <роль>` = одна Cargo **feature** (пресет helpers / re-export) + шаблон манифеста. Это не отдельный world.
 
-Имена ниже — модули SDK (`net_ws`), не пакеты WIT. Соответствие capability → WIT — приложение справочника.
+Имена ниже — модули SDK (`net_ws`), не пакеты WIT. Capability → WIT — [приложение](11-wit.md).
 
 ## База (грант не нужен)
 
@@ -37,26 +39,28 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 
 `bus.emit` в манифесте требует непустой `platform_id`. Канон без поля — `no platform_id`. Один живой плагин на `platform_id`; второй — `platform_id … already taken`. `platform_id` — короткое имя площадки, не `id` пакета.
 
-## Роли
+## Роли (`modus new`)
 
-| Роль | Feature `new` | Обязательные гранты | Типичные модули сверх базы | Эталон | Не делает |
+Все строки — пресеты одного world `plugin`. Колонка Feature — аргумент `new` / feature в `Cargo.toml`.
+
+| Роль | Feature | Обязательные гранты | Типичные модули сверх базы | Эталон | Не делает |
 | --- | --- | --- | --- | --- | --- |
-| `consumer` | `consumer` | нет | — | [`modus-examples/consumer`](../../../modus-examples/consumer), SDK | emit, сеть, `chat.act` |
-| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`modus-examples/emitter`](../../../modus-examples/emitter), SDK | логин и сокет площадки |
-| `connector` | `connector` | обычно `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | `modus new connector`, SDK | рисовать UI, KV, очередь алертов |
-| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | `modus new provider`, SDK | `platform_id`, канон, `bus.emit` |
-| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot` | [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`, SDK | сеть, emit |
-| `commander` | `commander` | `chat.act` | `chat_act` | `modus new commander`, SDK | emit канона, сеть |
-| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` для donation FX) | enqueue + web overlay + `rates` | `modus new alerter`, SDK | касса Core; recovery через history |
-| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (база) | `modus new store`, SDK | чужое KV, секреты |
-| `reader` | `reader` | `history.read` | `history_read` | `modus new reader`, SDK | emit, сеть, replay в `wait` |
-| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player`, SDK | открывать устройство, TTS в обход Core |
-| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge`, SDK | сырой сокет в обход allowlist |
-| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder`, SDK | прокси MP4, `play` на хосте, youtube-dl |
-| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates`, SDK | emit, UI, KV; курс в `opaque` |
-| host | — | — | world `runtime` | нет гостя | гость этот world не ставит |
+| `consumer` | `consumer` | нет | — | [`modus-examples/consumer`](https://github.com/CaptainGnome/modus-examples/tree/master/consumer) | emit, сеть, `chat.act` |
+| `emitter` | `emitter` | `bus.emit` | `bus_emit`, `chat_complete` | [`modus-examples/emitter`](https://github.com/CaptainGnome/modus-examples/tree/master/emitter) | логин и сокет площадки |
+| `connector` | `connector` | обычно `auth.token` + `net.http` + `net.ws` + `bus.emit` + `media.cache` | `auth_token`, `net_http`, `net_ws`, `bus_emit`, `chat_complete`, `media_cache` | [`connector-replay`](https://github.com/CaptainGnome/modus-examples/tree/master/connector-replay), `modus new connector` | UI, KV, очередь алертов |
+| `provider` | `provider` | `net.http` + `net.ws` + `media.cache` + `catalog.publish` | `net_http`, `net_ws`, `media_cache`, `catalog` | `modus new provider` | `platform_id`, канон, `bus.emit` |
+| `widget` | `widget` | `ui.slot` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot` | [`modus-examples/widget`](https://github.com/CaptainGnome/modus-examples/tree/master/widget) | сеть, emit |
+| `panel` | `widget` | как `widget`, ассеты panel | `ui_slot` | `modus new panel` / `--mode web` | сеть, emit |
+| `commander` | `commander` | `chat.act` | `chat_act` | `modus new commander` | emit канона, сеть |
+| `alerter` | `alerter` | `alert.enqueue`, `ui.slot`, `history.read` (+ `rates.convert` для donation FX) | enqueue + web overlay + `rates` | `modus new alerter` | касса Core; recovery через history |
+| `store` | `store` | `storage.kv` | `storage_kv` + `settings` (база) | `modus new store` | чужое KV, секреты |
+| `reader` | `reader` | `history.read` | `history_read` | `modus new reader` | emit, сеть, replay в `wait` |
+| `player` | `player` | `media.audio` + `media.cache` | `media_audio`, `media_cache` | `modus new player` | открывать устройство, TTS в обход Core |
+| `bridge` | `bridge` | `bridge.obs` + `bridge_requests` | `bridge` | `modus new bridge` | сырой сокет в обход allowlist |
+| `embedder` | `embedder` | `ui.slot` + `media.embed` + `embed_hosts` + `"slots": ["web"]` и/или `["panel"]` | `ui_slot`, `media_embed` | `modus new embedder` | прокси MP4, `play` на хосте, youtube-dl |
+| `rates` | `rates` | `net.http` + `rates.publish` | `net_http`, `rates_publish` | `modus new rates` | emit, UI, KV; курс в `opaque` |
 
-`modus new` пишет все роли из таблицы (включая `panel` → feature `widget`). Новый пакет: одна feature SDK. Сырой bindgen без SDK допустим, но не эталон.
+Новый пакет: **одна** feature SDK. Две feature сразу — `compile_error`. Сырой bindgen без SDK допустим, но не эталон.
 
 Алертер ставит талон в кассу Core; показ — свой `web` после `alert-play`. Голос — `media.audio` (player) или `custom` `tts.request` → исполнитель с `media.audio`. Эталонный alerter без emit/audio — оверлей title/body.
 
@@ -66,13 +70,13 @@ SDK: **одна** Cargo feature = пресет кода (helpers / re-export), �
 
 Манифест: `"capabilities": ["ui.slot"]` и `"slots": ["web"]` и/или `["panel"]`.
 
-- no grant при непустых `slots` — `slots require grant ui.slot`;
+- слоты без гранта — `slots require grant ui.slot`;
 - грант без слота — `ui.slot requires web or panel slot`;
 - иной слот — `slot … is not supported`.
 
-**Web / OBS.** Глухой слот — `consumer` + `"slots": ["web"]` (статика, wasm в DOM не пишет). Канал wasm ↔ страница — грант `ui.slot` + `ui_slot::post` (роль `widget`). Эталон: [`modus-examples/widget`](../../../modus-examples/widget). Ассеты `assets/web/`. Несколько `web` сразу ок. Картинки — `'self'` / `cache/{key}`. Кадр `plugin` только своему `plugin_id`. Чужой origin в iframe — роль `embedder` + грант `media.embed` + `embed_hosts`; без `embed_hosts` CSP `frame-src 'none'`; вызов без гранта — отказ.
+**Web / OBS.** Глухой слот — `consumer` + `"slots": ["web"]` (статика, wasm в DOM не пишет). Канал wasm ↔ страница — грант `ui.slot` + `ui_slot::post` (роль `widget`). Эталон: [`modus-examples/widget`](https://github.com/CaptainGnome/modus-examples/tree/master/widget). Ассеты `assets/web/`. Несколько `web` сразу ок. Картинки — `'self'` / `cache/{key}`. Кадр `plugin` только своему `plugin_id`. Чужой origin в iframe — роль `embedder` + грант `media.embed` + `embed_hosts`; без `embed_hosts` CSP `frame-src 'none'`; вызов без гранта — отказ.
 
-**Panel.** Док в раскладке Core, плагин окна не создаёт. Режим один: native (`assets/panel.json`) или web (`assets/panel/` либо те же `assets/web/`). Эталон native: `modus new panel`. `modus new panel` / `modus new panel --mode web`.
+**Panel.** Док в раскладке Core, плагин OS-окна не создаёт. Режим один: native (`assets/panel.json`) или web (`assets/panel/` либо те же `assets/web/`). `modus new panel` / `modus new panel --mode web`.
 
 ## Следствие для `pack`
 
