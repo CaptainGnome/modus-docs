@@ -1,0 +1,17 @@
+[book]
+title = "Modus plugins"
+description = "Modus ABI 2 guest-surface documentation"
+authors = ["CaptainGnome"]
+language = "en"
+src = "en"
+multilingual = false
+
+[build]
+build-dir = "site/en"
+create-missing = false
+
+[output.html]
+site-url = "/modus-docs/en/"
+git-repository-url = "https://github.com/CaptainGnome/modus-docs"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/CaptainGnome/modus-docs/edit/main/en/{path}"

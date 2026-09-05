@@ -1,0 +1,17 @@
+[book]
+title = "Плагины Modus"
+description = "Документация поверхности гостя Modus ABI 2"
+authors = ["CaptainGnome"]
+language = "ru"
+src = "ru"
+multilingual = false
+
+[build]
+build-dir = "site/ru"
+create-missing = false
+
+[output.html]
+site-url = "/modus-docs/ru/"
+git-repository-url = "https://github.com/CaptainGnome/modus-docs"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/CaptainGnome/modus-docs/edit/main/ru/{path}"

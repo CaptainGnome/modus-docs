@@ -1,6 +1,6 @@
 # Modus plugins
 
-**Languages:** [English](README.md) · [Русский](../ru/README.md)
+**Languages:** [English](README.md) · [Русский](https://captaingnome.github.io/modus-docs/ru/) · [source RU](https://github.com/CaptainGnome/modus-docs/tree/main/ru)
 
 Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome. ABI error strings are English (`stopped`, `no grant …`); use `HostError::classify`, do not parse literals.
 

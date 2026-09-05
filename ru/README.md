@@ -1,6 +1,6 @@
 # Плагины Modus
 
-**Языки:** [Русский](README.md) · [English](../en/README.md)
+**Языки:** [Русский](README.md) · [English](https://captaingnome.github.io/modus-docs/en/) · [source EN](https://github.com/CaptainGnome/modus-docs/tree/main/en)
 
 Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome. Строки ошибок ABI — на английском (`stopped`, `no grant …`); в коде — `HostError::classify`, не парсить литералы.
 
