@@ -105,4 +105,4 @@ Base always: `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`,
 
 WASI is not mixed into the SDK. `wasi:*` in the component — pack/load reject.
 
-CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Docs — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples); walkthroughs — [examples/](../examples/README.md).
+CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Docs — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples); walkthroughs — [examples/](../examples/overview.md).

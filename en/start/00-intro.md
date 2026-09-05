@@ -1,6 +1,6 @@
 # Who this is for and what to expect
 
-If this is your first plugin — read this chapter and continue through the tutorial. If you already know Rust and need the ABI contract — [reference](../README.md#reference).
+If this is your first plugin — read this chapter and continue through the tutorial. If you already know Rust and need the ABI contract — [reference](../introduction.md#reference).
 
 ## What a plugin is
 
@@ -60,8 +60,8 @@ One language: **Rust**. We do not promise others.
 
 | Path                                  | For whom                 | How to read                                                 |
 | ------------------------------------- | ------------------------ | ---------------------------------------------------------- |
-| [Tutorial](../README.md#tutorial)     | first plugin             | top to bottom; each chapter yields a terminal line or a file |
-| [Reference](../README.md#reference)   | contract, limits, errors | from the table of contents                                 |
+| [Tutorial](../introduction.md#tutorial)     | first plugin             | top to bottom; each chapter yields a terminal line or a file |
+| [Reference](../introduction.md#reference)   | contract, limits, errors | from the table of contents                                 |
 
 
 Commands, identifiers, and host error strings — as in the ABI, without “improving” the translation.

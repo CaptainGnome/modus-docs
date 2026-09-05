@@ -1,6 +1,6 @@
 # What a plugin cannot do
 
-If this is your first plugin — remember the bans while `dev` is still green. If you need the limits table and host errors — [reference](../README.md#reference).
+If this is your first plugin — remember the bans while `dev` is still green. If you need the limits table and host errors — [reference](../introduction.md#reference).
 
 A plugin is a guest in a sandbox. It does not get its own disk, socket, or window. Everything allowed is only an SDK call, and only if the manifest permitted it. A manifest entry without a call in code is fine. A call without an entry — `pack` will refuse, the package will not load.
 
@@ -26,6 +26,6 @@ Panel, chat history, sound, bridges — **not available in a plugin**. Not “la
 
 The `new consumer` scaffold is already inside these bounds: `subscribe`, `wait`, log. Do not add files, sockets, and HTTP “to check”. The check is `modus dev`; the host puts the bus.
 
-More precisely on limits, grants, and error strings — [reference](../README.md#reference).
+More precisely on limits, grants, and error strings — [reference](../introduction.md#reference).
 
 Next chapter — [open the generated `manifest`](05-manifest.md).

@@ -1,6 +1,6 @@
 # Summary
 
-[Modus plugins](README.md)
+[Modus plugins](introduction.md)
 
 # Tutorial
 
@@ -48,7 +48,7 @@
 
 # Examples
 
-- [Table of contents](examples/README.md)
+- [Table of contents](examples/overview.md)
 - [Consumer](examples/00-consumer.md)
 - [Emitter / fixture](examples/01-emitter-fixture.md)
 - [Connector](examples/02-connector-twitch.md)

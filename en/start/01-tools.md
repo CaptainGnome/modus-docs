@@ -1,6 +1,6 @@
 # Install tools
 
-If this is your first plugin — run the PowerShell commands one by one and read **what each word does**. Copying is fine; blind copying is not. If the toolchain is already installed and you need the contract — [reference](../README.md#reference).
+If this is your first plugin — run the PowerShell commands one by one and read **what each word does**. Copying is fine; blind copying is not. If the toolchain is already installed and you need the contract — [reference](../introduction.md#reference).
 
 Chapter outcome: CLI help on screen; the command list includes `new`, `check`, `pack`, `dev`.
 
@@ -47,7 +47,7 @@ rustup target list --installed
 
 The list must contain the line `wasm32-unknown-unknown`. If it is missing — `dev` and `pack` will later fail with `Need target wasm32-unknown-unknown` (Need target wasm32-unknown-unknown). Catch it here, not there.
 
-**Important.** This target does not give the guest files or sockets (in wasm that is called WASI). Otherwise the sandbox could be bypassed. More precisely — [reference](../README.md#reference).
+**Important.** This target does not give the guest files or sockets (in wasm that is called WASI). Otherwise the sandbox could be bypassed. More precisely — [reference](../introduction.md#reference).
 
 ## Repository
 

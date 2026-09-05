@@ -8,7 +8,7 @@ Guest-surface documentation (ABI 2): what a wasm plugin sees through [`modus-sdk
 
 Choose a language (markdown on GitHub, or the site above):
 
-- [Русский](ru/README.md) · [site RU](https://captaingnome.github.io/modus-docs/ru/)
-- [English](en/README.md) · [site EN](https://captaingnome.github.io/modus-docs/en/)
+- [Русский](ru/introduction.md) · [site RU](https://captaingnome.github.io/modus-docs/ru/)
+- [English](en/introduction.md) · [site EN](https://captaingnome.github.io/modus-docs/en/)
 
 Build locally: `./build.sh` (Unix) or `.\build.ps1` (Windows) after installing [mdBook](https://rust-lang.github.io/mdBook/).

@@ -105,4 +105,4 @@ use modus_sdk::{
 
 WASI SDK не подмешивает. `wasi:*` в компоненте — отказ pack/load.
 
-CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Документация — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples); разборы — [examples/](../examples/README.md).
+CLI: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (`cli/`). Документация — [modus-docs](https://github.com/CaptainGnome/modus-docs). Runnable dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples); разборы — [examples/](../examples/overview.md).

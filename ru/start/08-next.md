@@ -24,8 +24,8 @@
 | Crate SDK | [Контракт](../ref/00-contract.md) | [SDK](../api/13-sdk-crate.md) |
 | Чего нет в ABI 2 | [Не в этом ABI](../ref/10-not-in-abi.md) | — |
 | WIT | [приложение](../ref/11-wit.md) | — |
-| Разбор эталона по роли | [examples/](../examples/README.md) | — |
+| Разбор эталона по роли | [examples/](../examples/overview.md) | — |
 
-Оглавление — [README](../README.md).
+Оглавление — [README](../introduction.md).
 
 Путь автора не меняется: SDK → `new` → `dev` → `pack` → Core. Секреты в пакет не кладут.

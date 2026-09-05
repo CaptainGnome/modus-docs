@@ -1,6 +1,6 @@
 # Pack and install
 
-If this is your first plugin — get to a `.mplug` file on disk. Installing into the app is the last check, not a debugging method. If you need the zip and package fields table — [reference](../README.md#reference).
+If this is your first plugin — get to a `.mplug` file on disk. Installing into the app is the last check, not a debugging method. If you need the zip and package fields table — [reference](../introduction.md#reference).
 
 Commands — from the `modus-sdk` clone root. The `modus` function — [tools chapter](01-tools.md). Keep [modus-examples](https://github.com/CaptainGnome/modus-examples) nearby.
 

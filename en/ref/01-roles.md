@@ -1,6 +1,6 @@
 # Role map
 
-If this is your first plugin — `new` roles in the [tutorial](../start/02-roles.md). If you need feature × grant × reference — this chapter. Annotated code walkthroughs — [examples/](../examples/README.md).
+If this is your first plugin — `new` roles in the [tutorial](../start/02-roles.md). If you need feature × grant × reference — this chapter. Annotated code walkthroughs — [examples/](../examples/overview.md).
 
 **Rule.** The guest is always on world **`plugin`** (full guest API). Rights — only manifest + approve + deny on the call. Soft-link: a known modus import without a grant — `pack`/load ok; call without cap — `Err`. `wasi:*` / foreign — always refuse (`forbidden import …` / `extra import …`).
 

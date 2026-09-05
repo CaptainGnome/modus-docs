@@ -1,6 +1,6 @@
 # First success: consumer and `dev`
 
-If this is your first plugin — get to the `fixture hello` line in the terminal. The streamer app is not needed. If you need the `wait` and canon contract — [reference](../README.md#reference).
+If this is your first plugin — get to the `fixture hello` line in the terminal. The streamer app is not needed. If you need the `wait` and canon contract — [reference](../introduction.md#reference).
 
 Commands — from the **repo root**. The `modus` function — [tools chapter](01-tools.md). Do not `cd bus`: `--manifest-path` inside the function is relative and will break.
 

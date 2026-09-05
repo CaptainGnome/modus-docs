@@ -1,6 +1,6 @@
 # Roles: what to pick in `new`
 
-If this is your first plugin — chapter goal: choose **`consumer`** and invent an `id`. Connector and Twitch — not now. If you need the full role and grant list — [reference](../README.md#reference).
+If this is your first plugin — chapter goal: choose **`consumer`** and invent an `id`. Connector and Twitch — not now. If you need the full role and grant list — [reference](../introduction.md#reference).
 
 First look at what the CLI can create at all.
 
