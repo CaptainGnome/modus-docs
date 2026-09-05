@@ -14,7 +14,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 - `channel` — platform channel, not plugin id.
 - `payload` — `types::Payload`.
-- `opaque` — empty or **JSON text**; else `opaque is not JSON`. No secrets.
+- `opaque` — empty or **JSON text** (side-channel next to payload, not canon). Else `opaque is not JSON`. No secrets. Known Core keys: `audio_key` / `audio_kind`. Examples — [api § Opaque](../api/02-canon-bus.md#opaque).
 
 No grant — `no grant bus.emit`. Stamp > 64 KiB JSON — drop, `TooLarge`. Forging `plugin_id` is impossible. One live plugin per `platform_id`.
 

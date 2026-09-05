@@ -14,7 +14,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 
 - `channel` — канал площадки, не id плагина.
 - `payload` — `types::Payload`.
-- `opaque` — пусто или **JSON-текст**; иначе `opaque is not JSON`. Секреты не класть.
+- `opaque` — пусто или **JSON-текст** (хвост рядом с payload, не канон). Иначе `opaque is not JSON`. Секреты нельзя. Известные ключи Core: `audio_key` / `audio_kind`. Примеры — [api § Opaque](../api/02-canon-bus.md#opaque).
 
 Нет гранта — `no grant bus.emit`. Штамп > 64 KiB JSON — drop, `TooLarge`. Подделать `plugin_id` нельзя. Один живой плагин на `platform_id`.
 

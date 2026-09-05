@@ -16,7 +16,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 | --- | --- |
 | `channel` | platform channel (login / room), not plugin `id` |
 | `payload` | `types::Payload` |
-| `opaque` | `Option<&str>`: empty/`None` or **valid JSON text**. Else `opaque is not JSON`. No secrets; not an inter-plugin ABI without agreement |
+| `opaque` | `Option<&str>`: empty/`None` or **valid JSON text**. Else `opaque is not JSON`. No secrets. Details and examples — [below](#opaque) |
 
 No grant — `no grant bus.emit`. Stamped event JSON > 64 KiB — drop, `TooLarge`.
 
@@ -181,11 +181,87 @@ Connector author rules:
 
 Where `fragments` appear: `Message`, `Donation`, `Sub`, `Reward`. Not on `Follow` / `Raid` / `ViewerCount` / `Moderation`.
 
-## Opaque and flags
+## Opaque
+
+`opaque` is an **optional JSON side-channel** next to the typed `payload`. Canon (Message/Donation/…) stays shared; platform-specific or cross-plugin tail goes here. It is not a second payload field and not a substitute for `Custom`.
+
+### Contract
 
 | | Rule |
 | --- | --- |
-| `opaque` | JSON tail; player example: `{"audio_key":"…"}` after `media_cache` |
+| Type on emit | `Option<&str>`: `None`, `""`, or **valid JSON text** |
+| Error | otherwise `opaque is not JSON` |
+| Guest `Ready::Bus` | `Option<String>` — the same JSON string |
+| Inside Core | `serde_json::Value` (after parse) |
+| Size | counts toward the 64 KiB stamped-event limit |
+| Secrets | forbidden (tokens, refresh, passwords) |
+| ABI | **no** fixed Core schema for the whole tail. Fields are an emitter↔reader convention |
+
+Do not put into opaque what already has canon or a dedicated API: FX rates → `rates.publish`, caps/badges → do not invent kinds, chat text → `fragments`.
+
+Only plugins that **know** the convention should read opaque. Everyone else ignores the tail and uses `payload`. “Consumers never parse it” is false: player/alerter/Core do look at known keys (below).
+
+### What Core reads (known keys)
+
+Not a full ABI dictionary — only what the host already understands:
+
+| Key | Who looks | Why |
+| --- | --- | --- |
+| `audio_key` | alert cashier; a skin may **inject** it if missing | `media.cache` key for alert SFX |
+| `audio_kind` | chat UI (donation) | if `"voice"` **and** a valid `audio_key` — lift voice for the feed; otherwise the key is not promoted |
+| anything else | Core does not interpret | left for guests by convention |
+
+Overlay/web surfaces may **strip** opaque before display (sanitization); wasm bus subscribers see the tail as emitted (after flag filters).
+
+### Examples
+
+**1. Plain chat — no tail:**
+
+```rust
+bus_emit::emit(&channel, &payload, None)?;
+```
+
+**2. Voice donation (emitter reference)** — bytes into cache, key in opaque; player/alerter do not fetch a URL themselves:
+
+```rust
+let key = media_cache::put("audio/mpeg", &bytes)?;
+let opaque = format!(
+    r#"{{"fixture":"voice","audio_key":"{key}","audio_kind":"voice"}}"#
+);
+bus_emit::emit("dev", &donation_payload, Some(&opaque))?;
+```
+
+**3. DonationAlerts** — platform id plus optional voice after pin:
+
+```json
+{ "da_id": "30530030", "audio_key": "…", "audio_kind": "voice" }
+```
+
+or without voice just `{ "da_id": "…" }`.
+
+**4. Twitch Reward (EventSub)** — redemption tail without duplicating `Reward` fields:
+
+```json
+{ "redemptionId": "…", "mode": "custom", "status": "unfulfilled" }
+```
+
+**5. Reading in a player** (guest sketch):
+
+```rust
+fn audio_key_from_opaque(opaque: Option<&str>) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(opaque?).ok()?;
+    v.get("audio_key")?.as_str().map(str::to_string)
+}
+```
+
+Reference plugins sometimes scan for the `"audio_key"` substring without a full JSON parser in wasm — allowed, but brittle; prefer a JSON object.
+
+References: [`modus-examples/emitter`](../../../modus-examples/emitter) (voice), [`examples/10-player`](../examples/10-player.md), live connectors in the closed tree (DA / Twitch reward).
+
+## Flags
+
+| | Rule |
+| --- | --- |
 | `flags.hide_chat` | feed may hide; bus and journal (except viewers) — yes |
 | `flags.skip_alert` | alert cashier skips |
 | `flags.highlight` | UI highlight; not the same as `Message.rewarded` |

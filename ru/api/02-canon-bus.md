@@ -16,7 +16,7 @@ bus_emit::emit(channel, &payload, opaque) -> Result<(), String>
 | --- | --- |
 | `channel` | канал площадки (логин / room), не `id` плагина |
 | `payload` | `types::Payload` |
-| `opaque` | `Option<&str>`: пусто/`None` или **валидный JSON-текст**. Иначе `opaque is not JSON`. Не секреты; не ABI между плагинами без договорённости |
+| `opaque` | `Option<&str>`: пусто/`None` или **валидный JSON-текст**. Иначе `opaque is not JSON`. Секреты нельзя. Подробнее и примеры — [ниже](#opaque) |
 
 Нет гранта — `no grant bus.emit`. JSON штампованного события > 64 KiB — drop, `TooLarge`.
 
@@ -181,11 +181,87 @@ Text("hi ") + Emote{id, alt:"Kappa", url:Some("https://…")} + Text(" there")
 
 Где бывают `fragments`: `Message`, `Donation`, `Sub`, `Reward`. У `Follow` / `Raid` / `ViewerCount` / `Moderation` — нет.
 
-## Opaque и flags
+## Opaque
+
+`opaque` — **опциональный JSON-хвост** рядом с typed `payload`. Канон (Message/Donation/…) остаётся общим; площадочный или межплагинный хвост — сюда. Это не второе поле payload и не замена `Custom`.
+
+### Контракт
 
 | | Правило |
 | --- | --- |
-| `opaque` | JSON-хвост; пример для player: `{"audio_key":"…"}` после `media_cache` |
+| Тип на emit | `Option<&str>`: `None`, `""` или **валидный JSON-текст** |
+| Ошибка | иначе `opaque is not JSON` |
+| У гостя в `Ready::Bus` | `Option<String>` — та же JSON-строка |
+| У Core внутри | `serde_json::Value` (после parse) |
+| Размер | входит в лимит 64 KiB всего штампованного события |
+| Секреты | нельзя (токены, refresh, пароли) |
+| ABI | **нет** фиксированной схемы Core для всего хвоста. Поля — договорённость эмитера и читателя |
+
+Не класть в opaque то, для чего есть канон или отдельный API: курс валют → `rates.publish`, caps/badges → не придумывать kind, текст чата → `fragments`.
+
+Читать opaque имеют смысл только плагины, которые **знают** договорённость. Остальные игнорируют хвост и смотрят `payload`. «Потребители никогда не парсят» — неверно: player/alerter/Core как раз смотрят известные ключи (ниже).
+
+### Что читает Core (известные ключи)
+
+Не полный словарь ABI — только то, что хост уже умеет:
+
+| Ключ | Кто смотрит | Зачем |
+| --- | --- | --- |
+| `audio_key` | касса алертов; скин может **дописать**, если ключа ещё нет | ключ `media.cache` для звука алерта |
+| `audio_kind` | UI ленты (donation) | если `"voice"` **и** есть валидный `audio_key` — показать/играть voice в чате; иначе ключ не поднимается |
+| остальные | Core не интерпретирует | остаются для гостей по договорённости |
+
+Поверхности overlay/web могут **срезать** opaque перед показом (санитизация); wasm-подписчики шины видят хвост как пришло (после фильтров flags).
+
+### Примеры
+
+**1. Чат без хвоста** — обычный PRIVMSG:
+
+```rust
+bus_emit::emit(&channel, &payload, None)?;
+```
+
+**2. Voice-донат (эталон emitter)** — байты в кэш, ключ в opaque; player/alerter не качают URL сами:
+
+```rust
+let key = media_cache::put("audio/mpeg", &bytes)?;
+let opaque = format!(
+    r#"{{"fixture":"voice","audio_key":"{key}","audio_kind":"voice"}}"#
+);
+bus_emit::emit("dev", &donation_payload, Some(&opaque))?;
+```
+
+**3. DonationAlerts** — id площадки + опционально голос после pin:
+
+```json
+{ "da_id": "30530030", "audio_key": "…", "audio_kind": "voice" }
+```
+
+или без голоса только `{ "da_id": "…" }`.
+
+**4. Twitch Reward (EventSub)** — хвост redemption, не дублируя поля `Reward`:
+
+```json
+{ "redemptionId": "…", "mode": "custom", "status": "unfulfilled" }
+```
+
+**5. Чтение у player** (гостевой снимок):
+
+```rust
+fn audio_key_from_opaque(opaque: Option<&str>) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(opaque?).ok()?;
+    v.get("audio_key")?.as_str().map(str::to_string)
+}
+```
+
+На практике эталоны часто ищут подстроку `"audio_key"` без полного JSON-парсера в wasm — допустимо, но хрупко; надёжнее объект JSON.
+
+Эталоны: [`modus-examples/emitter`](../../../modus-examples/emitter) (voice), [`examples/10-player`](../examples/10-player.md), живые коннекторы в закрытом дереве (DA / Twitch reward).
+
+## Flags
+
+| | Правило |
+| --- | --- |
 | `flags.hide_chat` | лента может скрыть; шина и journal (кроме viewers) — да |
 | `flags.skip_alert` | касса алертов пропускает |
 | `flags.highlight` | подсветка в UI; не путать с `Message.rewarded` |
