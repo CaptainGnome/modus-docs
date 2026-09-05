@@ -50,7 +50,7 @@ wait::wait() -> Ready
 | `Ui(bytes)` | frame from page / panel | grant `ui.slot` + slot. In `dev`: `--ui` |
 | `MediaEnded(id)` | track end or `media.audio` stop | role `player`: `media_cache::release` if needed |
 | `AlertPlay(cmd)` | Core cashier issued a show | alerter: own overlay / SFX; then `alert_enqueue::complete` |
-| `AlertStop(cmd)` | cashier cleared the show (skip / timeout) | collapse overlay; complete if not yet |
+| `AlertStop(cmd)` | cashier cleared the show (skip / timeout) | collapse overlay; `alert_enqueue::complete` if not already called |
 
 `alert-play` / `alert-stop`: fields `job-id`, `event-id`, `duration-ms`. Cashier and queue are **Core**, not guest. In `modus dev` (S5) enqueue writes id to stderr **without** `AlertPlay`/`AlertStop`. Show reference — `modus new alerter`.
 

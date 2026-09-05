@@ -50,7 +50,7 @@ wait::wait() -> Ready
 | `Ui(bytes)` | кадр со страницы / panel | грант `ui.slot` + слот. В `dev`: `--ui` |
 | `MediaEnded(id)` | конец трека или `media.audio` stop | роль `player`: при необходимости `media_cache::release` |
 | `AlertPlay(cmd)` | касса Core выдала показ | alerter: свой overlay / SFX; потом `alert_enqueue::complete` |
-| `AlertStop(cmd)` | касса сняла показ (skip / timeout) | свернуть overlay; complete если ещё не |
+| `AlertStop(cmd)` | касса сняла показ (skip / timeout) | свернуть overlay; `alert_enqueue::complete`, если ещё не вызван |
 
 `alert-play` / `alert-stop`: поля `job-id`, `event-id`, `duration-ms`. Касса и очередь — **Core**, не гость. В `modus dev` (S5) enqueue пишет id в stderr **без** `AlertPlay`/`AlertStop`. Эталон показа — `modus new alerter`.
 
