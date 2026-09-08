@@ -105,6 +105,13 @@ File `assets/panel.json`, ≤ 32 KiB. HTML in texts — rejected. Together wit
 
 Icons — fixed Core set (`plus`, `trash`, `play`, …). Labels — plain or `{ key, fallback }` + i18n.
 
+For `select` / enum fields: static `options` **or** `options_source`:
+
+| `options_source` | List from |
+| --- | --- |
+| `system_fonts` | OS fonts (chrome) |
+| `tts_voices` | SpVoice tokens (`list-voices`); label = voice name |
+
 Channel with native panel is the same: `post` / `Ready::Ui` (table state, button clicks — JSON per plugin agreement).
 
 `modus new panel` / `modus new panel --mode web`. Feature is always `widget`.

@@ -49,6 +49,7 @@ wait::wait() -> Ready
 | `Resume` | Windows power resume | connector: tear WS session and retry as on `WsClosed`. In parallel Core emits `system` “network after sleep”. Not bus replay. `wait_backoff` on `Resume` → `false` (immediate retry) |
 | `Ui(bytes)` | frame from page / panel | grant `ui.slot` + slot. In `dev`: `--ui` |
 | `MediaEnded(id)` | track end or `media.audio` stop | role `player`: `media_cache::release` if needed |
+| `TtsRendered { request-id, key?, error? }` | background `start-render-tts` finished (or err) | alerter / prefetch: `mark-ready` or store key; not `MediaEnded` |
 | `AlertPlay(cmd)` | Core cashier issued a show | alerter: own overlay / SFX; then `alert_enqueue::complete` |
 | `AlertStop(cmd)` | cashier cleared the show (skip / timeout) | collapse overlay; `alert_enqueue::complete` if not already called |
 

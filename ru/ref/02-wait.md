@@ -39,6 +39,8 @@ wait::wait() -> Ready
 | `Resume` | после сна Windows (power resume) | коннектор: закрыть WS-сессию и retry, как на `WsClosed`. Параллельно Core эмитит `system` «сеть после сна» на шину (для consumer/UI). Не replay шины. `wait_backoff` на `Resume` выходит сразу (`false`) |
 | `Ui` | кадр со страницы слота | грант `ui.slot` + слот |
 | `MediaEnded` | конец / `stop` у `media.audio` play | роль `player`: `release` cache-key, если был |
+| `TtsRendered` | готов `start-render-tts` (key / error) | `mark-ready` или сохранить ключ; не `MediaEnded` |
+| `AlertPlay` / `AlertStop` | касса Core | alerter: overlay / complete |
 
 После стопа вызовы хоста отдают `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` смотрит стоп каждые 50 ms — не замена `wait`.
 

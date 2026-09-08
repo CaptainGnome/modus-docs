@@ -56,13 +56,13 @@ Core settings (chrome): `tts.voice` (default token), `tts.output` = `speakers` \
 
 `render-tts` synthesizes into cache **without** speakers and **without** play-id / `MediaEnded`; ignores `tts.output`. Use for sync prefetch.
 
-`start-render-tts` returns a request-id immediately and finishes on `Ready::tts-rendered { request-id, key?, error? }` (background SpVoice → cache). Prefer this on the bus path so other events keep flowing. For alerts: `enqueue` with `pending-audio` right away, then `mark-ready` on `tts-rendered` (or wait for Core pending TTL → play without voice). Opaque `audio_key` → enqueue ready (no pending). Do not hold the cashier slot until Speak finishes.
+`start-render-tts` returns a request-id immediately and finishes on `Ready::tts-rendered { request-id, key?, error? }` (background SpVoice → cache). Prefer this on the bus path so other events keep flowing. For alerts: `enqueue` with `pending-audio` right away, then `mark-ready` on `tts-rendered` (or wait for Core pending TTL → play without voice). Opaque `audio_key` → enqueue ready (no pending). Do not hold the cashier slot until Speak finishes. `pending-audio` / `mark-ready` is a generic cashier contract: the same path works for third-party TTS (network → `media.cache.put` → `mark-ready`), not only SpVoice.
 
 Guest posts overlay audio via `ui.slot` / `audioKey` (same as voice donations). Mute silences speakers only; overlay put still happens. `list-voices` needs the same grant; empty on non-Windows / null tests.
 
 Track end or successful `stop` → `Ready::MediaEnded(id)`. Player releases related cache-keys.
 
-In `dev` audio is a stub/log; `list-voices` / `render-tts` return stubs.
+In `dev` audio is a stub/log; `list-voices` / `render-tts` / `start-render-tts` return stubs (`tts-rendered` with empty/synthetic outcome per `dev` host).
 
 ## `media.embed`
 

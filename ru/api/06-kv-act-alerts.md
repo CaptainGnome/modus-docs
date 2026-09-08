@@ -59,18 +59,36 @@ chat_act::act(job) -> Result<string, string>   // id job
 
 ```text
 enqueue(job) -> Result<string, string>   // job-id
+attach(attach-job) -> Result<string, string>
+mark-ready(event-id, audio-key?, duration-ms?) -> Result<(), string>
 complete(job_id, outcome) -> Result<(), string>
 ```
 
-Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`.
+Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`, `lane` (пусто → `main`), `exclusive` (default true), `replay`, `pending_audio`, `pending_ttl_ms` (0 → Core default 15 s).
 
 ### Концепт кассы (Core)
 
 1. Плагин ставит талон `enqueue` после интересного `Ready::Bus` (или recovery через `history.read`).
-2. **Касса — Core**: очередь, приоритеты, skip, конфликт оверлеев. Гость очередь не ведёт.
-3. Когда пора показать — Core будит alerter `Ready::AlertPlay { job_id, event_id, duration_ms }`.
-4. Плагин гоняет свой `ui.slot` web (post JSON) / SFX; по окончании — `complete`.
+2. **Касса — Core**: очереди по lane, приоритеты, skip, exclusive, companion (`attach`). Гость очередь не ведёт.
+3. Eligible play — только **ready** job. Когда пора показать — Core будит alerter `Ready::AlertPlay { job_id, event_id, duration_ms }`.
+4. Плагин гоняет свой `ui.slot` web (post JSON) / SFX / voice; по окончании — `complete`.
 5. Досрочный skip — `Ready::AlertStop` с тем же job; тоже `complete` (если ещё не вызван).
+
+### Unready (`pending-audio`)
+
+Слот в кассе сразу, голос может догнать. Не HOL: ready сзади **может** сыграть раньше unready впереди.
+
+| | Правило |
+| --- | --- |
+| `pending_audio: true` | job → `unready`; в UI виден (badge «ждёт голос») |
+| Play | касса **skip**’ает unready; `AlertPlay` только после ready |
+| `mark-ready` | waiting unready того же `plugin_id` → ready; key none/empty = без voice; опц. обновить `duration_ms` |
+| TTL | `pending_ttl_ms` или default 15 s → ready **без** voice (не drop) |
+| Exclusive unready | чужие полосы **не** стопает до реального play |
+| `replay` + `pending_audio` | отказ |
+| Persist across restart | нет |
+
+Типичный поток Core TTS: `start-render-tts` → сразу `enqueue(pending_audio)` → `Ready::tts-rendered` → `mark-ready` с ключом. Opaque `audio_key` — сразу ready. Тот же контракт для **любого** async voice (сторонний TTS → `media.cache` → `mark-ready`); касса про SAPI не знает. Подробнее — [media.audio](08-media-cache-audio-embed.md).
 
 ### Показанные алерты (`alert_shown`)
 
@@ -85,8 +103,8 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 | Зачем | recovery без mangling payload: alerter пропускает id из `alert_shown` и не enqueue’ит снова |
 | Retention | ~1 ч и cap ~2000 строк (старые вычищаются) |
 
-В `dev`: enqueue/complete → stderr, **без** `AlertPlay`/`AlertStop`, без очереди 32 и **без** записи `alert_shown`. Не путать с прод-поведением.
+В `dev`: enqueue / attach / mark-ready / complete → stderr, **без** `AlertPlay`/`AlertStop`, без очереди 32 и **без** записи `alert_shown`. Не путать с прод-поведением.
 
-Эталон: `modus new alerter`. Голос — отдельный `player` (`media.audio`) или `custom` `tts.request`, не «Core говорит».
+Эталон: `modus new alerter`. Голос: `media.audio` (`start-render-tts` / cache key) или `custom` `tts.request` + `mark-ready` — не «Core сам говорит в оверлей».
 
 Следующая глава — [слоты и panel](07-ui-slots-panel.md).

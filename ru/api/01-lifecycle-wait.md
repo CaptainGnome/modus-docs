@@ -49,6 +49,7 @@ wait::wait() -> Ready
 | `Resume` | power resume Windows | коннектор: рвать WS-сессию и retry как на `WsClosed`. Параллельно Core эмитит `system` «сеть после сна». Не replay шины. `wait_backoff` на `Resume` → `false` (сразу retry) |
 | `Ui(bytes)` | кадр со страницы / panel | грант `ui.slot` + слот. В `dev`: `--ui` |
 | `MediaEnded(id)` | конец трека или `media.audio` stop | роль `player`: при необходимости `media_cache::release` |
+| `TtsRendered { request-id, key?, error? }` | фон `start-render-tts` готов (или err) | alerter / prefetch: `mark-ready` или положить ключ; не путать с `MediaEnded` |
 | `AlertPlay(cmd)` | касса Core выдала показ | alerter: свой overlay / SFX; потом `alert_enqueue::complete` |
 | `AlertStop(cmd)` | касса сняла показ (skip / timeout) | свернуть overlay; `alert_enqueue::complete`, если ещё не вызван |
 

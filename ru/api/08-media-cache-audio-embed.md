@@ -56,13 +56,13 @@ start-render-tts(tts) -> Result<string, string>  // Ok = request-id; Ready::tts-
 
 `render-tts` — синтез в cache **без** колонок и **без** play-id / `MediaEnded`; `tts.output` не читает. Синхронный prefetch.
 
-`start-render-tts` сразу отдаёт request-id; готовность — `Ready::tts-rendered { request-id, key?, error? }` (фон SpVoice → cache). На шине предпочитать это, чтобы другие события не ждали Speak. Для алертов: сразу `enqueue` с `pending-audio`, затем `mark-ready` на `tts-rendered` (или TTL Core → play без голоса). Opaque `audio_key` → enqueue сразу ready. Не держать слот кассы, пока Speak не закончится.
+`start-render-tts` сразу отдаёт request-id; готовность — `Ready::tts-rendered { request-id, key?, error? }` (фон SpVoice → cache). На шине предпочитать это, чтобы другие события не ждали Speak. Для алертов: сразу `enqueue` с `pending-audio`, затем `mark-ready` на `tts-rendered` (или TTL Core → play без голоса). Opaque `audio_key` → enqueue сразу ready. Не держать слот кассы, пока Speak не закончится. `pending-audio` / `mark-ready` — общий контракт кассы: тот же путь для стороннего TTS (сеть → `media.cache.put` → `mark-ready`), не только SpVoice.
 
 Гость кладёт звук в оверлей через `ui.slot` / `audioKey` (как voice-донат). Mute глушит только колонки. `list-voices` — тот же грант; пусто на non-Windows / null.
 
 Конец трека или успешный `stop` → `Ready::MediaEnded(id)`.
 
-В `dev` audio — заглушка/лог; `list-voices` / `render-tts` — stub.
+В `dev` audio — заглушка/лог; `list-voices` / `render-tts` / `start-render-tts` — stub (`tts-rendered` с пустым/синтетическим исходом по реализации `dev`).
 
 ## `media.embed`
 

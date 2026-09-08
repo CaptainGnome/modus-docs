@@ -38,15 +38,27 @@
 
 Эталон: `modus new alerter`. Полный контракт — [api/06](../api/06-kv-act-alerts.md#показанные-алерты-alert_shown).
 
+## `media.audio` / TTS
+
+Грант `media.audio` (+ обычно `media.cache`). Core играет звук и хостовый TTS (Windows **SpVoice**); устройства гость не открывает.
+
+- `play` / `stop` / `duration-ms`: asset, URL/cache-key, `tts` / `tts-ex`.
+- Settings Core: `tts.voice`, `tts.output` = `speakers` \| `overlay` \| `both` (Speak / WAV в cache / оба).
+- Prefetch: sync `render-tts` или async `start-render-tts` → `Ready::tts-rendered`; для алертов — `pending-audio` + `mark-ready` ([api/08](../api/08-media-cache-audio-embed.md), [api/06](../api/06-kv-act-alerts.md)).
+- `list-voices` — тот же грант; пусто на non-Windows / null. В `dev` — stub.
+
+Эталон: `modus new player`; голос в алертах — `modus new alerter`.
+
 ## Слоты (`ui.slot`)
 
 Манифест: `ui.slot` + `"slots": ["web"]` и/или `["panel"]`. Канал wasm ↔ поверхность: `ui_slot::post` / `Ready::Ui`. В `dev`: `--ui` → `Ready::Ui`; `post` → лог.
 
 Эталоны: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`.
 
-## Cache / catalog (кратко)
+## Cache / catalog / audio (кратко)
 
 - `media.cache` — pin URL/байт; эталоны коннектор / `modus new provider`.
+- `media.audio` — play/TTS (SpVoice); см. выше и [api/08](../api/08-media-cache-audio-embed.md).
 - `catalog.publish` — снимок словаря (не шина); в `dev` — publish в stderr. Эталон: 7tv.
 
 Полная карта грантов — [роли](01-roles.md). Флаги `dev` — [CLI](05-cli.md).

@@ -105,6 +105,13 @@ post(payload: list<u8>) -> Result<(), String>
 
 Иконки — фиксированный набор Core (`plus`, `trash`, `play`, …). Labels — plain или `{ key, fallback }` + i18n.
 
+У `select` / enum-полей: статический `options` **или** `options_source`:
+
+| `options_source` | Откуда список |
+| --- | --- |
+| `system_fonts` | шрифты ОС (хром) |
+| `tts_voices` | токены SpVoice (`list-voices`); label = имя голоса |
+
 Канал с native panel тот же: `post` / `Ready::Ui` (состояние таблицы, клики кнопок — JSON по договору плагина).
 
 `modus new panel` / `modus new panel --mode web`. Feature всегда `widget`.

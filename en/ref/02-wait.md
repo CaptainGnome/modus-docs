@@ -39,6 +39,8 @@ wait::wait() -> Ready
 | `Resume` | after Windows sleep (power resume) | connector: close WS session and retry, as on `WsClosed`. In parallel Core emits `system` “network after sleep” on the bus (for consumer/UI). Not bus replay. `wait_backoff` on `Resume` exits immediately (`false`) |
 | `Ui` | frame from the slot page | grant `ui.slot` + slot |
 | `MediaEnded` | end / `stop` of `media.audio` play | role `player`: `release` cache-key if any |
+| `TtsRendered` | `start-render-tts` done (key / error) | `mark-ready` or keep the key; not `MediaEnded` |
+| `AlertPlay` / `AlertStop` | Core cashier | alerter: overlay / complete |
 
 After stop, host calls return `"stopped"` (`HostError::Stopped`). `clock::sleep_ms` checks stop every 50 ms — not a substitute for `wait`.
 

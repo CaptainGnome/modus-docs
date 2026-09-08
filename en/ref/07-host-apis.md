@@ -38,15 +38,27 @@ Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui
 
 Reference: `modus new alerter`. Full contract — [api/06](../api/06-kv-act-alerts.md#shown-alerts-alert_shown).
 
+## `media.audio` / TTS
+
+Grant `media.audio` (+ usually `media.cache`). Core plays sound and host TTS (Windows **SpVoice**); the guest does not open devices.
+
+- `play` / `stop` / `duration-ms`: asset, URL/cache-key, `tts` / `tts-ex`.
+- Core settings: `tts.voice`, `tts.output` = `speakers` \| `overlay` \| `both` (Speak / WAV in cache / both).
+- Prefetch: sync `render-tts` or async `start-render-tts` → `Ready::tts-rendered`; for alerts — `pending-audio` + `mark-ready` ([api/08](../api/08-media-cache-audio-embed.md), [api/06](../api/06-kv-act-alerts.md)).
+- `list-voices` — same grant; empty on non-Windows / null. In `dev` — stub.
+
+Reference: `modus new player`; alert voice — `modus new alerter`.
+
 ## Slots (`ui.slot`)
 
 Manifest: `ui.slot` + `"slots": ["web"]` and/or `["panel"]`. Wasm ↔ surface channel: `ui_slot::post` / `Ready::Ui`. In `dev`: `--ui` → `Ready::Ui`; `post` → log.
 
 References: [`modus-examples/widget`](../../../modus-examples/widget), `modus new panel`.
 
-## Cache / catalog (brief)
+## Cache / catalog / audio (brief)
 
 - `media.cache` — pin URL/bytes; references connector / `modus new provider`.
+- `media.audio` — play/TTS (SpVoice); see above and [api/08](../api/08-media-cache-audio-embed.md).
 - `catalog.publish` — dictionary snapshot (not bus); in `dev` — publish to stderr. Reference: 7tv.
 
 Full grant map — [roles](01-roles.md). `dev` flags — [CLI](05-cli.md).
