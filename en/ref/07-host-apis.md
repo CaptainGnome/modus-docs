@@ -4,7 +4,7 @@ If this is your first plugin — roles in the [map](01-roles.md). If you need ce
 
 **Rule.** Rights — manifest + deny on the call. In `modus dev` (S5): KV/settings — RAM per process; `alert.enqueue` / `chat.act` — log + id to stderr, not Core queue and not park to a second wasm. In Core — prod semantics below.
 
-Base without grant: `settings`, `assets`, `log`, `wait`, `self_info`, `clock`, `chat_complete`.
+Base without grant: `settings`, `assets`, `log`, `wait`, `self_info`, `clock`, `random`, `chat_complete`.
 
 ## Settings
 
@@ -34,7 +34,7 @@ Reference: `modus new commander`; performer without network — [`modus-examples
 
 ## Alerts
 
-Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. Successful `complete` → row in `alert_shown` (canon untouched); recovery reads `history.Page.alert_shown`. In `dev`: enqueue/complete → stderr, no `AlertPlay`/`AlertStop`, no queue of 32, no `alert_shown`.
+Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. Job may enqueue with `pending-audio` (unready): cashier skips it until `mark-ready` or pending TTL (default 15s → ready without voice). Ready jobs behind may play earlier (not HOL). Exclusive unready does not solo other lanes until play. `replay` + `pending-audio` is rejected. Successful `complete` → row in `alert_shown` (canon untouched); recovery reads `history.Page.alert_shown`. In `dev`: enqueue / mark-ready / complete → stderr, no `AlertPlay`/`AlertStop`, no queue of 32, no `alert_shown`.
 
 Reference: `modus new alerter`. Full contract — [api/06](../api/06-kv-act-alerts.md#shown-alerts-alert_shown).
 

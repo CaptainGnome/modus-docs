@@ -2,7 +2,7 @@
 
 **Rule.** These imports exist for any package on world `plugin`. No grant in the manifest is needed. Soft-link is full; deny only on stop / argument validation.
 
-SDK modules (with any role-feature): `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`. `chat_complete` — no grant, but re-exported under feature `emitter` / `connector`.
+SDK modules (with any role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`. `chat_complete` — no grant, but re-exported under feature `emitter` / `connector`.
 
 ## `self_info`
 
@@ -33,6 +33,28 @@ sleep_ms(ms)
 ```
 
 Blocking sleep with stop poll ~every 50 ms. **Not** a `wait` replacement for connector loops: on stop exit via `Ready::Stop` / `wait_backoff`, else join in `dev` waits 5 s.
+
+## `random`
+
+```text
+fill(len: u32) -> Result<list<u8>, String>
+```
+
+Host CSPRNG (no WASI). `len` **1…256**; `0` / `>256` → err. Storm **20 calls/s** → `random too frequent`.
+
+The lottery / wheel / giveaway winner is chosen in **wasm** after `fill`. Overlay only animates an already-chosen result.
+
+SDK sugar (outside WIT):
+
+```rust
+use modus_sdk::random;
+
+let bytes = random::fill(16)?;
+let n = random::u64()?;       // 8 bytes LE
+let unit = random::f64()?;    // [0, 1)
+```
+
+`modus dev` links the same import as Core.
 
 ## `assets.read`
 

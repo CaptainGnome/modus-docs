@@ -92,7 +92,7 @@ With feature `consumer` / `emitter` / `connector`:
 
 Full canon — [02-canon-bus](02-canon-bus.md).
 
-Base always: `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`, `set_label_i18n`.
+Base always: `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`, `set_label_i18n`.
 
 ## Do not mix with raw bindgen
 

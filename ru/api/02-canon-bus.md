@@ -63,7 +63,7 @@ Wire у Core UI — JSON tagged (`"type":"message"`, поля camelCase, snake_c
 | --- | --- |
 | `user_id`, `display_name` | автор |
 | `fragments` | упорядоченные куски тела (см. ниже). Не HTML |
-| `name_color?` | только `#` + 6 hex; иначе Core **выкинет** цвет, emit не падает |
+| `name_color?` | `#` + 6 hex, или 2–4 стопа через `>` (`#A>#B`); иначе Core **выкинет** цвет, emit не падает |
 | `message_id?` | id сообщения на площадке (для `chat.act` delete и т.п.) |
 | `rewarded` | строка чата за очки канала (`msg-id=highlighted-message` / `custom-reward-id`). Не `flags.highlight`, не badges |
 

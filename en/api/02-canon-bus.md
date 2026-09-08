@@ -63,7 +63,7 @@ Core UI wire is tagged JSON (`"type":"message"`, camelCase fields, snake_case al
 | --- | --- |
 | `user_id`, `display_name` | author |
 | `fragments` | ordered body pieces (see below). Not HTML |
-| `name_color?` | only `#` + 6 hex; otherwise Core **drops** the color, emit does not fail |
+| `name_color?` | `#` + 6 hex, or 2–4 stops joined by `>` (`#A>#B`); otherwise Core **drops** the color, emit does not fail |
 | `message_id?` | platform message id (for `chat.act` delete, etc.) |
 | `rewarded` | chat line for channel points (`msg-id=highlighted-message` / `custom-reward-id`). Not `flags.highlight`, not badges |
 

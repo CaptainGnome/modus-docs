@@ -4,7 +4,7 @@
 
 **Правило.** Права — манифест + deny на вызове. В `modus dev` (S5): KV/settings — RAM на процесс; `alert.enqueue` / `chat.act` — лог + id в stderr, не очередь Core и не парк до второго wasm. В Core — прод-семантика ниже.
 
-База без гранта: `settings`, `assets`, `log`, `wait`, `self_info`, `clock`, `chat_complete`.
+База без гранта: `settings`, `assets`, `log`, `wait`, `self_info`, `clock`, `random`, `chat_complete`.
 
 ## Settings
 
@@ -34,7 +34,7 @@
 
 ## Алерты
 
-Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. Успешный `complete` → строка в `alert_shown` (не правка канона); recovery читает `history.Page.alert_shown`. В `dev`: enqueue/complete → stderr, без `AlertPlay`/`AlertStop`, без очереди 32 и без `alert_shown`.
+Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. Job может встать с `pending-audio` (unready): касса его skip’ает до `mark-ready` или TTL (default 15s → ready без голоса). Ready сзади может сыграть раньше (не HOL). Exclusive unready не solo’ит чужие полосы до play. `replay` + `pending-audio` — отказ. Успешный `complete` → строка в `alert_shown` (не правка канона); recovery читает `history.Page.alert_shown`. В `dev`: enqueue / mark-ready / complete → stderr, без `AlertPlay`/`AlertStop`, без очереди 32 и без `alert_shown`.
 
 Эталон: `modus new alerter`. Полный контракт — [api/06](../api/06-kv-act-alerts.md#показанные-алерты-alert_shown).
 

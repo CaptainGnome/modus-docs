@@ -2,7 +2,7 @@
 
 **Правило.** Эти импорты есть у любого пакета на world `plugin`. Грант в манифесте не нужен. Soft-link полный; deny только на стопе / валидации аргументов.
 
-Модули SDK (при любой role-feature): `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`. `chat_complete` — без гранта, но re-export у feature `emitter` / `connector`.
+Модули SDK (при любой role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`. `chat_complete` — без гранта, но re-export у feature `emitter` / `connector`.
 
 ## `self_info`
 
@@ -33,6 +33,28 @@ sleep_ms(ms)
 ```
 
 Блокирующий сон с опросом стопа ~каждые 50 ms. **Не** замена `wait` для циклов коннектора: на стопе выходите через `Ready::Stop` / `wait_backoff`, иначе join в `dev` ждёт 5 s.
+
+## `random`
+
+```text
+fill(len: u32) -> Result<list<u8>, String>
+```
+
+Host CSPRNG (без WASI). `len` **1…256**; `0` / `>256` → err. Шторм **20 вызовов/с** → `random too frequent`.
+
+Победителя (лотерея, колесо, giveaway) считает **wasm** после `fill`. Overlay только анимирует уже выбранный результат.
+
+Сахар SDK (вне WIT):
+
+```rust
+use modus_sdk::random;
+
+let bytes = random::fill(16)?;
+let n = random::u64()?;       // 8 байт LE
+let unit = random::f64()?;    // [0, 1)
+```
+
+`modus dev` линкует тот же импорт, что Core.
 
 ## `assets.read`
 

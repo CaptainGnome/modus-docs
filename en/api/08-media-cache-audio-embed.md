@@ -19,7 +19,7 @@ release(key) -> Result<(), string>
 | --- | --- |
 | `lookup` | already in cache? |
 | `ensure` | host fetches URL (https + allowlist like network) and pins |
-| `put` | put raw bytes with mime |
+| `put` | put raw bytes (`audio/mpeg` or `audio/wav`) |
 | `release` | release pin (after `MediaEnded` for player) |
 
 Key is used by web slots as `cache/{key}` in `<img>` / CSP. Not a secret store.
@@ -29,8 +29,12 @@ Key is used by web slots as `cache/{key}` in `<img>` / CSP. Not a secret store.
 Grant `media.audio`. Feature `player` (+ cache usually nearby).
 
 ```text
-play(spec) -> Result<string, string>   // playback id
+play(spec) -> Result<string, string>   // playback id (or cache-key for overlay TTS)
 stop(id) -> Result<(), string>
+duration-ms(spec) -> Result<u32, string>
+list-voices() -> Result<list<voice>, string>
+render-tts(tts) -> Result<string, string>  // cache only; Ok = 64-hex key
+start-render-tts(tts) -> Result<string, string>  // Ok = request-id; Ready::tts-rendered
 ```
 
 `spec`:
@@ -38,14 +42,27 @@ stop(id) -> Result<(), string>
 | Variant | Value |
 | --- | --- |
 | `asset(path)` | file from package `assets/` |
-| `url(https)` | URL via host policy / cache |
-| `tts(text)` | host-side synthesis (if available) |
+| `url(https\|cache-key)` | URL via host policy / cache |
+| `tts(text)` | host TTS with Core default voice |
+| `tts-ex({ text, voice? })` | same; optional SpVoice token override |
 
-Track end or successful `stop` → `Ready::MediaEnded(id)`. Player releases related cache-keys. Output device is chosen by Core, not the plugin.
+Core settings (chrome): `tts.voice` (default token), `tts.output` = `speakers` \| `overlay` \| `both`.
 
-TTS request from the bus: another plugin may emit `custom` kind `tts.request`; executor with `media.audio` plays. Reference alerter without audio — overlay only.
+| `tts.output` | `play(tts*)` behavior | `play` Ok |
+| --- | --- | --- |
+| `speakers` | Speak to default device | uuid play-id |
+| `overlay` | One synth → WAV in `media.cache`; no speakers | 64-hex `audioKey` |
+| `both` | Same WAV → cache + rodio speakers | 64-hex `audioKey` |
 
-In `dev` audio is a stub/log as far as CLI allows; do not expect driver parity with Core.
+`render-tts` synthesizes into cache **without** speakers and **without** play-id / `MediaEnded`; ignores `tts.output`. Use for sync prefetch.
+
+`start-render-tts` returns a request-id immediately and finishes on `Ready::tts-rendered { request-id, key?, error? }` (background SpVoice → cache). Prefer this on the bus path so other events keep flowing. For alerts: `enqueue` with `pending-audio` right away, then `mark-ready` on `tts-rendered` (or wait for Core pending TTL → play without voice). Opaque `audio_key` → enqueue ready (no pending). Do not hold the cashier slot until Speak finishes.
+
+Guest posts overlay audio via `ui.slot` / `audioKey` (same as voice donations). Mute silences speakers only; overlay put still happens. `list-voices` needs the same grant; empty on non-Windows / null tests.
+
+Track end or successful `stop` → `Ready::MediaEnded(id)`. Player releases related cache-keys.
+
+In `dev` audio is a stub/log; `list-voices` / `render-tts` return stubs.
 
 ## `media.embed`
 

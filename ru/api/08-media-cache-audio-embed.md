@@ -19,7 +19,7 @@ release(key) -> Result<(), string>
 | --- | --- |
 | `lookup` | уже есть в кэше? |
 | `ensure` | хост тянет URL (https + allowlist как у сети) и pin |
-| `put` | положить сырые байты с mime |
+| `put` | положить сырые байты (`audio/mpeg` или `audio/wav`) |
 | `release` | отпустить pin (после `MediaEnded` у player) |
 
 Ключ используют web-слоты как `cache/{key}` в `<img>` / CSP. Не секретное хранилище.
@@ -29,8 +29,12 @@ release(key) -> Result<(), string>
 Грант `media.audio`. Feature `player` (+ cache обычно рядом).
 
 ```text
-play(spec) -> Result<string, string>   // playback id
+play(spec) -> Result<string, string>   // playback id (или cache-key для overlay TTS)
 stop(id) -> Result<(), string>
+duration-ms(spec) -> Result<u32, string>
+list-voices() -> Result<list<voice>, string>
+render-tts(tts) -> Result<string, string>  // только cache; Ok = 64-hex key
+start-render-tts(tts) -> Result<string, string>  // Ok = request-id; Ready::tts-rendered
 ```
 
 `spec`:
@@ -38,14 +42,27 @@ stop(id) -> Result<(), string>
 | Вариант | Значение |
 | --- | --- |
 | `asset(path)` | файл из `assets/` пакета |
-| `url(https)` | URL через политику хоста / cache |
-| `tts(text)` | синтез на стороне хоста (если доступен) |
+| `url(https\|cache-key)` | URL через политику хоста / cache |
+| `tts(text)` | TTS хоста с голосом Core по умолчанию |
+| `tts-ex({ text, voice? })` | то же; опциональный токен SpVoice |
 
-Конец трека или успешный `stop` → `Ready::MediaEnded(id)`. Player отпускает связанные cache-key. Устройство вывода выбирает Core, не плагин.
+Настройки Core (хром): `tts.voice`, `tts.output` = `speakers` \| `overlay` \| `both`.
 
-TTS-запрос с шины: другой плагин может эмитить `custom` kind `tts.request`; исполнитель с `media.audio` играет. Эталонный alerter без audio — только overlay.
+| `tts.output` | Поведение `play(tts*)` | `play` Ok |
+| --- | --- | --- |
+| `speakers` | Speak в устройство по умолчанию | uuid play-id |
+| `overlay` | Один синтез → WAV в `media.cache`; без колонок | 64-hex `audioKey` |
+| `both` | Тот же WAV → cache + rodio | 64-hex `audioKey` |
 
-В `dev` audio — заглушка/лог по возможности CLI; не ждите паритета драйвера с Core.
+`render-tts` — синтез в cache **без** колонок и **без** play-id / `MediaEnded`; `tts.output` не читает. Синхронный prefetch.
+
+`start-render-tts` сразу отдаёт request-id; готовность — `Ready::tts-rendered { request-id, key?, error? }` (фон SpVoice → cache). На шине предпочитать это, чтобы другие события не ждали Speak. Для алертов: сразу `enqueue` с `pending-audio`, затем `mark-ready` на `tts-rendered` (или TTL Core → play без голоса). Opaque `audio_key` → enqueue сразу ready. Не держать слот кассы, пока Speak не закончится.
+
+Гость кладёт звук в оверлей через `ui.slot` / `audioKey` (как voice-донат). Mute глушит только колонки. `list-voices` — тот же грант; пусто на non-Windows / null.
+
+Конец трека или успешный `stop` → `Ready::MediaEnded(id)`.
+
+В `dev` audio — заглушка/лог; `list-voices` / `render-tts` — stub.
 
 ## `media.embed`
 

@@ -34,7 +34,7 @@ Helpers: `text_message`, `donation`, `follow`, `reward`, `viewer_count`, `money`
 
 Гость в `Ready::Bus` видит: `id`, `ts`, `source`, `payload`, `opaque?`, `flags`. Отдельного `kind` и `audio_key` нет (`audio_key` — в opaque / UI Core).
 
-- **Message:** `user_id`, `display_name`, `fragments`, `name_color?` (`#`+6 hex или Core выкинет), `message_id?`, `rewarded` (очки канала в IRC). Badges в каноне нет.
+- **Message:** `user_id`, `display_name`, `fragments`, `name_color?` (`#`+6 hex, или 2–4 стопа через `>` вроде `#A>#B`; иначе Core выкинет), `message_id?`, `rewarded` (очки канала в IRC). Badges в каноне нет.
 - **Donation:** юзер + `Money { amount, currency }` + `fragments`. Валюта — договорённость (`RUB`, `BITS`, …), Core не нормализует.
 - **Sub:** юзер, `months`, `tier?`, `gifted`, `gifter_*?`, `fragments`.
 - **Follow:** юзер.

@@ -92,7 +92,7 @@ use modus_sdk::{
 
 Полный канон — [02-canon-bus](02-canon-bus.md).
 
-База всегда: `self_info`, `log`, `clock`, `assets`, `settings`, `wait`, `types`, `set_label_i18n`.
+База всегда: `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`, `set_label_i18n`.
 
 ## Не смешивать с сырым bindgen
 

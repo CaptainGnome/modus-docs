@@ -34,7 +34,7 @@ Helpers: `text_message`, `donation`, `follow`, `reward`, `viewer_count`, `money`
 
 On `Ready::Bus` the guest sees: `id`, `ts`, `source`, `payload`, `opaque?`, `flags`. No separate `kind` or `audio_key` (`audio_key` lives in opaque / Core UI).
 
-- **Message:** `user_id`, `display_name`, `fragments`, `name_color?` (`#`+6 hex or Core drops it), `message_id?`, `rewarded` (channel points on IRC). No badges in canon.
+- **Message:** `user_id`, `display_name`, `fragments`, `name_color?` (`#`+6 hex, or 2–4 stops joined by `>` like `#A>#B`; otherwise Core drops it), `message_id?`, `rewarded` (channel points on IRC). No badges in canon.
 - **Donation:** user + `Money { amount, currency }` + `fragments`. Currency is convention (`RUB`, `BITS`, …); Core does not normalize.
 - **Sub:** user, `months`, `tier?`, `gifted`, `gifter_*?`, `fragments`.
 - **Follow:** user.
