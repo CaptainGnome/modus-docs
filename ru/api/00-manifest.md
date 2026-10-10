@@ -102,6 +102,15 @@
 
 Публикация снимка — грант `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Эталон: `modus new provider`.
 
+## Классификация эмитов: `emits` / `emits_custom`
+
+| Поле | Правило |
+| --- | --- |
+| `emits` | заявленные **канон**-kind (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`). Без `system`. Неизвестное / дубль — отказ install |
+| `emits_custom` | свободные custom kind; **не** маскировать канон (включая `system`). Дубль — отказ |
+
+Пустые списки ок. Канон-emit вне `emits` в рантайме → **warn** в лог плагина (событие **не** drop). Потребители смотрят эмитентов через WIT `plugins.list` / chrome `plugin_registry`, не через sniff трафика.
+
 ## i18n в labels
 
 `name` (и тексты panel/settings) могут быть:

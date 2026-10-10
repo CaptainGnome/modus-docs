@@ -34,7 +34,7 @@ Reference: `modus new commander`; performer without network — [`modus-examples
 
 ## Alerts
 
-Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. Job may enqueue with `pending-audio` (unready): cashier skips it until `mark-ready` or pending TTL (default 15s → ready without voice). Ready jobs behind may play earlier (not HOL). Exclusive unready does not solo other lanes until play. `replay` + `pending-audio` is rejected. Successful `complete` → row in `alert_shown` (canon untouched); recovery reads `history.Page.alert_shown`. In `dev`: enqueue / mark-ready / complete → stderr, no `AlertPlay`/`AlertStop`, no queue of 32, no `alert_shown`.
+Grant `alert.enqueue`. Plugin places a job; queue and display — Core + own `ui.slot` web after `alert-play`. Job may enqueue with `pending-audio` (unready): cashier skips it until `mark-ready` or pending TTL (default 120s → ready without voice). Ready jobs behind may play earlier (not HOL). Exclusive unready does not solo other lanes until play. Replay may also be unready (Core TTS regenerated). Successful `complete` → row in `alert_shown` (canon untouched); recovery reads `history.Page.alert_shown`. In `dev`: enqueue / mark-ready / complete → stderr, no `AlertPlay`/`AlertStop`, no queue of 32, no `alert_shown`.
 
 Reference: `modus new alerter`. Full contract — [api/06](../api/06-kv-act-alerts.md#shown-alerts-alert_shown).
 

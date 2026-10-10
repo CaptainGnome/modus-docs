@@ -102,6 +102,15 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 
 Snapshot publish — grant `catalog.publish` ([09-bridge-history-rates-catalog](09-bridge-history-rates-catalog.md)). Reference: `modus new provider`.
 
+## Emit classification: `emits` / `emits_custom`
+
+| Field | Rule |
+| --- | --- |
+| `emits` | declared **canon** kinds this plugin may emit (`message`, `donation`, `sub`, `follow`, `raid`, `viewer_count`, `reward`, `moderation`). No `system`. Unknown / duplicate — install reject |
+| `emits_custom` | free custom kind strings; must **not** mask canon names (incl. `system`). Duplicate — reject |
+
+Empty lists are fine. Undeclared canon emit at runtime → **warn** in the plugin log (event is **not** dropped). Consumers discover emitters via WIT `plugins.list` / chrome `plugin_registry` — not by sniffing traffic.
+
 ## i18n in labels
 
 `name` (and panel/settings texts) may be:

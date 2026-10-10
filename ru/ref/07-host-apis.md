@@ -34,7 +34,7 @@
 
 ## Алерты
 
-Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. Job может встать с `pending-audio` (unready): касса его skip’ает до `mark-ready` или TTL (default 15s → ready без голоса). Ready сзади может сыграть раньше (не HOL). Exclusive unready не solo’ит чужие полосы до play. `replay` + `pending-audio` — отказ. Успешный `complete` → строка в `alert_shown` (не правка канона); recovery читает `history.Page.alert_shown`. В `dev`: enqueue / mark-ready / complete → stderr, без `AlertPlay`/`AlertStop`, без очереди 32 и без `alert_shown`.
+Грант `alert.enqueue`. Плагин ставит job; касса и показ — Core + свой `ui.slot` web после `alert-play`. Job может встать с `pending-audio` (unready): касса его skip’ает до `mark-ready` или TTL (default 120s → ready без голоса). Ready сзади может сыграть раньше (не HOL). Exclusive unready не solo’ит чужие полосы до play. Replay тоже может быть unready (повторный Core TTS). Успешный `complete` → строка в `alert_shown` (не правка канона); recovery читает `history.Page.alert_shown`. В `dev`: enqueue / mark-ready / complete → stderr, без `AlertPlay`/`AlertStop`, без очереди 32 и без `alert_shown`.
 
 Эталон: `modus new alerter`. Полный контракт — [api/06](../api/06-kv-act-alerts.md#показанные-алерты-alert_shown).
 

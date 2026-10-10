@@ -64,7 +64,7 @@ mark-ready(event-id, audio-key?, duration-ms?) -> Result<(), string>
 complete(job_id, outcome) -> Result<(), string>
 ```
 
-Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`, `lane` (пусто → `main`), `exclusive` (default true), `replay`, `pending_audio`, `pending_ttl_ms` (0 → Core default 15 s).
+Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`, `lane` (пусто → `main`), `exclusive` (default true), `replay`, `pending_audio`, `pending_ttl_ms` (0 → Core default 120 s).
 
 ### Концепт кассы (Core)
 
@@ -83,12 +83,12 @@ Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `durati
 | `pending_audio: true` | job → `unready`; в UI виден (badge «ждёт голос») |
 | Play | касса **skip**’ает unready; `AlertPlay` только после ready |
 | `mark-ready` | waiting unready того же `plugin_id` → ready; key none/empty = без voice; опц. обновить `duration_ms` |
-| TTL | `pending_ttl_ms` или default 15 s → ready **без** voice (не drop) |
+| TTL | `pending_ttl_ms` или default 120 s → ready **без** voice (не drop). Поздний `mark-ready` пока job ещё в waiting — цепляет ключ/duration |
 | Exclusive unready | чужие полосы **не** стопает до реального play |
-| `replay` + `pending_audio` | отказ |
+| `replay` + `pending_audio` | ok (replay Core TTS regenerates; same unready skip) |
 | Persist across restart | нет |
 
-Типичный поток Core TTS: `start-render-tts` → сразу `enqueue(pending_audio)` → `Ready::tts-rendered` → `mark-ready` с ключом. Opaque `audio_key` — сразу ready. Тот же контракт для **любого** async voice (сторонний TTS → `media.cache` → `mark-ready`); касса про SAPI не знает. Подробнее — [media.audio](08-media-cache-audio-embed.md).
+Типичный поток Core TTS: `start-render-tts` → сразу `enqueue(pending_audio)` → `Ready::tts-rendered` → `mark-ready` с ключом. Opaque `audio_key` — сразу ready. HTTPS-голос площадки ещё кладёт `audio_url` в opaque; на `alerts_replay` Core проверяет ключ и при miss снова `ensure` по URL (при необходимости подменяет ключ) до wake alerter. Тот же контракт для **любого** async voice (сторонний TTS → `media.cache` → `mark-ready`); касса про SAPI не знает. Подробнее — [media.audio](08-media-cache-audio-embed.md).
 
 ### Показанные алерты (`alert_shown`)
 

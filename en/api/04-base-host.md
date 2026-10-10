@@ -2,7 +2,7 @@
 
 **Rule.** These imports exist for any package on world `plugin`. No grant in the manifest is needed. Soft-link is full; deny only on stop / argument validation.
 
-SDK modules (with any role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`. `chat_complete` — no grant, but re-exported under feature `emitter` / `connector`.
+SDK modules (with any role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`, `plugins`. `chat_complete` — no grant, but re-exported under feature `emitter` / `connector`.
 
 ## `self_info`
 
@@ -18,6 +18,18 @@ version()   -> string
 
 For logs and debugging; forging another id is impossible.
 
+## `plugins`
+
+```text
+list() -> Result<list<entry>, String>
+```
+
+Read-only snapshot of **installed non-quarantine** plugins: `plugin_id`, `name`, `enabled`, optional `platform_id`, `emits`, `emits_custom`. **No grant.** Storm **2/s** (`plugins too frequent`). Disabled plugins appear with `enabled: false`; quarantine is omitted.
+
+On install / enable / disable / uninstall / quarantine Core emits `system` with code `plugins-changed` (refresh without Core restart). Helper: `modus_sdk::platforms_with_kind(entries, kind)`.
+
+Chrome mirrors the same snapshot via IPC `plugin_registry`.
+
 ## `log`
 
 ```text
@@ -30,9 +42,15 @@ Levels: `debug` / `info` / `warn` / `error`. Cap **20 messages/s** per instance;
 
 ```text
 sleep_ms(ms)
+now_ms() -> s64
 ```
 
-Blocking sleep with stop poll ~every 50 ms. **Not** a `wait` replacement for connector loops: on stop exit via `Ready::Stop` / `wait_backoff`, else join in `dev` waits 5 s.
+| Call | Behavior |
+| --- | --- |
+| `sleep_ms` | Blocking sleep with stop poll ~every 50 ms. **Not** a `wait` replacement for connector loops: on stop exit via `Ready::Stop` / `wait_backoff`, else join in `dev` waits 5 s. |
+| `now_ms` | UTC unix time in milliseconds since 1970-01-01. No grant, no storm. Same clock as Core event stamps (`db::now_ms`). Use for catch-up waterlines (e.g. ignore chat history before plugin attach). |
+
+`modus dev` implements the same import as Core. ABI **2** additive — old packages that only call `sleep_ms` keep working.
 
 ## `random`
 

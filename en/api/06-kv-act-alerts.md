@@ -64,7 +64,7 @@ mark-ready(event-id, audio-key?, duration-ms?) -> Result<(), string>
 complete(job_id, outcome) -> Result<(), string>
 ```
 
-Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`, `lane` (empty → `main`), `exclusive` (default true), `replay`, `pending_audio`, `pending_ttl_ms` (0 → Core default 15 s).
+Job: `event_id`, `priority` (`follow`/`sub`/`raid`/`donation`/`reward`), `duration_ms`, `title`, `body`, `lane` (empty → `main`), `exclusive` (default true), `replay`, `pending_audio`, `pending_ttl_ms` (0 → Core default 120 s).
 
 ### Cashier concept (Core)
 
@@ -83,12 +83,12 @@ Slot appears in the cashier immediately; voice may catch up. Not HOL: a ready jo
 | `pending_audio: true` | job → `unready`; visible in UI (pending-voice badge) |
 | Play | cashier **skips** unready; `AlertPlay` only after ready |
 | `mark-ready` | waiting unready of the same `plugin_id` → ready; key none/empty = no voice; optional `duration_ms` update |
-| TTL | `pending_ttl_ms` or default 15 s → ready **without** voice (not drop) |
+| TTL | `pending_ttl_ms` or default 120 s → ready **without** voice (not drop). Late `mark-ready` while still waiting attaches key/duration |
 | Exclusive unready | does **not** stop other lanes until real play |
-| `replay` + `pending_audio` | rejected |
+| `replay` + `pending_audio` | ok (replay Core TTS regenerates; same unready skip) |
 | Persist across restart | no |
 
-Typical Core TTS flow: `start-render-tts` → immediate `enqueue(pending_audio)` → `Ready::tts-rendered` → `mark-ready` with key. Opaque `audio_key` → enqueue ready. Same contract for **any** async voice (third-party TTS → `media.cache` → `mark-ready`); the cashier does not know about SAPI. Details — [media.audio](08-media-cache-audio-embed.md).
+Typical Core TTS flow: `start-render-tts` → immediate `enqueue(pending_audio)` → `Ready::tts-rendered` → `mark-ready` with key. Opaque `audio_key` → enqueue ready. Provider HTTPS voice also stores `audio_url` in opaque; on `alerts_replay` Core checks the key and re-`ensure`s the URL (replacing the key if needed) before waking the alerter. Same contract for **any** async voice (third-party TTS → `media.cache` → `mark-ready`); the cashier does not know about SAPI. Details — [media.audio](08-media-cache-audio-embed.md).
 
 ### Shown alerts (`alert_shown`)
 

@@ -2,7 +2,7 @@
 
 **Правило.** Эти импорты есть у любого пакета на world `plugin`. Грант в манифесте не нужен. Soft-link полный; deny только на стопе / валидации аргументов.
 
-Модули SDK (при любой role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`. `chat_complete` — без гранта, но re-export у feature `emitter` / `connector`.
+Модули SDK (при любой role-feature): `self_info`, `log`, `clock`, `random`, `assets`, `settings`, `wait`, `types`, `plugins`. `chat_complete` — без гранта, но re-export у feature `emitter` / `connector`.
 
 ## `self_info`
 
@@ -18,6 +18,18 @@ version()   -> string
 
 Для логов и отладки; подделать чужой id нельзя.
 
+## `plugins`
+
+```text
+list() -> Result<list<entry>, String>
+```
+
+Read-only снимок **установленных non-quarantine** плагинов: `plugin_id`, `name`, `enabled`, опц. `platform_id`, `emits`, `emits_custom`. **Без гранта.** Шторм **2/s** (`plugins too frequent`). Выключенные — с `enabled: false`; quarantine не попадает в список.
+
+На install / enable / disable / uninstall / quarantine Core эмитит `system` с кодом `plugins-changed` (обновление без рестарта Core). Хелпер: `modus_sdk::platforms_with_kind(entries, kind)`.
+
+Хром зеркалит тот же снимок через IPC `plugin_registry`.
+
 ## `log`
 
 ```text
@@ -30,9 +42,15 @@ log(level, message)
 
 ```text
 sleep_ms(ms)
+now_ms() -> s64
 ```
 
-Блокирующий сон с опросом стопа ~каждые 50 ms. **Не** замена `wait` для циклов коннектора: на стопе выходите через `Ready::Stop` / `wait_backoff`, иначе join в `dev` ждёт 5 s.
+| Вызов | Поведение |
+| --- | --- |
+| `sleep_ms` | Блокирующий сон с опросом стопа ~каждые 50 ms. **Не** замена `wait` для циклов коннектора: на стопе выходите через `Ready::Stop` / `wait_backoff`, иначе join в `dev` ждёт 5 s. |
+| `now_ms` | UTC unix time в миллисекундах с 1970-01-01. Без гранта, без шторма. Те же часы, что штампы событий Core (`db::now_ms`). Для waterline catch-up (например игнор истории чата до attach плагина). |
+
+`modus dev` реализует тот же импорт, что Core. ABI **2** additive — старые пакеты с одним `sleep_ms` продолжают работать.
 
 ## `random`
 
