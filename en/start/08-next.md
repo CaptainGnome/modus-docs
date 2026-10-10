@@ -1,12 +1,13 @@
 # Next steps
 
-Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a green `dev`. Chapter 7 (connector) is optional.
+Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a green `dev`. Chapter 7 (connector) is optional. Parallel JS/TS path — [chapter 09](09-js-ts.md).
 
 ## Checklist
 
 - [ ] `modus new consumer` → `modus dev` → `fixture hello` in the log
 - [ ] `modus pack` → `.mplug` file
 - [ ] (optional) `modus new connector` → `dev --token fake --replay …`
+- [ ] (JS/TS) `modus new widget --lang ts` → `dev` / `pack` — [09](09-js-ts.md)
 
 ## Where to look
 
@@ -22,10 +23,11 @@ Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a gree
 | `.mplug` contents | [Package](../ref/08-package.md) | [Package/signing](../api/10-package-signing.md) |
 | Ceilings | [Limits](../ref/09-limits.md) | [Limits](../api/12-limits.md) |
 | SDK crate | [Contract](../ref/00-contract.md) | [SDK](../api/13-sdk-crate.md) |
+| npm SDK (JS/TS) | [Contract](../ref/00-contract.md) | [SDK-JS](../api/14-sdk-js.md) |
 | What is not in ABI 2 | [Not in this ABI](../ref/10-not-in-abi.md) | — |
 | WIT | [appendix](../ref/11-wit.md) | — |
 | Annotated reference by role | [examples/](../examples/overview.md) | — |
 
 Table of contents — [hub](../introduction.md).
 
-The author path does not change: SDK → `new` → `dev` → `pack` → shipped Modus. Secrets do not go into the package. All `new` roles — [map](../ref/01-roles.md); teaching dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples).
+The author path does not change: SDK → `new` → `dev` → `pack` → shipped Modus (Rust or JS/TS). Secrets do not go into the package. All `new` roles — [map](../ref/01-roles.md); teaching dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples).

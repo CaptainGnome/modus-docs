@@ -1,12 +1,13 @@
 # Дальше
 
-Часть 1 (главы 0–6) закрыта, если у вас есть `dist/*.mplug` consumer и зелёный `dev`. Глава 7 (коннектор) — по желанию.
+Часть 1 (главы 0–6) закрыта, если у вас есть `dist/*.mplug` consumer и зелёный `dev`. Глава 7 (коннектор) — по желанию. Параллельный путь JS/TS — [глава 09](09-js-ts.md).
 
 ## Чеклист
 
 - [ ] `modus new consumer` → `modus dev` → в логе `fixture hello`
 - [ ] `modus pack` → файл `.mplug`
 - [ ] (по желанию) `modus new connector` → `dev --token fake --replay …`
+- [ ] (JS/TS) `modus new widget --lang ts` → `dev` / `pack` — [09](09-js-ts.md)
 
 ## Куда смотреть
 
@@ -22,10 +23,11 @@
 | Содержимое `.mplug` | [Пакет](../ref/08-package.md) | [Пакет/подпись](../api/10-package-signing.md) |
 | Потолки | [Лимиты](../ref/09-limits.md) | [Лимиты](../api/12-limits.md) |
 | Crate SDK | [Контракт](../ref/00-contract.md) | [SDK](../api/13-sdk-crate.md) |
+| npm SDK (JS/TS) | [Контракт](../ref/00-contract.md) | [SDK-JS](../api/14-sdk-js.md) |
 | Чего нет в ABI 2 | [Не в этом ABI](../ref/10-not-in-abi.md) | — |
 | WIT | [приложение](../ref/11-wit.md) | — |
 | Разбор эталона по роли | [examples/](../examples/overview.md) | — |
 
 Оглавление — [hub](../introduction.md).
 
-Путь автора не меняется: SDK → `new` → `dev` → `pack` → shipped Modus. Секреты в пакет не кладут. Все роли `new` — [карта](../ref/01-roles.md); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples).
+Путь автора не меняется: SDK → `new` → `dev` → `pack` → shipped Modus (Rust или JS/TS). Секреты в пакет не кладут. Все роли `new` — [карта](../ref/01-roles.md); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples).

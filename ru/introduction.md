@@ -2,11 +2,11 @@
 
 **Языки:** [Русский](introduction.md) · [English](https://captaingnome.github.io/modus-docs/en/) · [source EN](https://github.com/CaptainGnome/modus-docs/tree/main/en)
 
-Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome. Строки ошибок ABI — на английском (`stopped`, `no grant …`); в коде — `HostError::classify`, не парсить литералы.
+Документация **поверхности гостя** (ABI 2): что видит wasm-плагин через [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) / [`modus-sdk-js`](https://github.com/CaptainGnome/modus-sdk-js) и CLI `modus`. Core здесь только короткими концептами («Core штампует события шины», «Core паркует `chat.act`», «касса алертов — Core»). Нет глав про брокер изнутри, фильтры ленты, hot-swap, React chrome. Строки ошибок ABI — на английском (`stopped`, `no grant …`); в коде — `HostError::classify`, не парсить литералы.
 
-**Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples). Разборы с комментариями — [examples/](examples/overview.md). Закрытые `plugins/*` продукта в публичный путь не входят.
+**Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); guest JS/TS — [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples). Разборы с комментариями — [examples/](examples/overview.md). Закрытые `plugins/*` продукта в публичный путь не входят.
 
-Путь автора: SDK → `new` → `dev` → `pack` → установка `.mplug` в **готовый** Modus. Язык — Rust. Секреты в пакет не кладут.
+Путь автора: SDK → `new` → `dev` → `pack` → установка `.mplug` в **готовый** Modus. Язык гостя — **Rust** или **JS/TS** (виджет / алертер). Хост языку не видит. Секреты в пакет не кладут.
 
 ## Туториал
 
@@ -23,8 +23,9 @@
 | 6 | [Упаковать](start/06-pack.md) | файл `dist/*.mplug` |
 | 7 | [Коннектор](start/07-connector.md) (по желанию) | replay кадра без живой площадки |
 | 8 | [Дальше](start/08-next.md) | чеклист и ссылки |
+| 9 | [JS/TS виджет](start/09-js-ts.md) | `new widget --lang ts` → `pack` |
 
-Часть 1 — главы 0–6 и 8. Глава 7 не обязательна.
+Часть 1 — главы 0–6 и 8 (Rust consumer). Глава 7 не обязательна. Глава 9 — параллельный путь JS/TS.
 
 ## Справочник
 
@@ -65,6 +66,7 @@
 | 11 | [CLI](api/11-cli-dev.md) |
 | 12 | [Лимиты](api/12-limits.md) |
 | 13 | [Crate `modus-sdk`](api/13-sdk-crate.md) |
+| 14 | [npm `modus-sdk` (JS/TS)](api/14-sdk-js.md) |
 
 ## Эталоны
 
@@ -73,4 +75,4 @@
 | | Глава | Эталон |
 | --- | --- | --- |
 | — | [оглавление](examples/overview.md) | |
-| 0–13 | consumer … rates | [`examples/`](examples/overview.md) |
+| 0–14 | consumer … widget-ts | [`examples/`](examples/overview.md) |

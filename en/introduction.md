@@ -2,11 +2,11 @@
 
 **Languages:** [English](introduction.md) · [Русский](https://captaingnome.github.io/modus-docs/ru/) · [source RU](https://github.com/CaptainGnome/modus-docs/tree/main/ru)
 
-Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome. ABI error strings are English (`stopped`, `no grant …`); use `HostError::classify`, do not parse literals.
+Documentation of the **guest surface** (ABI 2): what a wasm plugin sees through [`modus-sdk`](https://github.com/CaptainGnome/modus-sdk) / [`modus-sdk-js`](https://github.com/CaptainGnome/modus-sdk-js) and the `modus` CLI. Core appears only as short concepts (“Core stamps bus events”, “Core parks `chat.act`”, “alert till is Core”). No chapters on the broker internals, feed filters, hot-swap, or React chrome. ABI error strings are English (`stopped`, `no grant …`); use `HostError::classify`, do not parse literals.
 
-**Public repositories:** this hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); educational dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples). Annotated walkthroughs — [examples/](examples/overview.md). Closed product `plugins/*` are not part of the public path.
+**Public repositories:** this hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); guest JS/TS — [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js); educational dummies — [modus-examples](https://github.com/CaptainGnome/modus-examples). Annotated walkthroughs — [examples/](examples/overview.md). Closed product `plugins/*` are not part of the public path.
 
-Author path: SDK → `new` → `dev` → `pack` → install `.mplug` into the **shipped** Modus app. Language — Rust. Do not put secrets in the package.
+Author path: SDK → `new` → `dev` → `pack` → install `.mplug` into the **shipped** Modus app. Guest language — **Rust** or **JS/TS** (widget / alerter). The host does not see the language. Do not put secrets in the package.
 
 ## Tutorial
 
@@ -23,8 +23,9 @@ For someone who can paste a command into PowerShell. You do not need to know WAS
 | 6 | [Pack](start/06-pack.md) | file `dist/*.mplug` |
 | 7 | [Connector](start/07-connector.md) (optional) | frame replay without a live platform |
 | 8 | [Next](start/08-next.md) | checklist and links |
+| 9 | [JS/TS widget](start/09-js-ts.md) | `new widget --lang ts` → `pack` |
 
-Part 1 is chapters 0–6 and 8. Chapter 7 is optional.
+Part 1 is chapters 0–6 and 8 (Rust consumer). Chapter 7 is optional. Chapter 9 is the parallel JS/TS path.
 
 ## Reference
 
@@ -65,6 +66,7 @@ Reference depth: fields, tables, call semantics. Core only enough to understand 
 | 11 | [CLI](api/11-cli-dev.md) |
 | 12 | [Limits](api/12-limits.md) |
 | 13 | [Crate `modus-sdk`](api/13-sdk-crate.md) |
+| 14 | [npm `modus-sdk` (JS/TS)](api/14-sdk-js.md) |
 
 ## Examples
 
@@ -73,4 +75,4 @@ Walkthroughs of reference plugins: manifest + key code with comments.
 | | Chapter | Reference |
 | --- | --- | --- |
 | — | [table of contents](examples/overview.md) | |
-| 0–13 | consumer … rates | [`examples/`](examples/overview.md) |
+| 0–14 | consumer … widget-ts | [`examples/`](examples/overview.md) |

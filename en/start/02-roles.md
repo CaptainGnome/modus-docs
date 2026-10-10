@@ -34,7 +34,7 @@ Options:
 - `--id <ID>` — required flag. Plugin identifier, not a nick and not a folder name.
 - `--name` / `--author` — how the plugin is signed in the manifest. Optional: name from the last segment of `id`, author `author`.
 - `--dir <DIR>` — scaffold folder. No flag — folder = last segment of `id`. Path relative to the **current** directory (`modus-sdk` clone root).
-- `--lang` — do not set it: Rust anyway. Any other value — rejection `S1 Rust only`.
+- `--lang` — `rust` (default), `ts`, or `js`. For JS/TS only `widget` and `alerter` — [chapter 09](09-js-ts.md). Any other lang value — rejection `unsupported --lang …`.
 - `--mode` — only for `panel`: `native` or `web`.
 - `[OPTIONS]` in Usage — flags are optional except those listed separately. Here `--id` is separately required.
 

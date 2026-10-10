@@ -1,6 +1,6 @@
 # Для кого это и чего ждать
 
-Если это первый плагин — читайте эту главу и дальше по туториалу. Если уже есть Rust и нужен контракт ABI — [справочник](../introduction.md#справочник).
+Если это первый плагин — читайте эту главу и дальше по туториалу. Если нужен контракт ABI — [справочник](../introduction.md#справочник). Для виджета на TypeScript — сразу [глава 09](09-js-ts.md).
 
 ## Что такое плагин
 
@@ -12,7 +12,7 @@
 
 ```mermaid
 flowchart LR
-  rust[ваш Rust] --> sdk[modus-sdk]
+  guest["Rust или JS/TS"] --> sdk["modus-sdk / modus-sdk-js"]
   sdk --> wasm[компонент WASM]
   wasm --> host["хост: modus dev или Core"]
 ```
@@ -47,13 +47,14 @@ flowchart LR
 ## Что понадобится
 
 - Windows — как у продукта.
-- Rust stable и цель `wasm32-unknown-unknown` (поставим в следующей главе).
-- Публичные clone: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (CLI), рядом удобны [modus-docs](https://github.com/CaptainGnome/modus-docs) и [modus-examples](https://github.com/CaptainGnome/modus-examples). SDK пока не на crates.io.
+- Для части 1 (Rust consumer): Rust stable и цель `wasm32-unknown-unknown` (поставим в следующей главе).
+- Для JS/TS виджета: Node ≥20 + [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js); бинарь `modus` всё равно из [modus-sdk](https://github.com/CaptainGnome/modus-sdk) — [глава 09](09-js-ts.md).
+- Публичные clone: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (CLI), рядом удобны [modus-docs](https://github.com/CaptainGnome/modus-docs), [modus-examples](https://github.com/CaptainGnome/modus-examples), при JS — `modus-sdk-js`. SDK пока не на crates.io.
 - PowerShell, чтобы копировать команды.
 
-Node для самого плагина не нужен. **Установленный** Modus — только в конце части 1, когда будете ставить `.mplug`. Отладка — `modus dev` в терминале, не окно Core.
+**Установленный** Modus — только в конце, когда будете ставить `.mplug`. Отладка — `modus dev` в терминале, не окно Core.
 
-Язык один: **Rust**. Других не обещаем.
+Языки гостя: **Rust** (все роли) и **JS/TS** (widget / alerter). Хост языку не видит.
 
 ## Два текста
 

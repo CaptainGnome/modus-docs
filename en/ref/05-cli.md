@@ -2,13 +2,13 @@
 
 If this is your first plugin — commands in the [tutorial](../start/01-tools.md). If you need the flag map — this chapter.
 
-**Rule.** `dev` builds **debug** wasm and raises the host in the same process. `pack` — **release** + component + `.mplug`. Debug with `dev`, not “install mplug in Core”.
+**Rule.** `dev` builds wasm (Rust debug or JS componentize) and raises the host in the same process. `pack` — release/component + `.mplug`. Debug with `dev`, not “install mplug in Core”.
 
 ## Commands
 
 | Command | Purpose |
 | --- | --- |
-| `new <role> --id …` | scaffold on disk |
+| `new <role> --id … [--lang rust\|ts\|js]` | scaffold on disk |
 | `dev [PATH]` | tutorial host without Tauri |
 | `check [PATH]` | directory or `.mplug` |
 | `pack [PATH]` | `dist/<name>.mplug` |
@@ -22,7 +22,9 @@ cargo run --manifest-path cli/Cargo.toml --release -- <command>
 
 At the product root (submodule): `modus-sdk/cli/Cargo.toml`. Or the `modus` function from the [tutorial](../start/01-tools.md).
 
-`new connector` does not set `broker`, the official Twitch `client_id`, or Twitch hosts. No `wit_bindgen::generate` in `src`. Two bindgens (SDK + `generate` in one crate) — `pack`/`check` refuse.
+`new connector` does not set `broker`, the official Twitch `client_id`, or Twitch hosts. No `wit_bindgen::generate` in Rust `src`. Two bindgens (SDK + `generate` in one crate) — `pack`/`check` refuse.
+
+`--lang ts` / `js` — npm scaffold for `widget` / `alerter` (Node ≥20, sibling [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)). Tutorial — [start/09-js-ts](../start/09-js-ts.md).
 
 ## `modus dev`
 
@@ -51,6 +53,8 @@ Tutorial: [consumer](../start/03-dev.md), [connector](../start/07-connector.md).
 
 ## `pack` / `check`
 
-`pack` itself builds release wasm, wraps as a component, soft-links imports. No file without a successful `check`. WASI / foreign import — refuse. Known modus import without grant in the manifest — soft-link ok; call without cap is cut by the host.
+Detect: exactly one marker — `Cargo.toml` (Rust: `cargo` → `wasm32-unknown-unknown` → component) **or** `package.json` (JS/TS: `npm install` + jco componentize). Both at once — refuse.
+
+`pack` itself builds the component and soft-links imports. No file without a successful `check`. WASI / foreign import — refuse. Known modus import without grant in the manifest — soft-link ok; call without cap is cut by the host.
 
 Next chapter — [network and auth](06-net-auth.md).

@@ -2,18 +2,18 @@
 
 If this is your first plugin — [tutorial](../start/00-intro.md), toolchain in [chapters 1–3](../start/01-tools.md). If you need the contract — this chapter.
 
-**Rule.** The public path is crate `modus-sdk` + manifest + CLI `modus`. Authors do not copy WIT or `wasm-tools`.
+**Rule.** The public path is a guest SDK (crate `modus-sdk` or npm `modus-sdk` from [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)) + manifest + CLI `modus`. Authors do not copy WIT or `wasm-tools`. The host does not see the language.
 
 ## Layers
 
 ```mermaid
 flowchart LR
-  rust[your Rust] --> sdk[modus-sdk]
+  guest["Rust or JS/TS"] --> sdk["modus-sdk / modus-sdk-js"]
   sdk --> wasm[WASM component]
   wasm --> host["host: modus dev or Core"]
 ```
 
-Guest code → SDK (canon, `wait`, `HostError`, `export!`) → bindings inside the SDK → host imports → Wasmtime. The sandbox gets the same component as raw bindgen. The SDK is not a second ABI and not a grant bypass.
+Guest code → SDK (canon, `wait`, host errors, lifecycle) → bindings inside the SDK → host imports → Wasmtime. The sandbox gets the same component. The SDK is not a second ABI and not a grant bypass.
 
 Not in WIT — not in the SDK. The SDK does not inject WASI: `wasi:*` in the component always fails `pack` / load.
 

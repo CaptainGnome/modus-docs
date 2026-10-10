@@ -13,6 +13,7 @@
 - [Упаковать](start/06-pack.md)
 - [Коннектор](start/07-connector.md)
 - [Дальше](start/08-next.md)
+- [JS/TS виджет](start/09-js-ts.md)
 
 # Справочник
 
@@ -45,6 +46,7 @@
 - [CLI](api/11-cli-dev.md)
 - [Лимиты](api/12-limits.md)
 - [Crate `modus-sdk`](api/13-sdk-crate.md)
+- [npm `modus-sdk` (JS/TS)](api/14-sdk-js.md)
 
 # Эталоны
 
@@ -63,3 +65,4 @@
 - [Bridge / OBS](examples/11-bridge-obs.md)
 - [Embedder](examples/12-embedder.md)
 - [Rates / FX](examples/13-rates-fx.md)
+- [Widget TS](examples/14-widget-ts.md)

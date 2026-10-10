@@ -2,11 +2,11 @@
 
 Разборы ролей: ключевые фрагменты манифеста и кода с комментариями «что / зачем / куда».
 
-**Публичный runnable kit** — [modus-examples](https://github.com/CaptainGnome/modus-examples): учебно-полные dummy (`consumer`, `emitter`, `connector-replay`, `widget`), не копии закрытых `plugins/*`. Канон — sibling clone рядом с sdk/docs; submodule — удобство checkout’а. Остальные роли — `modus new <роль>` + главы ниже.
+**Публичный runnable kit** — [modus-examples](https://github.com/CaptainGnome/modus-examples): учебно-полные dummy (`consumer`, `emitter`, `connector-replay`, `widget`, `widget-ts`), не копии закрытых `plugins/*`. Канон — sibling clone рядом с sdk / sdk-js / docs; submodule — удобство checkout’а. Остальные роли — `modus new <роль>` + главы ниже.
 
 Свой плагин всегда с `modus new`, не форком dummy. Dummy — не каталог стора.
 
-Карта ролей — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://github.com/CaptainGnome/modus-sdk).
+Карта ролей — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); JS/TS — [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js).
 
 | | Глава | Роль | Runnable |
 | --- | --- | --- | --- |
@@ -24,5 +24,6 @@
 | 11 | [Bridge / OBS](11-bridge-obs.md) | `bridge` | `modus new bridge` |
 | 12 | [Embedder](12-embedder.md) | `embedder` | `modus new embedder` |
 | 13 | [Rates / FX](13-rates-fx.md) | `rates` | `modus new rates` |
+| 14 | [Widget TS](14-widget-ts.md) | `widget` (TS) | [`modus-examples/widget-ts`](https://github.com/CaptainGnome/modus-examples/tree/master/widget-ts) |
 
 Hub — [оглавление](../introduction.md).

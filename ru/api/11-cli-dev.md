@@ -29,13 +29,13 @@ modus new <role> --id <reverse.dns.name>
   [--name <str>]
   [--author <str>]
   [--dir <path>]
-  [--lang rust]
+  [--lang rust|ts|js]
   [--mode native|web]   # только role panel
 ```
 
 Роли: `consumer`, `emitter`, `connector`, `provider`, `widget`, `panel` (→ feature `widget`), `reader`, `player`, `bridge`, `embedder`, `rates`, `alerter`, `commander`, `store`.
 
-`--id` обязателен, reverse-DNS ≥3 сегмента. Каталог по умолчанию — последний сегмент id. `--lang` кроме `rust` — отказ. `--mode` только для `panel`.
+`--id` обязателен, reverse-DNS ≥3 сегмента. Каталог по умолчанию — последний сегмент id. `--lang` по умолчанию `rust`; `ts`/`js` — только `widget` / `alerter` (нужен Node ≥20 и sibling [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)). `--mode` только для `panel`.
 
 Карта грантов в каркасе — [ref/01-roles](../ref/01-roles.md). Help `new` совпадает со списком ролей.
 
@@ -57,7 +57,7 @@ modus pack [PATH]
   [--key-file <path>]
 ```
 
-Без ключа — unsigned zip. `--sign` или наличие `MODUS_SIGN_KEY` / `--key-file` — подписать после pack. Подробнее — [10-package-signing](10-package-signing.md).
+Detect: `Cargo.toml` **или** `package.json` (не оба). JS/TS — `npm install` + jco (Node ≥20). Без ключа — unsigned zip. `--sign` или наличие `MODUS_SIGN_KEY` / `--key-file` — подписать после pack. Подробнее — [10-package-signing](10-package-signing.md).
 
 ## `modus keygen`
 

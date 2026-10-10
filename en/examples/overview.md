@@ -2,11 +2,11 @@
 
 Role walkthroughs: key manifest and code fragments with “what / why / where” notes.
 
-**Public runnable kit** — [modus-examples](https://github.com/CaptainGnome/modus-examples): educational-full dummies (`consumer`, `emitter`, `connector-replay`, `widget`), not copies of closed `plugins/*`. Canonical — sibling clone next to sdk/docs; submodule is checkout convenience. Other roles — `modus new <role>` + chapters below.
+**Public runnable kit** — [modus-examples](https://github.com/CaptainGnome/modus-examples): educational-full dummies (`consumer`, `emitter`, `connector-replay`, `widget`, `widget-ts`), not copies of closed `plugins/*`. Canonical — sibling clone next to sdk / sdk-js / docs; submodule is checkout convenience. Other roles — `modus new <role>` + chapters below.
 
 Your own plugin always starts from `modus new`, not a fork of a dummy. Dummies are not the store catalog.
 
-Role map — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://github.com/CaptainGnome/modus-sdk).
+Role map — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); JS/TS — [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js).
 
 | | Chapter | Role | Runnable |
 | --- | --- | --- | --- |
@@ -24,5 +24,6 @@ Role map — [ref/01-roles](../ref/01-roles.md). SDK — [modus-sdk](https://git
 | 11 | [Bridge / OBS](11-bridge-obs.md) | `bridge` | `modus new bridge` |
 | 12 | [Embedder](12-embedder.md) | `embedder` | `modus new embedder` |
 | 13 | [Rates / FX](13-rates-fx.md) | `rates` | `modus new rates` |
+| 14 | [Widget TS](14-widget-ts.md) | `widget` (TS) | [`modus-examples/widget-ts`](https://github.com/CaptainGnome/modus-examples/tree/master/widget-ts) |
 
 Hub — [table of contents](../introduction.md).

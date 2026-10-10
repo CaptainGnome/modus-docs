@@ -29,13 +29,13 @@ modus new <role> --id <reverse.dns.name>
   [--name <str>]
   [--author <str>]
   [--dir <path>]
-  [--lang rust]
+  [--lang rust|ts|js]
   [--mode native|web]   # panel role only
 ```
 
 Roles: `consumer`, `emitter`, `connector`, `provider`, `widget`, `panel` (→ feature `widget`), `reader`, `player`, `bridge`, `embedder`, `rates`, `alerter`, `commander`, `store`.
 
-`--id` is required, reverse-DNS ≥3 segments. Default directory — last segment of id. `--lang` other than `rust` — rejected. `--mode` only for `panel`.
+`--id` is required, reverse-DNS ≥3 segments. Default directory — last segment of id. `--lang` defaults to `rust`; `ts`/`js` — only `widget` / `alerter` (needs Node ≥20 and sibling [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)). `--mode` only for `panel`.
 
 Grant map in the scaffold — [ref/01-roles](../ref/01-roles.md). Help for `new` matches the role list.
 
@@ -57,7 +57,7 @@ modus pack [PATH]
   [--key-file <path>]
 ```
 
-Without a key — unsigned zip. `--sign` or presence of `MODUS_SIGN_KEY` / `--key-file` — sign after pack. Details — [10-package-signing](10-package-signing.md).
+Detect: `Cargo.toml` **or** `package.json` (not both). JS/TS — `npm install` + jco (Node ≥20). Without a key — unsigned zip. `--sign` or presence of `MODUS_SIGN_KEY` / `--key-file` — sign after pack. Details — [10-package-signing](10-package-signing.md).
 
 ## `modus keygen`
 

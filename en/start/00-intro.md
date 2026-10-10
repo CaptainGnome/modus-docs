@@ -1,6 +1,6 @@
 # Who this is for and what to expect
 
-If this is your first plugin — read this chapter and continue through the tutorial. If you already know Rust and need the ABI contract — [reference](../introduction.md#reference).
+If this is your first plugin — read this chapter and continue through the tutorial. If you need the ABI contract — [reference](../introduction.md#reference). For a TypeScript widget — jump to [chapter 09](09-js-ts.md).
 
 ## What a plugin is
 
@@ -12,7 +12,7 @@ The guest lives in WASM: no disk, no own sockets, no access to the streamer's fi
 
 ```mermaid
 flowchart LR
-  rust[your Rust] --> sdk[modus-sdk]
+  guest["Rust or JS/TS"] --> sdk["modus-sdk / modus-sdk-js"]
   sdk --> wasm[WASM component]
   wasm --> host["host: modus dev or Core"]
 ```
@@ -47,13 +47,14 @@ Other roles (panel, reader, player, bridge, widget, …) **exist** in the ABI; t
 ## What you need
 
 - Windows — same as the product.
-- Rust stable and the `wasm32-unknown-unknown` target (we install them in the next chapter).
-- Public clones: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (CLI); keep [modus-docs](https://github.com/CaptainGnome/modus-docs) and [modus-examples](https://github.com/CaptainGnome/modus-examples) nearby. The SDK is not on crates.io yet.
+- For part 1 (Rust consumer): Rust stable and the `wasm32-unknown-unknown` target (we install them in the next chapter).
+- For a JS/TS widget: Node ≥20 + [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js); the `modus` binary still comes from [modus-sdk](https://github.com/CaptainGnome/modus-sdk) — [chapter 09](09-js-ts.md).
+- Public clones: [modus-sdk](https://github.com/CaptainGnome/modus-sdk) (CLI); keep [modus-docs](https://github.com/CaptainGnome/modus-docs), [modus-examples](https://github.com/CaptainGnome/modus-examples), and for JS `modus-sdk-js` nearby. The SDK is not on crates.io yet.
 - PowerShell, so you can copy commands.
 
-Node is not needed for the plugin itself. The **shipped** Modus app — only at the end of part 1, when you install the `.mplug`. Debugging is `modus dev` in the terminal, not the Core window.
+The **shipped** Modus app — only at the end, when you install the `.mplug`. Debugging is `modus dev` in the terminal, not the Core window.
 
-One language: **Rust**. We do not promise others.
+Guest languages: **Rust** (all roles) and **JS/TS** (widget / alerter). The host does not see the language.
 
 ## Two texts
 

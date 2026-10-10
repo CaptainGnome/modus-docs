@@ -54,17 +54,19 @@ The list must contain the line `wasm32-unknown-unknown`. If it is missing — `d
 The SDK is not on crates.io yet. Publicly:
 
 - SDK / CLI / WIT — [CaptainGnome/modus-sdk](https://github.com/CaptainGnome/modus-sdk)
+- guest JS/TS — [CaptainGnome/modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)
 - this documentation — [CaptainGnome/modus-docs](https://github.com/CaptainGnome/modus-docs)
 - teaching dummies — [CaptainGnome/modus-examples](https://github.com/CaptainGnome/modus-examples)
 
 ```powershell
 git clone https://github.com/CaptainGnome/modus-sdk.git
+git clone https://github.com/CaptainGnome/modus-sdk-js.git
 git clone https://github.com/CaptainGnome/modus-docs.git
 git clone https://github.com/CaptainGnome/modus-examples.git
 cd modus-sdk
 ```
 
-CLI commands below are **from the `modus-sdk` clone root**. Keep `modus-docs` (guide) and `modus-examples` (teaching dummies) nearby. You can create a plugin in a sibling folder (`modus new … --dir ..\my-plugin`) and set `path = "../modus-sdk/guest"` in `Cargo.toml`.
+CLI commands below are **from the `modus-sdk` clone root**. Keep `modus-docs`, `modus-examples`, and (for JS/TS) `modus-sdk-js` nearby. Rust plugin: `Cargo.toml` → `path = "../modus-sdk/guest"`. JS/TS: `package.json` → `"modus-sdk": "file:../modus-sdk-js"` (what `new --lang ts` writes). Node ≥20 is only for the JS/TS guest; the Rust toolchain builds the CLI and Rust plugins. JS path — [chapter 09](09-js-ts.md).
 
 ## CLI
 

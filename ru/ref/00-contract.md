@@ -2,18 +2,18 @@
 
 Если это первый плагин — [туториал](../start/00-intro.md), тулчейн в [главах 1–3](../start/01-tools.md). Если нужен контракт — эта глава.
 
-**Правило.** Публичный путь — crate `modus-sdk` + манифест + CLI `modus`. WIT и `wasm-tools` автор не копирует.
+**Правило.** Публичный путь — guest SDK (`modus-sdk` crate или npm `modus-sdk` из [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js)) + манифест + CLI `modus`. WIT и `wasm-tools` автор не копирует. Хост языку не видит.
 
 ## Слои
 
 ```mermaid
 flowchart LR
-  rust[ваш Rust] --> sdk[modus-sdk]
+  guest["Rust или JS/TS"] --> sdk["modus-sdk / modus-sdk-js"]
   sdk --> wasm[компонент WASM]
   wasm --> host["хост: modus dev или Core"]
 ```
 
-Код гостя → SDK (канон, `wait`, `HostError`, `export!`) → биндинги внутри SDK → импорты хоста → Wasmtime. В песочницу попадает тот же компонент, что с сырого bindgen. SDK не второе ABI и не обход грантов.
+Код гостя → SDK (канон, `wait`, ошибки хоста, lifecycle) → биндинги внутри SDK → импорты хоста → Wasmtime. В песочницу попадает тот же компонент. SDK не второе ABI и не обход грантов.
 
 Нет в WIT — нет в SDK. WASI SDK не подмешивает: `wasi:*` в компоненте — всегда отказ `pack` / загрузки.
 
