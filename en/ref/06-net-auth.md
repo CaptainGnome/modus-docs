@@ -27,7 +27,7 @@ Reference: `modus new connector`, scaffold `modus new connector`.
 
 ## HTTP
 
-Grant `net.http`. Only `https://`. Literal IP, loopback, private, link-local — refuse. Host ∈ manifest `hosts` ∩ Core whitelist. Redirect: up to 5 hops, each checked.
+Grant `net.http`. Only `https://`. Literal IP, loopback, private, link-local — refuse. Host ∈ manifest `hosts` ∩ Core whitelist. Redirect: up to 5 hops, each before connect (manifest ∩ whitelist + pinned DNS). Cross-origin drops guest headers. Guests cannot set hop-by-hop (`Host`, `Content-Length`, …).
 
 Limits: body 1 MiB, timeout 15 s, ≤4 inflight. Host does not retry 429.
 
@@ -38,6 +38,10 @@ In `dev`: without network — `--http-file` (JSON, key = URL without query).
 Grant `net.ws`. Only `wss://`. ≤2 sockets. Frames — `Ready::WsText` / `WsClosed`. Stop tears TCP. Loopback / private — refuse.
 
 In `dev`: `--replay` (file lines) or one live URL from `hosts`.
+
+## gRPC
+
+Grant `net.grpc` (`modus:abi@2.1.0`). Unary `call` and server-streaming `open-stream` / `cancel`. Body is raw protobuf bytes; TLS required; authority ∈ `hosts` ∩ whitelist. Metadata: no pseudo-headers and no `grpc-*`. Stream frames — `Ready::GrpcMsg` / `GrpcClosed`. Concurrent streams share the WS quota. Full contract — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netgrpc).
 
 ## Bridge (loopback)
 

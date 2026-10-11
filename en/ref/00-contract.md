@@ -27,9 +27,9 @@ New package: SDK feature; do not copy a `lib.rs` with raw bindgen.
 
 ## Versions
 
-Major of crate `modus-sdk` = ABI. Currently `2.0.0` only with `"abi": 2` in the manifest. Breaking WIT — new SDK major in the same release as the ABI.
+Major of crate `modus-sdk` = ABI. Line `2.x` (`2.1.0` ↔ WIT package `modus:abi@2.1.0`) with `"abi": 2` in the manifest. Additive WIT — SDK minor; breaking WIT — new SDK major in the same release as the ABI.
 
-The host loads only `abi: 2`. An old package with ABI 1 will not load. Pin the SDK version in the plugin `Cargo.toml`. WIT lives inside the SDK; do not “download world.wit from master”.
+The host loads only `abi: 2` and accepts components importing `modus:abi@2.0.0` or `modus:abi@2.1.0` (the manifest stays `"abi": 2` for both). Mixing package versions in one component is rejected; `net-grpc` exists only in `@2.1.0`. An old package with ABI 1 will not load. Pin the SDK version in the plugin `Cargo.toml`. WIT lives inside the SDK; do not “download world.wit from master”.
 
 One package — **one** SDK role-feature (`consumer` | `emitter` | … | `commander` | `store`). The WIT world is always **`plugin`**. Two features at once — `compile_error`. This is not “one product role”: listen on the bus and emit — `emitter` or `connector`, not two features. Map — [next chapter](01-roles.md).
 

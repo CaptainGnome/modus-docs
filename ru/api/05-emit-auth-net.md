@@ -45,14 +45,14 @@ token(account_id) -> Result<string, string>
 
 ## Allowlist хостов
 
-Концепт для гостя (`net.http` / `net.ws`):
+Концепт для гостя (`net.http` / `net.ws` / `net.grpc`):
 
-1. URL должен быть `https://` или `wss://`.
+1. URL/`authority` должен быть TLS-схемой (`https://` / `wss://` / gRPC `:443`).
 2. Hostname ∈ `hosts` манифеста (для embed iframe — `embed_hosts`).
 3. Hostname ∈ whitelist политики Core.
 4. Литеральный IP, loopback, private, link-local — отказ.
 
-Редиректы HTTP: до **5** hop, каждый hop проверяется теми же правилами. Ошибки класса `Network` — [03-errors](03-errors.md).
+Редиректы HTTP: до **5** hop; каждый hop до connect — https, манифест ∩ whitelist, pinned DNS. Кросс-origin снимает все гостевые заголовки (включая `Authorization`). Гость не задаёт hop-by-hop (`Host`, `Content-Length`, `Transfer-Encoding`, `Connection`, …). Ошибки класса `Network` — [03-errors](03-errors.md).
 
 Исключение: локальный софт — только [`net.bridge`](#netbridge) (plain `ws://` на loopback), не `net.ws`.
 
@@ -96,6 +96,36 @@ close(handle) -> Result<(), String>
 | сокетов | ≤ 2 |
 
 В `dev`: `--replay file` (текстовые кадры по строке) **или** один live `wss://` из `hosts` (не private).
+
+## `net.grpc`
+
+Грант `net.grpc`. Транспорт сырых protobuf bytes; decode/encode — в wasm. Пакет WIT `modus:abi@2.1.0`.
+
+```text
+call(authority, path, headers, request) -> Result<GrpcResponse, String>
+open-stream(authority, path, headers, request) -> Result<u32, String>  // handle
+cancel(handle) -> Result<(), String>
+```
+
+`GrpcResponse`: `status` (gRPC code, `0` = OK), `message`, `body` (пусто при `status != 0`).
+
+| Режим | Поведение |
+| --- | --- |
+| unary `call` | один request → один response; блокирует guest-вызов (как `net.http` fetch); без `wait` |
+| server-stream `open-stream` | кадры `Ready::GrpcMsg { handle, bytes }` / `Ready::GrpcClosed { handle, status, message }` |
+
+| Потолок | Значение |
+| --- | --- |
+| TLS | обязателен |
+| authority | hostname ∈ `hosts` ∩ whitelist; порт по умолчанию 443 |
+| request / message | 1 MiB |
+| concurrent streams | как квота WS (≤ 2) |
+| unary timeout | как HTTP (15 s) |
+| metadata | без псевдо-заголовков (`:…`) и без `grpc-*`; `Authorization` ок |
+
+Не в срезе: client-streaming, bidi, gRPC-Web. Stop/resume рвут открытые streams.
+
+Эталон: `plugins/youtube` (`StreamList`).
 
 ## `net.bridge`
 

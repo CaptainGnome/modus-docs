@@ -1,6 +1,6 @@
 # Crate `modus-sdk`
 
-**Rule.** The public author path is one Cargo role feature + `export!`. WIT and `wit_bindgen::generate` are not written in the plugin. Crate major = ABI (`2.0.0` ↔ `"abi": 2`).
+**Rule.** The public author path is one Cargo role feature + `export!`. WIT and `wit_bindgen::generate` are not written in the plugin. Crate major = ABI (`2.1.0` ↔ `"abi": 2`, WIT package `@2.1.0`).
 
 Contract — [ref/00-contract](../ref/00-contract.md). WIT as an appendix — [ref/11-wit](../ref/11-wit.md).
 

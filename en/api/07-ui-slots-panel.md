@@ -52,8 +52,9 @@ Concept, not the full Core browser policy:
 | images | `'self'` and `cache/{key}` from `media.cache` |
 | iframe | without `media.embed` / empty `embed_hosts` — `frame-src 'none'` |
 | foreign origin in iframe | role `embedder` + `media.embed` + `embed_hosts` |
+| navigation | `navigate-to 'self'` — the page cannot navigate to an external URL |
 
-Several `web` slots at once are ok. Raw fetch to an arbitrary CDN from the page is not a bypass of wasm `hosts`; for binaries use a cache-key.
+Several `web` slots at once are ok. Each mount (`web` and `panel`) has its own path token; another slot under another token is 404. Raw fetch to an arbitrary CDN from the page is not a bypass of wasm `hosts`; for binaries use a cache-key.
 
 ## Panel native: `panel.json`
 

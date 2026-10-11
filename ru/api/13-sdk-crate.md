@@ -1,6 +1,6 @@
 # Crate `modus-sdk`
 
-**Правило.** Публичный путь автора — одна Cargo feature роли + `export!`. WIT и `wit_bindgen::generate` в плагине не пишут. Мажор crate = ABI (`2.0.0` ↔ `"abi": 2`).
+**Правило.** Публичный путь автора — одна Cargo feature роли + `export!`. WIT и `wit_bindgen::generate` в плагине не пишут. Мажор crate = ABI (`2.1.0` ↔ `"abi": 2`, пакет WIT `@2.1.0`).
 
 Контракт — [ref/00-contract](../ref/00-contract.md). WIT как приложение — [ref/11-wit](../ref/11-wit.md).
 

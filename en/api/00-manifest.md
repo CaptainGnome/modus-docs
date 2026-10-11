@@ -36,6 +36,7 @@ Array of strings. Empty / absent — base only (`wait`, settings, assets, log, �
 | `auth.token` | `list-accounts` / `token`; required for any `auth_mode` |
 | `net.http` | HTTPS through the host |
 | `net.ws` | WSS through the host |
+| `net.grpc` | gRPC through the host (unary + server-stream); raw protobuf bytes |
 | `alert.enqueue` | ticket into the alert cashier |
 | `storage.kv` | private instance KV |
 | `chat.act` | send/delete/timeout/ban/unban |
@@ -71,7 +72,7 @@ Assets: web — `assets/web/`; panel native — `assets/panel.json`; panel web �
 
 | Field | Rule |
 | --- | --- |
-| `hosts` | DNS allowlist for `net.http` / `net.ws` and auth URLs. Format: hostname or `host:port`. Intersection with Core whitelist. Literal IP / private — rejected at call time |
+| `hosts` | DNS allowlist for `net.http` / `net.ws` / `net.grpc` and auth URLs. Format: hostname or `host:port`. Intersection with Core whitelist. Literal IP / private — rejected at call time |
 | `embed_hosts` | iframe allowlist (`media.embed`). Empty + no cap — CSP `frame-src 'none'`. Non-empty without `media.embed` — `embed_hosts требует capability media.embed`. Duplicates — rejected |
 
 Concept: manifest ∩ Core policy. The guest does not “open” a URL itself — the host checks. Network — [05-emit-auth-net](05-emit-auth-net.md).

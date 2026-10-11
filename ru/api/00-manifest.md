@@ -36,6 +36,7 @@
 | `auth.token` | `list-accounts` / `token`; нужен при любом `auth_mode` |
 | `net.http` | HTTPS через хост |
 | `net.ws` | WSS через хост |
+| `net.grpc` | gRPC через хост (unary + server-stream); сырые protobuf bytes |
 | `alert.enqueue` | талон в кассу алертов |
 | `storage.kv` | приватное KV инстанса |
 | `chat.act` | send/delete/timeout/ban/unban |
@@ -71,7 +72,7 @@
 
 | Поле | Правило |
 | --- | --- |
-| `hosts` | allowlist DNS для `net.http` / `net.ws` и URL auth. Формат: hostname или `host:port`. Пересечение с whitelist Core. Литеральный IP / private — отказ на вызове |
+| `hosts` | allowlist DNS для `net.http` / `net.ws` / `net.grpc` и URL auth. Формат: hostname или `host:port`. Пересечение с whitelist Core. Литеральный IP / private — отказ на вызове |
 | `embed_hosts` | allowlist для iframe (`media.embed`). Пустой + нет cap — CSP `frame-src 'none'`. Непустой без `media.embed` — `embed_hosts требует capability media.embed`. Дубликаты — отказ |
 
 Концепт: манифест ∩ политика Core. Гость URL сам не «открывает» — хост проверяет. Сеть — [05-emit-auth-net](05-emit-auth-net.md).

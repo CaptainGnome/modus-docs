@@ -52,8 +52,9 @@ post(payload: list<u8>) -> Result<(), String>
 | картинки | `'self'` и `cache/{key}` из `media.cache` |
 | iframe | без `media.embed` / пустых `embed_hosts` — `frame-src 'none'` |
 | чужой origin в iframe | роль `embedder` + `media.embed` + `embed_hosts` |
+| навигация | `navigate-to 'self'` — страница не уходит на внешний URL |
 
-Несколько `web` слотов сразу ок. Сырой fetch на произвольный CDN из страницы — не обход `hosts` wasm; для бинарников используйте cache-key.
+Несколько `web` слотов сразу ок. У каждого mount (`web` и `panel`) свой токен в пути; чужой слот по чужому токену — 404. Сырой fetch на произвольный CDN из страницы — не обход `hosts` wasm; для бинарников используйте cache-key.
 
 ## Panel native: `panel.json`
 

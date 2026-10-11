@@ -6,7 +6,7 @@
 
 **Публичные репозитории:** этот hub — [modus-docs](https://github.com/CaptainGnome/modus-docs); SDK/CLI/WIT — [modus-sdk](https://github.com/CaptainGnome/modus-sdk); guest JS/TS — [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js); учебные dummy — [modus-examples](https://github.com/CaptainGnome/modus-examples). Разборы с комментариями — [examples/](examples/overview.md). Закрытые `plugins/*` продукта в публичный путь не входят.
 
-Путь автора: SDK → `new` → `dev` → `pack` → установка `.mplug` в **готовый** Modus. Язык гостя — **Rust** или **JS/TS** (виджет / алертер). Хост языку не видит. Секреты в пакет не кладут.
+Путь автора: SDK → `new` → `dev` → `pack` → установка `.mplug` в **готовый** Modus. Язык гостя — **Rust** или **JS/TS** (виджет / алертер). Хост язык не видит. Секреты в пакет не кладут.
 
 ## Туториал
 

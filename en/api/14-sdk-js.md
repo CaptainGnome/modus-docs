@@ -1,6 +1,6 @@
 # npm package `modus-sdk` (JS/TS)
 
-**Rule.** The public guest SDK for JavaScript/TypeScript is the separate repo [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js), package name `modus-sdk`. Same WIT (`modus:abi@2.0.0`, world `plugin`) as the Rust crate. The host does not see the language. Official focus — **widget** and **alerter**.
+**Rule.** The public guest SDK for JavaScript/TypeScript is the separate repo [modus-sdk-js](https://github.com/CaptainGnome/modus-sdk-js), package name `modus-sdk`. Same WIT (`modus:abi@2.1.0`, world `plugin`) as the Rust crate. The host does not see the language. Official focus — **widget** and **alerter**.
 
 Companion to the Rust crate — [api/13-sdk-crate](13-sdk-crate.md). Tutorial — [start/09-js-ts](../start/09-js-ts.md).
 

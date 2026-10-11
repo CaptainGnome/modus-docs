@@ -27,7 +27,7 @@ token(account-id) -> result<string, string>
 
 ## HTTP
 
-Грант `net.http`. Только `https://`. Литеральный IP, loopback, private, link-local — отказ. Хост ∈ `hosts` манифеста ∩ whitelist Core. Редирект: до 5 hop, каждый проверяется.
+Грант `net.http`. Только `https://`. Литеральный IP, loopback, private, link-local — отказ. Хост ∈ `hosts` манифеста ∩ whitelist Core. Редирект: до 5 hop, каждый до connect (манифест ∩ whitelist + pinned DNS). Кросс-origin снимает гостевые заголовки. Hop-by-hop (`Host`, `Content-Length`, …) гость задать не может.
 
 Лимиты: тело 1 MiB, таймаут 15 s, ≤4 inflight. 429 хост не ретраит.
 
@@ -38,6 +38,10 @@ token(account-id) -> result<string, string>
 Грант `net.ws`. Только `wss://`. ≤2 сокета. Кадры — `Ready::WsText` / `WsClosed`. Стоп рвёт TCP. Loopback / private — отказ.
 
 В `dev`: `--replay` (строки файла) или один live URL из `hosts`.
+
+## gRPC
+
+Грант `net.grpc` (`modus:abi@2.1.0`). Unary `call` и server-streaming `open-stream` / `cancel`. Тело — сырые protobuf bytes; TLS обязателен; authority ∈ `hosts` ∩ whitelist. Metadata: без псевдо-заголовков и без `grpc-*`. Stream-кадры — `Ready::GrpcMsg` / `GrpcClosed`. Concurrent streams — квота как у WS. Полный контракт — [api/05-emit-auth-net](../api/05-emit-auth-net.md#netgrpc).
 
 ## Bridge (loopback)
 

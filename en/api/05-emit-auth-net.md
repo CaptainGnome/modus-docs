@@ -45,14 +45,14 @@ URL/client_id fields — [00-manifest](00-manifest.md). In `dev`: `--token` / `-
 
 ## Host allowlist
 
-Guest concept (`net.http` / `net.ws`):
+Guest concept (`net.http` / `net.ws` / `net.grpc`):
 
-1. URL must be `https://` or `wss://`.
+1. URL/`authority` must use TLS (`https://` / `wss://` / gRPC `:443`).
 2. Hostname ∈ manifest `hosts` (for embed iframe — `embed_hosts`).
 3. Hostname ∈ Core policy whitelist.
 4. Literal IP, loopback, private, link-local — rejected.
 
-HTTP redirects: up to **5** hops, each hop checked by the same rules. `Network`-class errors — [03-errors](03-errors.md).
+HTTP redirects: up to **5** hops; each hop before connect — https, manifest ∩ whitelist, pinned DNS. Cross-origin drops all guest headers (including `Authorization`). Guests must not set hop-by-hop headers (`Host`, `Content-Length`, `Transfer-Encoding`, `Connection`, …). `Network`-class errors — [03-errors](03-errors.md).
 
 Exception: local software — only [`net.bridge`](#netbridge) (plain `ws://` on loopback), not `net.ws`.
 
@@ -96,6 +96,36 @@ Frames arrive as `Ready::WsText { handle, text }` / `Ready::WsClosed(handle)`. H
 | sockets | ≤ 2 |
 
 In `dev`: `--replay file` (text frames per line) **or** one live `wss://` from `hosts` (not private).
+
+## `net.grpc`
+
+Grant `net.grpc`. Host transports raw protobuf bytes; decode/encode stays in wasm. WIT package `modus:abi@2.1.0`.
+
+```text
+call(authority, path, headers, request) -> Result<GrpcResponse, String>
+open-stream(authority, path, headers, request) -> Result<u32, String>  // handle
+cancel(handle) -> Result<(), String>
+```
+
+`GrpcResponse`: `status` (gRPC code, `0` = OK), `message`, `body` (empty when `status != 0`).
+
+| Mode | Behavior |
+| --- | --- |
+| unary `call` | one request → one response; blocks the guest call (same model as `net.http` fetch); no `wait` |
+| server-stream `open-stream` | frames `Ready::GrpcMsg { handle, bytes }` / `Ready::GrpcClosed { handle, status, message }` |
+
+| Ceiling | Value |
+| --- | --- |
+| TLS | required |
+| authority | hostname ∈ `hosts` ∩ whitelist; default port 443 |
+| request / message | 1 MiB |
+| concurrent streams | same as WS quota (≤ 2) |
+| unary timeout | same as HTTP (15 s) |
+| metadata | no pseudo-headers (`:…`) and no `grpc-*`; `Authorization` ok |
+
+Not in this slice: client-streaming, bidi, gRPC-Web. Stop/resume tear open streams.
+
+Reference: `plugins/youtube` (`StreamList`).
 
 ## `net.bridge`
 
