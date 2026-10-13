@@ -83,15 +83,34 @@
 
 | Режим | Обязательно | Опционально |
 | --- | --- | --- |
-| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes` |
-| `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes` |
-| `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes` |
+| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
 | `api` | (токен вставляет стример в UI) | `userinfo_url` |
-| `custom` | `token_url` и хотя бы один из `auth_url` / `device_url` | `userinfo_url`, `scopes` |
+| `custom` | `token_url` и хотя бы один из `auth_url` / `device_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
+
+| Поле | Правило |
+| --- | --- |
+| `broker_url` | база OAuth-брокера; host ∈ `hosts`. Dev override Core: `MODUS_OAUTH_BROKER_URL` |
+| `redirect_uri` | если кабинет не пускает localhost: https-callback брокера (host = `broker_url`). Иначе Core сам даёт `http://localhost:17420/oauth/callback` |
+| `scope_delimiter` | чем склеивать `scopes` в authorize/refresh. По умолчанию пробел; VK Video Live — `","` |
 
 `client_secret` — запрещён. Оболочку OAuth гоняет Core; wasm видит только короткий access через `auth.token`. В `dev` — `--token` / `--token-file`, не сейф Core.
 
 `api` без вставленного токена: `api mode: paste token`. Broker в проде требует verified подпись пакета — [10-package-signing](10-package-signing.md).
+
+## WH-труба (`wh_url`)
+
+Опционально. Площадка шлёт web-push на публичный HTTPS; Core поднимает слепую трубу `modus-wh` (не новый WIT-импорт).
+
+| Поле | Правило |
+| --- | --- |
+| `wh_url` | база WH (`https://wh.…`); host ∈ `hosts`. Нет поля — пакет к трубе не ходит |
+| Dev | `MODUS_WH_URL` — override базы bind (как `MODUS_OAUTH_BROKER_URL` для OAuth) |
+
+Плагин зовёт обычный `net.ws.connect` на `wss://<host из wh_url>/v1/wh/ws` (без ticket). Core при совпадении host делает auto-bind (attestation → ticket) и уже потом upgrade. Дальше по WS: `ingress` (рецепт) + `route` (ключи). Сырой кадр webhook → `Ready::WsText`; канон парсит плагин. Секрет площадки (`secret_ref`) — env WH, не wasm.
+
+Контракт трубы — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md); пример коннектора с `wh_url` — `plugins/vkvideo`.
 
 ## Catalog: `provides` / `depends` / `consumes`
 

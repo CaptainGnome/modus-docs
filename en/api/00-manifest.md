@@ -83,15 +83,34 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 
 | Mode | Required | Optional |
 | --- | --- | --- |
-| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes` |
-| `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes` |
-| `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes` |
+| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
 | `api` | (streamer pastes token in UI) | `userinfo_url` |
-| `custom` | `token_url` and at least one of `auth_url` / `device_url` | `userinfo_url`, `scopes` |
+| `custom` | `token_url` and at least one of `auth_url` / `device_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
+
+| Field | Rule |
+| --- | --- |
+| `broker_url` | OAuth broker base; host ∈ `hosts`. Core dev override: `MODUS_OAUTH_BROKER_URL` |
+| `redirect_uri` | if the platform rejects localhost: broker https-callback (host = `broker_url`). Otherwise Core uses `http://localhost:17420/oauth/callback` |
+| `scope_delimiter` | join `scopes` in authorize/refresh. Default space; VK Video Live — `","` |
 
 `client_secret` — forbidden. Core runs the OAuth shell; wasm sees only a short access via `auth.token`. In `dev` — `--token` / `--token-file`, not the Core safe.
 
 `api` without a pasted token: `api mode: paste token`. Broker in production requires a verified package signature — [10-package-signing](10-package-signing.md).
+
+## WH pipe (`wh_url`)
+
+Optional. The platform sends web-push to a public HTTPS endpoint; Core talks to the blind `modus-wh` pipe (no new WIT import).
+
+| Field | Rule |
+| --- | --- |
+| `wh_url` | WH base (`https://wh.…`); host ∈ `hosts`. Absent — package never hits the pipe |
+| Dev | `MODUS_WH_URL` — bind-base override (same idea as `MODUS_OAUTH_BROKER_URL`) |
+
+The plugin calls plain `net.ws.connect` on `wss://<host from wh_url>/v1/wh/ws` (no ticket). When the host matches, Core auto-binds (attestation → ticket) then upgrades. Over WS: `ingress` (recipe) + `route` (keys). Raw webhook frames arrive as `Ready::WsText`; the plugin parses canon. Platform secret (`secret_ref`) lives in WH env, not wasm.
+
+Pipe contract — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md); connector with `wh_url` — `plugins/vkvideo`.
 
 ## Catalog: `provides` / `depends` / `consumes`
 

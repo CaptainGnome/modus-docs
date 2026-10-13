@@ -97,6 +97,16 @@ close(handle) -> Result<(), String>
 
 В `dev`: `--replay file` (текстовые кадры по строке) **или** один live `wss://` из `hosts` (не private).
 
+### WH auto-bind
+
+Если в манифесте есть `wh_url` (host ∈ `hosts`) и `connect` идёт на этот host (path `/v1/wh/ws`), Core **до** upgrade:
+
+1. attestation подписанного `.mplug`;
+2. `POST /v1/wh/bind` → one-shot ticket;
+3. connect уже на `…/v1/wh/ws?ticket=`.
+
+Guest bind не вызывает и ticket не знает. Unsigned / без trusted key — bind и OAuth broker недоступны. Поле и override — [00-manifest § WH](00-manifest.md#wh-труба-wh_url).
+
 ## `net.grpc`
 
 Грант `net.grpc`. Транспорт сырых protobuf bytes; decode/encode — в wasm. Пакет WIT `modus:abi@2.1.0`.

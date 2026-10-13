@@ -18,7 +18,7 @@ Part 1 (chapters 0–6) is done if you have a consumer `dist/*.mplug` and a gree
 | Bus canon | [Canon](../ref/03-canon.md) | [Canon](../api/02-canon-bus.md) |
 | Host error strings | [Errors](../ref/04-errors.md) | [Errors](../api/03-errors.md) |
 | `dev` flags | [CLI](../ref/05-cli.md) | [CLI](../api/11-cli-dev.md) |
-| Network and OAuth | [Network and auth](../ref/06-net-auth.md) | [Emit/auth/net](../api/05-emit-auth-net.md) |
+| Network, OAuth, WH (`wh_url`) | [Network and auth](../ref/06-net-auth.md) | [Emit/auth/net](../api/05-emit-auth-net.md), [manifest](../api/00-manifest.md) |
 | KV, act, alerts, slots | [Host API](../ref/07-host-apis.md) | [KV/act](../api/06-kv-act-alerts.md), [slots](../api/07-ui-slots-panel.md) |
 | `.mplug` contents | [Package](../ref/08-package.md) | [Package/signing](../api/10-package-signing.md) |
 | Ceilings | [Limits](../ref/09-limits.md) | [Limits](../api/12-limits.md) |

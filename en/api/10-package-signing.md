@@ -48,9 +48,11 @@ Variable `MODUS_SIGN_KEY` — path to the key (equivalent to `--key-file` for pa
 
 | Status | Install |
 | --- | --- |
-| Unsigned | from disk ok, UI warns; OAuth via broker unavailable |
+| Unsigned | from disk ok, UI warns; OAuth broker and WH `bind` unavailable |
 | Invalid | install rejected |
-| Verified | broker / strict policies |
+| Verified | broker / WH bind / strict policies |
+
+`exchange` / `refresh` and `POST /v1/wh/bind` require attestation: `package_digest`, `publisher_key_id`, `sig`.
 
 Trusted keys and revoke — in [`docs/signing.md`](../../../docs/signing.md). Files `plugins/{id}/inject/` in Core are **not** in the digest (overlay themes).
 

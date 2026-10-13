@@ -47,4 +47,6 @@ Ctrl+C — `Ready::Stop`. `"stopped"` / `HostError::is_stop()` не глотат
 
 Живой OAuth и установка `.mplug` в приложение — не способ отладки коннектора. Сначала `dev` с replay.
 
+Webhook-площадки (VK Video, Kick, …): в живом манифесте добавьте `wh_url` (+ host в `hosts`) и обычный `net.ws.connect` на этот host — Core сам сделает bind. Подробнее — [сеть и auth](../ref/06-net-auth.md#wh-труба-webhook--ws), [манифест § WH](../api/00-manifest.md#wh-труба-wh_url).
+
 Следующая глава — [дальше](08-next.md).

@@ -47,4 +47,6 @@ Without `--replay` the CLI may open one live `wss://` from the manifest `hosts` 
 
 Live OAuth and installing a `.mplug` into the app are not a way to debug a connector. First `dev` with replay.
 
+Webhook platforms (VK Video, Kick, …): in a live manifest add `wh_url` (+ host in `hosts`) and plain `net.ws.connect` to that host — Core binds for you. Details — [network and auth](../ref/06-net-auth.md#wh-pipe-webhook--ws), [manifest § WH](../api/00-manifest.md#wh-pipe-wh_url).
+
 Next chapter — [next steps](08-next.md).

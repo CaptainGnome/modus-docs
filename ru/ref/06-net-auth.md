@@ -23,6 +23,8 @@ token(account-id) -> result<string, string>
 
 Оболочку OAuth гоняет Core. Протокол площадки — у плагина через `net.*` + `token`.
 
+При `auth_mode: broker` в манифесте — `broker_url` (host ∈ `hosts`). Опционально `scope_delimiter` (VK — `","`), `redirect_uri` (https-bounce брокера).
+
 Эталон: `modus new connector`, каркас `modus new connector`.
 
 ## HTTP
@@ -38,6 +40,12 @@ token(account-id) -> result<string, string>
 Грант `net.ws`. Только `wss://`. ≤2 сокета. Кадры — `Ready::WsText` / `WsClosed`. Стоп рвёт TCP. Loopback / private — отказ.
 
 В `dev`: `--replay` (строки файла) или один live URL из `hosts`.
+
+### WH-труба (webhook → WS)
+
+Площадка с web-push не достигает десктопа напрямую. Коннектор декларирует `wh_url` в манифесте (host ∈ `hosts`), затем `net.ws.connect` на `wss://<host>/v1/wh/ws`. Core делает auto-bind (attestation → ticket) без новых импортов ABI. Дальше по WS — рецепт `ingress` / `route`; кадры webhook приходят как обычный `WsText`. Dev override: `MODUS_WH_URL`.
+
+Поля — [api/манифест](../api/00-manifest.md#wh-труба-wh_url). Контракт — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md).
 
 ## gRPC
 

@@ -39,7 +39,7 @@ Compact contract: rule → consequence → reference plugin. Read from the table
 | 3 | [Bus canon](ref/03-canon.md) | Core stamps; `system` only from Core |
 | 4 | [Host errors](ref/04-errors.md) | `HostError::classify`, do not parse strings by eye |
 | 5 | [CLI](ref/05-cli.md) | `dev` debug, `pack` release; `--settings` / `--act` / `--ui` |
-| 6 | [Network and auth](ref/06-net-auth.md) | OAuth shell is Core; secret not in wasm |
+| 6 | [Network and auth](ref/06-net-auth.md) | OAuth at Core; `wh_url` / auto-bind; secret not in wasm |
 | 7 | [Settings, KV, act, alerts, slots](ref/07-host-apis.md) | grant + ceilings; `dev` vs Core |
 | 8 | [`.mplug` package](ref/08-package.md) | zip: `manifest` + `module.wasm` + posix `assets/` |
 | 9 | [Limits](ref/09-limits.md) | one table |

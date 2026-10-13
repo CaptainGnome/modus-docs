@@ -18,7 +18,7 @@
 | Канон шины | [Канон](../ref/03-canon.md) | [Канон](../api/02-canon-bus.md) |
 | Строки ошибок хоста | [Ошибки](../ref/04-errors.md) | [Ошибки](../api/03-errors.md) |
 | Флаги `dev` | [CLI](../ref/05-cli.md) | [CLI](../api/11-cli-dev.md) |
-| Сеть и OAuth | [Сеть и auth](../ref/06-net-auth.md) | [Emit/auth/net](../api/05-emit-auth-net.md) |
+| Сеть, OAuth, WH (`wh_url`) | [Сеть и auth](../ref/06-net-auth.md) | [Emit/auth/net](../api/05-emit-auth-net.md), [манифест](../api/00-manifest.md) |
 | KV, act, алерты, слоты | [Host API](../ref/07-host-apis.md) | [KV/act](../api/06-kv-act-alerts.md), [слоты](../api/07-ui-slots-panel.md) |
 | Содержимое `.mplug` | [Пакет](../ref/08-package.md) | [Пакет/подпись](../api/10-package-signing.md) |
 | Потолки | [Лимиты](../ref/09-limits.md) | [Лимиты](../api/12-limits.md) |

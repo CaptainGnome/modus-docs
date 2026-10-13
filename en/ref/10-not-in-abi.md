@@ -17,6 +17,8 @@ If this is your first plugin — [what you cannot](../start/04-cannot.md). If yo
 
 `media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, alerts, KV, `chat.act` — see [role map](01-roles.md), [network](06-net-auth.md), and [host API](07-host-apis.md).
 
+The WH pipe (`wh_url` + auto-bind on `net.ws.connect`) is **not** a new ABI import: manifest + existing `net.ws`.
+
 TTS: voice — another plugin (`media.audio` or `custom` `tts.request`), not “Core speaks”.
 
 Next chapter — [WIT](11-wit.md).

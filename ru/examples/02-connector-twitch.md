@@ -25,6 +25,8 @@
 | `scopes` | chat / mod / redemptions |
 | `hosts` | allowlist DNS для `net.*` |
 
+Twitch webhook не использует: EventSub у эталона — свой `wss://`. Площадки с **web-push** (VK Video Live и др.) дополнительно ставят `wh_url` и ходят на WH через обычный `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-труба-webhook--ws), пакет `plugins/vkvideo`.
+
 ```json
 {
   /* полный набор живой площадки: токен, HTTP, WS, emit, кэш эмодзи */

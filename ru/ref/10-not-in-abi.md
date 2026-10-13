@@ -17,6 +17,8 @@
 
 `media.audio`, `net.bridge`, `history.read`, `media.embed`, `rates.*`, `catalog.publish`, `ui.slot`, алерты, KV, `chat.act` — см. [карту ролей](01-roles.md), [сеть](06-net-auth.md) и [host API](07-host-apis.md).
 
+WH-труба (`wh_url` + auto-bind на `net.ws.connect`) — **не** новый импорт ABI: манифест + существующий `net.ws`.
+
 TTS: голос — другой плагин (`media.audio` или `custom` `tts.request`), не «Core говорит».
 
 Следующая глава — [WIT](11-wit.md).

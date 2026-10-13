@@ -48,9 +48,11 @@ modus check path\to\plugin.mplug --trusted-keys trusted_keys.json
 
 | Статус | Установка |
 | --- | --- |
-| Unsigned | с диска ок, UI предупреждает; OAuth через broker недоступен |
+| Unsigned | с диска ок, UI предупреждает; OAuth broker и WH `bind` недоступны |
 | Invalid | установка отклонена |
-| Verified | broker / строгие политики |
+| Verified | broker / WH bind / строгие политики |
+
+`exchange` / `refresh` и `POST /v1/wh/bind` требуют attestation: `package_digest`, `publisher_key_id`, `sig`.
 
 Trusted keys и revoke — в [`docs/signing.md`](../../../docs/signing.md). Файлы `plugins/{id}/inject/` в Core **не** в digest (темы overlay).
 

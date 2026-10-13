@@ -39,7 +39,7 @@
 | 3 | [Канон шины](ref/03-canon.md) | штамп Core; `system` только Core |
 | 4 | [Ошибки хоста](ref/04-errors.md) | `HostError::classify`, не парсить литералы глазами |
 | 5 | [CLI](ref/05-cli.md) | `dev` debug, `pack` release; флаги `--settings` / `--act` / `--ui` |
-| 6 | [Сеть и auth](ref/06-net-auth.md) | оболочка OAuth у Core; секрет не в wasm |
+| 6 | [Сеть и auth](ref/06-net-auth.md) | OAuth у Core; `wh_url` / auto-bind; секрет не в wasm |
 | 7 | [Settings, KV, act, алерты, слоты](ref/07-host-apis.md) | грант + потолки; `dev` vs Core |
 | 8 | [Пакет `.mplug`](ref/08-package.md) | zip: `manifest` + `module.wasm` + posix `assets/` |
 | 9 | [Лимиты](ref/09-limits.md) | одна таблица |

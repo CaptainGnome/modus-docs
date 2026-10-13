@@ -25,6 +25,8 @@ Reference: `modus new connector`. Auth/network — [ref/06-net-auth](../ref/06-n
 | `scopes` | chat / mod / redemptions |
 | `hosts` | DNS allowlist for `net.*` |
 
+Twitch does not use the WH pipe here: EventSub in the reference is its own `wss://`. Platforms with **web-push** (VK Video Live, …) also set `wh_url` and reach WH via plain `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-pipe-webhook--ws), package `plugins/vkvideo`.
+
 ```json
 {
   // five grants: OAuth token, Helix HTTP, IRC/EventSub WS, bus write, emote pins

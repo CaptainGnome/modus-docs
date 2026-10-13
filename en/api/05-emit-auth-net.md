@@ -97,6 +97,16 @@ Frames arrive as `Ready::WsText { handle, text }` / `Ready::WsClosed(handle)`. H
 
 In `dev`: `--replay file` (text frames per line) **or** one live `wss://` from `hosts` (not private).
 
+### WH auto-bind
+
+If the manifest has `wh_url` (host ∈ `hosts`) and `connect` targets that host (path `/v1/wh/ws`), Core **before** upgrade:
+
+1. attestation of the signed `.mplug`;
+2. `POST /v1/wh/bind` → one-shot ticket;
+3. connect already on `…/v1/wh/ws?ticket=`.
+
+The guest never calls bind and never sees the ticket. Unsigned / no trusted key — bind and OAuth broker unavailable. Fields and override — [00-manifest § WH](00-manifest.md#wh-pipe-wh_url).
+
 ## `net.grpc`
 
 Grant `net.grpc`. Host transports raw protobuf bytes; decode/encode stays in wasm. WIT package `modus:abi@2.1.0`.

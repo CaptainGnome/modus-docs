@@ -23,6 +23,8 @@ Manifest modes (`auth_mode`): `broker` / `pkce` / `device` / `api` / `custom`. `
 
 Core drives the OAuth shell. Platform protocol — the plugin's via `net.*` + `token`.
 
+With `auth_mode: broker`, the manifest needs `broker_url` (host ∈ `hosts`). Optional `scope_delimiter` (VK — `","`), `redirect_uri` (broker https bounce).
+
 Reference: `modus new connector`, scaffold `modus new connector`.
 
 ## HTTP
@@ -38,6 +40,12 @@ In `dev`: without network — `--http-file` (JSON, key = URL without query).
 Grant `net.ws`. Only `wss://`. ≤2 sockets. Frames — `Ready::WsText` / `WsClosed`. Stop tears TCP. Loopback / private — refuse.
 
 In `dev`: `--replay` (file lines) or one live URL from `hosts`.
+
+### WH pipe (webhook → WS)
+
+A web-push platform never reaches the desktop directly. The connector declares `wh_url` in the manifest (host ∈ `hosts`), then `net.ws.connect` to `wss://<host>/v1/wh/ws`. Core auto-binds (attestation → ticket) with no new ABI imports. Over WS — `ingress` / `route` recipe; webhook frames arrive as plain `WsText`. Dev override: `MODUS_WH_URL`.
+
+Fields — [api/manifest](../api/00-manifest.md#wh-pipe-wh_url). Contract — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md).
 
 ## gRPC
 
