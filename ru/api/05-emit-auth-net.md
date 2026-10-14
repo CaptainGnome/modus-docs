@@ -35,13 +35,13 @@ token(account_id) -> Result<string, string>
 
 | `auth_mode` | Кто держит секрет | Что видит гость |
 | --- | --- | --- |
-| `broker` | брокер + Core | access после verified пакета |
+| `broker` | брокер + Core | access после verified пакета; опц. `pkce: true` — ещё и verifier на брокер (Kick) |
 | `pkce` | Core (public client) | access после браузерного логина |
 | `device` | Core | access после device code |
 | `api` | стример вставляет токен в UI | access из сейфа |
 | `custom` | по полям URL | access после оболочки Core |
 
-Поля URL/client_id — [00-manifest](00-manifest.md). В `dev`: `--token` / `--token-file` + `--account` (по умолчанию `dev`) — фейковый access **только процесса CLI**, в `.mplug` не попадает.
+Поля URL/client_id / флаг `pkce` у broker — [00-manifest](00-manifest.md). В `dev`: `--token` / `--token-file` + `--account` (по умолчанию `dev`) — фейковый access **только процесса CLI**, в `.mplug` не попадает.
 
 ## Allowlist хостов
 

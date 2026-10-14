@@ -28,6 +28,8 @@
 
 Грант `chat.act`. Единственный путь send/delete/timeout/ban/unban. В Core хост паркует вызов и будит живой коннектор `Ready::Act`; коннектор отвечает `chat_complete`. Нет коннектора — сразу ошибка. В `dev`: id + лог сразу; `--act` будит emitter/connector.
 
+`complete` на шину не пишет. Лента — только через `bus.emit` (кадр площадки или локальный emit после успешного act, если inbound нет).
+
 Текст send ≤ 500. Timeout 0 — отказ. Шторм: 10/с.
 
 Эталон: `modus new commander`; исполнитель без сети — [`modus-examples/emitter`](../../../modus-examples/emitter).

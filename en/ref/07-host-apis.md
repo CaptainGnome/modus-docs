@@ -28,6 +28,8 @@ Reference: `modus new store`.
 
 Grant `chat.act`. Only path for send/delete/timeout/ban/unban. In Core the host parks the call and wakes the live connector with `Ready::Act`; connector answers `chat_complete`. No connector — immediate error. In `dev`: id + log immediately; `--act` wakes emitter/connector.
 
+`complete` does not write the bus. The feed sees the fact only via `bus.emit` (platform frame or a local emit after a successful act when inbound is missing).
+
 Send text ≤ 500. Timeout 0 — refuse. Storm: 10/s.
 
 Reference: `modus new commander`; performer without network — [`modus-examples/emitter`](../../../modus-examples/emitter).

@@ -25,7 +25,14 @@ Reference: `modus new connector`. Auth/network — [ref/06-net-auth](../ref/06-n
 | `scopes` | chat / mod / redemptions |
 | `hosts` | DNS allowlist for `net.*` |
 
-Twitch does not use the WH pipe here: EventSub in the reference is its own `wss://`. Platforms with **web-push** (VK Video Live, …) also set `wh_url` and reach WH via plain `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-pipe-webhook--ws), package `plugins/vkvideo`.
+Twitch does not use the WH pipe here: EventSub in the reference is its own `wss://`. Platforms with **web-push** set `wh_url` and reach WH via plain `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-pipe-webhook--ws):
+
+| Package | Auth | Pipe |
+| --- | --- | --- |
+| `plugins/vkvideo` | `broker` (+ `scope_delimiter: ","`) | Centrifugo → WH |
+| `plugins/kick` | `broker` + `pkce: true` | Kick Events → `/in/kick`, route `subscription_id`, RSA |
+
+Kick has no inbound message-deleted event — after a 2xx `chat.act` delete the connector emits `moderation` itself (declare it in `emits`).
 
 ```json
 {

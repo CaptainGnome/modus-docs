@@ -83,7 +83,7 @@
 
 | Режим | Обязательно | Опционально |
 | --- | --- | --- |
-| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter`, `pkce` |
 | `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
 | `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
 | `api` | (токен вставляет стример в UI) | `userinfo_url` |
@@ -92,6 +92,7 @@
 | Поле | Правило |
 | --- | --- |
 | `broker_url` | база OAuth-брокера; host ∈ `hosts`. Dev override Core: `MODUS_OAUTH_BROKER_URL` |
+| `pkce` | только с `auth_mode: broker`. `true` — Core вешает S256 challenge на authorize и шлёт `code_verifier` на брокер (`/v1/oauth/exchange`). Секрет по-прежнему только на брокере. Kick: `broker` + `pkce: true`. С `auth_mode: pkce` ставить нельзя |
 | `redirect_uri` | если кабинет не пускает localhost: https-callback брокера (host = `broker_url`). Иначе Core сам даёт `http://localhost:17420/oauth/callback` |
 | `scope_delimiter` | чем склеивать `scopes` в authorize/refresh. По умолчанию пробел; VK Video Live — `","` |
 
@@ -110,7 +111,7 @@
 
 Плагин зовёт обычный `net.ws.connect` на `wss://<host из wh_url>/v1/wh/ws` (без ticket). Core при совпадении host делает auto-bind (attestation → ticket) и уже потом upgrade. Дальше по WS: `ingress` (рецепт) + `route` (ключи). Сырой кадр webhook → `Ready::WsText`; канон парсит плагин. Секрет площадки (`secret_ref`) — env WH, не wasm.
 
-Контракт трубы — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md); пример коннектора с `wh_url` — `plugins/vkvideo`.
+Контракт трубы — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md). Эталоны с `wh_url`: `plugins/kick` (Events + RSA), `plugins/vkvideo`.
 
 ## Catalog: `provides` / `depends` / `consumes`
 

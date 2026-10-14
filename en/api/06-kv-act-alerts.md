@@ -41,7 +41,7 @@ chat_act::act(job) -> Result<string, string>   // job id
 2. No live connector for that `platform_id` — immediate error to caller, no bus.
 3. Connector in `wait` gets `Ready::Act(req)` with `id`.
 4. Runs platform protocol, calls `chat_complete::complete(&req.id, Ok(()) | Err(...))`.
-5. Nothing is placed on the bus by itself. The fact appears only via a separate `bus.emit` from the protocol.
+5. `complete` itself places nothing on the bus. The feed sees the fact only via a separate `bus.emit` (platform frame **or** a local connector emit after 2xx when there is no inbound event — Kick delete).
 
 | Ceiling | Value |
 | --- | --- |

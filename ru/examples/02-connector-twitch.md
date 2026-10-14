@@ -25,7 +25,14 @@
 | `scopes` | chat / mod / redemptions |
 | `hosts` | allowlist DNS для `net.*` |
 
-Twitch webhook не использует: EventSub у эталона — свой `wss://`. Площадки с **web-push** (VK Video Live и др.) дополнительно ставят `wh_url` и ходят на WH через обычный `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-труба-webhook--ws), пакет `plugins/vkvideo`.
+Twitch webhook не использует: EventSub у эталона — свой `wss://`. Площадки с **web-push** ставят `wh_url` и ходят на WH через обычный `net.ws` (Core auto-bind) — [ref/06](../ref/06-net-auth.md#wh-труба-webhook--ws):
+
+| Пакет | Auth | Труба |
+| --- | --- | --- |
+| `plugins/vkvideo` | `broker` (+ `scope_delimiter: ","`) | Centrifugo → WH |
+| `plugins/kick` | `broker` + `pkce: true` | Kick Events → `/in/kick`, route `subscription_id`, RSA |
+
+Kick: входящего message-deleted нет — после 2xx на `chat.act` delete коннектор сам эмитит `moderation` (заявить в `emits`).
 
 ```json
 {

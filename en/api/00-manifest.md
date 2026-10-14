@@ -83,7 +83,7 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 
 | Mode | Required | Optional |
 | --- | --- | --- |
-| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
+| `broker` | `client_id`, `auth_url`, `broker_url`; URL ∈ `hosts` | `token_url`, `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter`, `pkce` |
 | `pkce` | `client_id`, `auth_url`, `token_url` | `userinfo_url`, `scopes`, `redirect_uri`, `scope_delimiter` |
 | `device` | `client_id`, `device_url`, `token_url` | `userinfo_url`, `scopes`, `scope_delimiter` |
 | `api` | (streamer pastes token in UI) | `userinfo_url` |
@@ -92,6 +92,7 @@ Without `auth_mode`, fields `auth_url` / `token_url` / `device_url` must not be 
 | Field | Rule |
 | --- | --- |
 | `broker_url` | OAuth broker base; host ∈ `hosts`. Core dev override: `MODUS_OAUTH_BROKER_URL` |
+| `pkce` | only with `auth_mode: broker`. `true` — Core attaches an S256 challenge on authorize and forwards `code_verifier` to the broker (`/v1/oauth/exchange`). The secret still lives only on the broker. Kick: `broker` + `pkce: true`. Forbidden with `auth_mode: pkce` |
 | `redirect_uri` | if the platform rejects localhost: broker https-callback (host = `broker_url`). Otherwise Core uses `http://localhost:17420/oauth/callback` |
 | `scope_delimiter` | join `scopes` in authorize/refresh. Default space; VK Video Live — `","` |
 
@@ -110,7 +111,7 @@ Optional. The platform sends web-push to a public HTTPS endpoint; Core talks to 
 
 The plugin calls plain `net.ws.connect` on `wss://<host from wh_url>/v1/wh/ws` (no ticket). When the host matches, Core auto-binds (attestation → ticket) then upgrades. Over WS: `ingress` (recipe) + `route` (keys). Raw webhook frames arrive as `Ready::WsText`; the plugin parses canon. Platform secret (`secret_ref`) lives in WH env, not wasm.
 
-Pipe contract — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md); connector with `wh_url` — `plugins/vkvideo`.
+Pipe contract — [`external_apis/kick_api/broker.md`](../../../external_apis/kick_api/broker.md). Connectors with `wh_url`: `plugins/kick` (Events + RSA), `plugins/vkvideo`.
 
 ## Catalog: `provides` / `depends` / `consumes`
 

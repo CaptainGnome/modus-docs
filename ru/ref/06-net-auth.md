@@ -23,9 +23,9 @@ token(account-id) -> result<string, string>
 
 Оболочку OAuth гоняет Core. Протокол площадки — у плагина через `net.*` + `token`.
 
-При `auth_mode: broker` в манифесте — `broker_url` (host ∈ `hosts`). Опционально `scope_delimiter` (VK — `","`), `redirect_uri` (https-bounce брокера).
+При `auth_mode: broker` в манифесте — `broker_url` (host ∈ `hosts`). Опционально `scope_delimiter` (VK — `","`), `redirect_uri` (https-bounce брокера), `pkce: true` (Kick и др.: Core шлёт S256 challenge + `code_verifier` на брокер; секрет остаётся на брокере). Флаг `pkce` с `auth_mode: pkce` ставить нельзя — это разные режимы.
 
-Эталон: `modus new connector`, каркас `modus new connector`.
+Эталон: `modus new connector`. Живые WH+broker: `plugins/kick` (`pkce: true`), `plugins/vkvideo`.
 
 ## HTTP
 

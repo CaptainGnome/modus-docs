@@ -35,13 +35,13 @@ token(account_id) -> Result<string, string>
 
 | `auth_mode` | Who holds the secret | What the guest sees |
 | --- | --- | --- |
-| `broker` | broker + Core | access after verified package |
+| `broker` | broker + Core | access after verified package; optional `pkce: true` also forwards verifier to the broker (Kick) |
 | `pkce` | Core (public client) | access after browser login |
 | `device` | Core | access after device code |
 | `api` | streamer pastes token in UI | access from the safe |
 | `custom` | by URL fields | access after Core shell |
 
-URL/client_id fields — [00-manifest](00-manifest.md). In `dev`: `--token` / `--token-file` + `--account` (default `dev`) — fake access for the **CLI process only**, not packed into `.mplug`.
+URL/client_id fields and broker `pkce` flag — [00-manifest](00-manifest.md). In `dev`: `--token` / `--token-file` + `--account` (default `dev`) — fake access for the **CLI process only**, not packed into `.mplug`.
 
 ## Host allowlist
 

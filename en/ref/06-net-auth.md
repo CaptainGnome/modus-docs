@@ -23,9 +23,9 @@ Manifest modes (`auth_mode`): `broker` / `pkce` / `device` / `api` / `custom`. `
 
 Core drives the OAuth shell. Platform protocol — the plugin's via `net.*` + `token`.
 
-With `auth_mode: broker`, the manifest needs `broker_url` (host ∈ `hosts`). Optional `scope_delimiter` (VK — `","`), `redirect_uri` (broker https bounce).
+With `auth_mode: broker`, the manifest needs `broker_url` (host ∈ `hosts`). Optional `scope_delimiter` (VK — `","`), `redirect_uri` (broker https bounce), `pkce: true` (Kick and similar: Core sends an S256 challenge + `code_verifier` to the broker; the secret stays on the broker). Do not set `pkce` with `auth_mode: pkce` — those are different modes.
 
-Reference: `modus new connector`, scaffold `modus new connector`.
+Reference: `modus new connector`. Live WH+broker packages: `plugins/kick` (`pkce: true`), `plugins/vkvideo`.
 
 ## HTTP
 
